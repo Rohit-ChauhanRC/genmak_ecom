@@ -11,7 +11,7 @@ class OtpView extends GetView<OtpController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      // resizeToAvoidBottomInset: false,
       body: Container(
         height: Get.height,
         width: Get.width,
@@ -142,33 +142,34 @@ class OtpView extends GetView<OtpController> {
                         ),
                       ),
                     ),
-                    controller.circularProgress
-                        ? Container(
-                            margin: const EdgeInsets.only(
-                              top: 30,
-                            ),
-                            width: Get.width / 2,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.purple[900],
-                                foregroundColor: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                fixedSize: const Size(120, 30),
-                              ),
-                              onPressed: () async {
-                                await controller.otpVerify();
-                              },
-                              child: const Text(
-                                Constants.verifyProceed,
-                                style: TextStyle(
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ),
-                          )
-                        : const CircularProgressIndicator(),
+                    // controller.circularProgress
+                    //     ?
+                    Container(
+                      margin: const EdgeInsets.only(
+                        top: 30,
+                      ),
+                      width: Get.width / 2,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.purple[900],
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          fixedSize: const Size(120, 30),
+                        ),
+                        onPressed: () async {
+                          await controller.otpVerify();
+                        },
+                        child: const Text(
+                          Constants.verifyProceed,
+                          style: TextStyle(
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                    ),
+                    // : const CircularProgressIndicator(),
                   ],
                 ),
               ),

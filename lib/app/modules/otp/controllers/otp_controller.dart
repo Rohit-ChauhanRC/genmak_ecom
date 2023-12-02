@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_mak_inapp/app/constants/constants.dart';
+import 'package:webview_mak_inapp/app/utils/utils.dart';
 
 import '../../../data/dio_client.dart';
 import '../../../data/models/send_otp_model.dart';
@@ -61,6 +62,7 @@ class OtpController extends GetxController {
   }
 
   Future<dynamic> resendOtp() async {
+    Utils.closeKeyboard();
     if (!loginFormKey!.currentState!.validate()) {
       return null;
     }
@@ -71,9 +73,11 @@ class OtpController extends GetxController {
     }).then((value) => sendOtpModel = value!);
     count = 0;
     resend = false;
+    circularProgress = true;
   }
 
   Future<dynamic> otpVerify() async {
+    Utils.closeKeyboard();
     if (!loginFormKey!.currentState!.validate()) {
       return null;
     }
@@ -91,7 +95,8 @@ class OtpController extends GetxController {
 
       // Get.toNamed(Routes.OTP);
     } else {
-      circularProgress = false;
+      circularProgress = true;
+      Utils.showDialog(Constants.error);
     }
   }
 }

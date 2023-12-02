@@ -9,6 +9,8 @@ class Constants {
   static const String regenerate = "or re-generate the one time pin.";
   static const String yourOtp = "Your OTP will be expire in";
   static const String remaining = "remaining 80s";
+  static const String error = "Something went wrong!";
+  static const String success = "Success";
 
   static const String appName = "Mak Life";
   static const String appbarTitle = "Mak Life Dairy Producer Company Limited";

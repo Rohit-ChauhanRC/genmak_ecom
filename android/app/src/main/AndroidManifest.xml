@@ -9,12 +9,17 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-   
+   <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     
     <application
         android:label="webview_mak_inapp"
         android:name="${applicationName}"
-        android:icon="@mipmap/launcher_icon">
+        android:icon="@mipmap/launcher_icon"
+        android:usesCleartextTraffic="true"
+            android:networkSecurityConfig="@xml/network_security_config">
+        <meta-data android:name="io.flutter.network-policy"
+             android:resource="@xml/network_security_config"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -23,8 +28,7 @@
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize"
-            android:usesCleartextTraffic="true"
-            android:networkSecurityConfig="@xml/network_security_config"
+            
             >
             <!-- Specifies an Android theme to apply to this Activity as soon as
                  the Android process has started. This theme is visible to the user
@@ -44,5 +48,22 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+            <provider
+                android:name="io.flutter.plugins.webviewflutter.GenericFileProvider"
+                android:authorities="${applicationId}.generic.provider"
+                android:exported="false"
+                android:grantUriPermissions="true"
+                >
+                <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/provider_paths"
+                    />
+            </provider>
+        
     </application>
+     <queries>
+        <package android:name="com.google.android.apps.photos" />
+        <package android:name="com.google.android.apps.docs" />
+        <package android:name="com.google.android.documentsui" />
+     </queries>
 </manifest>

@@ -5,6 +5,7 @@ import 'package:webview_mak_inapp/app/data/models/send_otp_model.dart';
 
 import '../../../constants/constants.dart';
 import '../../../routes/app_pages.dart';
+import '../../../utils/utils.dart';
 
 class LoginController extends GetxController {
   //
@@ -42,6 +43,7 @@ class LoginController extends GetxController {
   }
 
   Future<dynamic> login() async {
+    Utils.closeKeyboard();
     if (!loginFormKey!.currentState!.validate()) {
       return null;
     }
@@ -60,6 +62,7 @@ class LoginController extends GetxController {
       Get.toNamed(Routes.OTP, arguments: mobileNumber);
     } else {
       circularProgress = false;
+      Utils.showDialog(Constants.error);
     }
   }
 }
