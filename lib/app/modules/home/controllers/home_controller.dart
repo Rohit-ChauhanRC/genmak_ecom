@@ -26,7 +26,7 @@ class HomeController extends GetxController {
       ),
     )
     ..loadRequest(
-      Uri.http('app.maklifedairy.in:5011',
+      Uri.https('app.maklifedairy.in:5017',
           '/index.php/Login/Check_Login/9868892862'),
       // method: LoadRequestMethod.post,
     );
