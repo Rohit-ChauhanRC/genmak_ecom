@@ -92,13 +92,25 @@ class LoginView extends GetView<LoginController> {
                         ),
                       ),
                     ),
-                    CheckboxFormField(
-                      title: const Text(Constants.agreeTerms),
-                      initialValue: controller.agreeCheck,
-                      onSaved: (val) {
-                        controller.agreeCheck = val!;
-                      },
-                    ),
+                    // CheckboxFormField(
+                    //   title: const Text(Constants.agreeTerms),
+                    //   initialValue: controller.agreeCheck,
+                    //   onSaved: (val) {
+                    //     controller.agreeCheck = val!;
+                    //     debugPrint("${controller.agreeCheck}");
+                    //   },
+                    // ),
+                    Obx(() => CheckBoxWidget(
+                          onChanged: (val) {
+                            controller.agreeCheck = val!;
+                            debugPrint("${controller.agreeCheck}");
+                            debugPrint("${controller.agreeCheck}");
+                          },
+                          title: Constants.agreeTerms,
+                          value: controller.agreeCheck,
+                          width: Get.width * .6,
+                          onTap: () {},
+                        )),
                     controller.circularProgress
                         ? Container(
                             margin: const EdgeInsets.only(
@@ -116,7 +128,10 @@ class LoginView extends GetView<LoginController> {
                               ),
                               onPressed: () async {
                                 // Get.toNamed(Routes.OTP);
-                                await controller.login();
+
+                                if (controller.agreeCheck) {
+                                  await controller.login();
+                                }
                               },
                               child: const Text(
                                 Constants.next,

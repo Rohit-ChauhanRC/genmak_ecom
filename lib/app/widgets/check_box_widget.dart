@@ -9,12 +9,14 @@ class CheckBoxWidget extends StatelessWidget {
     required this.title,
     this.onTap,
     this.crossAxisAlignment,
+    this.width,
   });
   final void Function(bool?)? onChanged;
   final bool? value;
   final String title;
   final void Function()? onTap;
   final CrossAxisAlignment? crossAxisAlignment;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,7 @@ class CheckBoxWidget extends StatelessWidget {
           InkWell(
             onTap: () {},
             child: SizedBox(
-              width: Get.width * 0.8,
+              width: width ?? Get.width * 0.8,
               child: Text(title,
                   textAlign: TextAlign.justify,
                   style: const TextStyle(

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:webview_mak_inapp/app/data/dio_client.dart';
 import 'package:webview_mak_inapp/app/data/models/send_otp_model.dart';
 
@@ -13,6 +14,8 @@ class LoginController extends GetxController {
 
   final DioClient client = DioClient();
 
+  final box = GetStorage();
+
   final RxString _mobileNumber = ''.obs;
   String get mobileNumber => _mobileNumber.value;
   set mobileNumber(String mobileNumber) => _mobileNumber.value = mobileNumber;
@@ -21,13 +24,14 @@ class LoginController extends GetxController {
   bool get circularProgress => _circularProgress.value;
   set circularProgress(bool v) => _circularProgress.value = v;
 
-  final RxBool _agreeCheck = true.obs;
+  final RxBool _agreeCheck = false.obs;
   bool get agreeCheck => _agreeCheck.value;
   set agreeCheck(bool v) => _agreeCheck.value = v;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
+    await checkLoginOrNot();
   }
 
   @override
@@ -40,6 +44,13 @@ class LoginController extends GetxController {
     super.onClose();
     _mobileNumber.close();
     _circularProgress.close();
+  }
+
+  checkLoginOrNot() async {
+    // if (await box.read(Constants.cred) != null {
+    //   Get.toNamed(Routes.HOME, arguments: box.read(Constants.cred));
+    // }
+    debugPrint("${box.read(Constants.cred)}");
   }
 
   Future<dynamic> login() async {

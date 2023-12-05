@@ -202,4 +202,5 @@ class Constants {
   static const String baseUrl = "http://payment.maklife.in:8084/api/";
   static const String sendOtp = "otp/ValidateOtpusers";
   static const String verifyOtp = "otp/OTPValidation";
+  static const String cred = "mobile_no";
 }

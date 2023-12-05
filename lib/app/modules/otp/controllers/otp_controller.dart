@@ -1,16 +1,20 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_mak_inapp/app/constants/constants.dart';
+import 'package:webview_mak_inapp/app/routes/app_pages.dart';
 import 'package:webview_mak_inapp/app/utils/utils.dart';
 
 import '../../../data/dio_client.dart';
 import '../../../data/models/send_otp_model.dart';
+import 'package:get_storage/get_storage.dart';
 
 class OtpController extends GetxController {
   //
   GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
 
   final DioClient client = DioClient();
+
+  final box = GetStorage();
 
   final RxString _otp = ''.obs;
   String get otp => _otp.value;
@@ -92,8 +96,11 @@ class OtpController extends GetxController {
     debugPrint(sendOtpModel!.status.toString());
     if (sendOtpModel!.status == "200") {
       circularProgress = true;
-
-      // Get.toNamed(Routes.OTP);
+      box.write(Constants.cred, mobileNumber);
+      Get.offAllNamed(
+        Routes.HOME,
+        arguments: mobileNumber,
+      );
     } else {
       circularProgress = true;
       Utils.showDialog(Constants.error);

@@ -12,6 +12,7 @@ dependencies:
   webview_flutter: ^4.4.2
   permission_handler:
   dio: ^5.4.0
+  get_storage: ^2.1.1
 
   flutter:
     sdk: flutter
