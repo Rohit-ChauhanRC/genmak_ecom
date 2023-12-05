@@ -16,6 +16,14 @@ class HomeController extends GetxController {
   String get mobileNumber => _mobileNumber.value;
   set mobileNumber(String mobileNumber) => _mobileNumber.value = mobileNumber;
 
+  final RxBool _circularProgress = true.obs;
+  bool get circularProgress => _circularProgress.value;
+  set circularProgress(bool v) => _circularProgress.value = v;
+
+  final RxInt _progress = 0.obs;
+  int get progress => _progress.value;
+  set progress(int i) => _progress.value = i;
+
   WebViewController webViewController = WebViewController();
 
   Future<void> permisions() async {
@@ -37,11 +45,16 @@ class HomeController extends GetxController {
       ..setBackgroundColor(const Color(0x00000000))
       ..setNavigationDelegate(
         NavigationDelegate(
-          onProgress: (int progress) {
+          onProgress: (int p) {
             // Update loading bar.
+            progress = p;
           },
-          onPageStarted: (String url) {},
-          onPageFinished: (String url) {},
+          onPageStarted: (String url) {
+            progress = 1;
+          },
+          onPageFinished: (String url) {
+            circularProgress = false;
+          },
           onWebResourceError: (WebResourceError error) {},
           onNavigationRequest: (NavigationRequest request) {
             // if (request.url.startsWith('http://app.maklifedairy.in:5011/')) {

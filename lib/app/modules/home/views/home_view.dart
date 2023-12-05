@@ -15,8 +15,22 @@ class HomeView extends GetView<HomeController> {
       //   centerTitle: true,
       // ),
       body: SafeArea(
-        child: WebViewWidget(
-          controller: controller.webViewController,
+        child: Stack(
+          children: [
+            WebViewWidget(
+              controller: controller.webViewController,
+            ),
+            Obx(
+              () => controller.circularProgress
+                  ? Center(
+                      child: CircularProgressIndicator(
+                        value: controller.progress.toDouble(),
+                        backgroundColor: Colors.purple[900],
+                      ),
+                    )
+                  : const Stack(),
+            )
+          ],
         ),
       ),
     );
