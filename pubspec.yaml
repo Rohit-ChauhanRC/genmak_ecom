@@ -1,7 +1,7 @@
 name: webview_mak_inapp
 version: 1.0.0+1
 publish_to: none
-description: A new Flutter project.
+description: Man Life Dairy.
 environment:
   sdk: ">=3.1.0 <4.0.0"
 
