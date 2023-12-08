@@ -72,7 +72,7 @@ class LoginController extends GetxController {
 
       Get.toNamed(Routes.OTP, arguments: mobileNumber);
     } else {
-      circularProgress = false;
+      circularProgress = true;
       Utils.showDialog(Constants.error);
     }
   }
