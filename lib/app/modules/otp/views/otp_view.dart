@@ -95,7 +95,7 @@ class OtpView extends GetView<OtpController> {
                             value!.length < 4 || value!.length > 5
                                 ? "Please enter valid otp"
                                 : null,
-                        keyboardType: TextInputType.number,
+                        keyboardType: TextInputType.text,
                         inputFormatters: [
                           FilteringTextInputFormatter.digitsOnly,
                         ],
@@ -148,7 +148,7 @@ class OtpView extends GetView<OtpController> {
                       margin: const EdgeInsets.only(
                         top: 30,
                       ),
-                      width: Get.width / 2,
+                      // width: Get.width / 2,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.purple[900],
@@ -156,7 +156,7 @@ class OtpView extends GetView<OtpController> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
                           ),
-                          fixedSize: const Size(120, 30),
+                          // fixedSize: const Size(120, 30),
                         ),
                         onPressed: () async {
                           await controller.otpVerify();

@@ -61,7 +61,7 @@ class LoginView extends GetView<LoginController> {
                         validator: (value) => value!.length < 10
                             ? "Please enter valid mobile no."
                             : null,
-                        keyboardType: TextInputType.number,
+                        keyboardType: TextInputType.text,
                         inputFormatters: [
                           FilteringTextInputFormatter.digitsOnly,
                         ],
@@ -142,6 +142,12 @@ class LoginView extends GetView<LoginController> {
                             ),
                           )
                         : const CircularProgressIndicator(),
+                    InkWell(
+                      onTap: () {
+                        print("object");
+                      },
+                      child: Text("data"),
+                    )
                   ],
                 ),
               ),
