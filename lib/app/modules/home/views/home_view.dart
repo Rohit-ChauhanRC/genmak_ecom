@@ -42,92 +42,59 @@ class HomeView extends GetView<HomeController> {
                   url: WebUri(
                       "https://app.maklifedairy.in:5017/index.php/Login/Check_Login/${controller.mobileNumber.toString()}")),
               initialSettings: controller.settings,
-              pullToRefreshController: controller.pullToRefreshController,
+              // pullToRefreshController: controller.pullToRefreshController,
               onWebViewCreated: (cx) {
                 controller.webViewController = cx;
               },
-              // onLoadStart: (controller, url) {
-              // setState(() {
-              // url = url.toString();
-              // urlController.text = this.url;
-              // });
-              // },
+
               onPermissionRequest: (controller, request) async {
                 return PermissionResponse(
                     resources: request.resources,
                     action: PermissionResponseAction.GRANT);
               },
-              // shouldOverrideUrlLoading: (cx, navigationAction) async {
-              //   var uri = navigationAction.request.url!;
-
-              //   if (![
-              //     "http",
-              //     "https",
-              //     "file",
-              //     "chrome",
-              //     "data",
-              //     "javascript",
-              //     "about"
-              //   ].contains(uri.scheme)) {
-              //     if (await canLaunchUrl(uri)) {
-              //       // Launch the App
-              //       await launchUrl(
-              //         uri,
-              //       );
-              //       // and cancel the request
-              //       return NavigationActionPolicy.CANCEL;
-              //     }
-              //   }
-
-              //   return NavigationActionPolicy.ALLOW;
-              // },
-              // onLoadStop: (cx, url) async {
+              // onReceivedError: (cx, request, error) {
               //   controller.pullToRefreshController!.endRefreshing();
-              //   // setState(() {
-              //   //   this.url = url.toString();
-              //   //   urlController.text = this.url;
-              //   // });
               // },
-              onReceivedError: (cx, request, error) {
-                controller.pullToRefreshController!.endRefreshing();
-              },
-              onProgressChanged: (cx, progress) {
-                // if (progress == 100) {
-                //   controller.pullToRefreshController!.endRefreshing();
-                // }
-                // setState(() {
-                //   this.progress = progress / 100;
-                //   urlController.text = url;
-                // });
-              },
-              onUpdateVisitedHistory: (controller, url, androidIsReload) {
-                // setState(() {
-                //   this.url = url.toString();
-                //   urlController.text = this.url;
-                // });
-              },
-              onConsoleMessage: (controller, consoleMessage) {
+              // onProgressChanged: (cx, progress) {
+              //   controller.progress = progress / 100;
+              // },
+              // onUpdateVisitedHistory: (controller, url, androidIsReload) {},
+              onConsoleMessage: (cx, consoleMessage) {
                 if (kDebugMode) {
                   print(consoleMessage);
                 }
               },
-              onDownloadStartRequest: (controller, request) async {
-                if (kDebugMode) {
-                  print('onDownloadStart $request');
+              shouldOverrideUrlLoading: (cx, navigationAction) async {
+                if (!kIsWeb && defaultTargetPlatform == TargetPlatform.iOS) {
+                  final shouldPerformDownload =
+                      navigationAction.shouldPerformDownload ?? false;
+                  final url = navigationAction.request.url;
+                  if (shouldPerformDownload && url != null) {
+                    await controller.downloadFile(url.toString());
+                    return NavigationActionPolicy.DOWNLOAD;
+                  }
                 }
-                final taskId = await FlutterDownloader.enqueue(
-                  url: request.url.toString(),
-                  savedDir: (await getDownloadsDirectory())?.path ?? '',
-                  showNotification: true,
-                  saveInPublicStorage:
-                      true, // show download progress in status bar (for Android)
-                  openFileFromNotification: true,
-                );
+                return NavigationActionPolicy.ALLOW;
+              },
+              onDownloadStartRequest: (cx, request) async {
+                if (kDebugMode) {
+                  print('onDownloadStart ${request.url.toString()}');
+                }
+                // final taskId = await FlutterDownloader.enqueue(
+                //   url: request.url.toString(),
+                //   savedDir: (await getDownloadsDirectory())!.path,
+                //   showNotification: true,
+                //   saveInPublicStorage: true,
+                //   openFileFromNotification: true,
+                // );
+                // controller.handleClick(request.url);
+                await controller.downloadFile(
+                    request.url.toString(), request.suggestedFilename);
               },
             ),
-            controller.progress < 1.0
-                ? LinearProgressIndicator(value: controller.progress.toDouble())
-                : Container(),
+            // controller.progress < 1.0
+            //     ? LinearProgressIndicator(value: controller.progress)
+            //     : Container(),
           ],
         ),
       ),
