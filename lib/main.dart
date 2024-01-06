@@ -6,6 +6,7 @@ import 'package:webview_mak_inapp/app/constants/constants.dart';
 import 'app/routes/app_pages.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:upgrader/upgrader.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,15 +17,34 @@ void main() async {
       ignoreSsl:
           true // option: set to false to disable working with http links (default: false)
       );
-  final box = GetStorage();
+  await Upgrader.clearSavedSettings();
 
   runApp(
-    GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: Constants.appbarTitle,
-      initialRoute:
-          box.read(Constants.cred) != null ? AppPages.CHECK : AppPages.INITIAL,
-      getPages: AppPages.routes,
-    ),
+    App(),
   );
+}
+
+class App extends StatelessWidget {
+  App({super.key});
+  final box = GetStorage();
+
+  @override
+  Widget build(BuildContext context) {
+    return UpgradeAlert(
+      upgrader: Upgrader(
+        canDismissDialog: false,
+        showLater: false,
+        showIgnore: false,
+        showReleaseNotes: false,
+      ),
+      child: GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: Constants.appbarTitle,
+        initialRoute: box.read(Constants.cred) != null
+            ? AppPages.CHECK
+            : AppPages.INITIAL,
+        getPages: AppPages.routes,
+      ),
+    );
+  }
 }

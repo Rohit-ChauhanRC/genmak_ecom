@@ -142,12 +142,6 @@ class LoginView extends GetView<LoginController> {
                             ),
                           )
                         : const CircularProgressIndicator(),
-                    InkWell(
-                      onTap: () {
-                        print("object");
-                      },
-                      child: Text("data"),
-                    )
                   ],
                 ),
               ),

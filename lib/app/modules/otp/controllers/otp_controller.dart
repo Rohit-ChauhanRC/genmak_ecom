@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_mak_inapp/app/constants/constants.dart';
@@ -37,10 +39,10 @@ class OtpController extends GetxController {
   set resend(bool v) => _resend.value = v;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     mobileNumber = Get.arguments.toString();
-    counter();
+    await counter();
   }
 
   @override
@@ -56,20 +58,26 @@ class OtpController extends GetxController {
     _otp.close();
   }
 
-  void counter() {
-    for (var i = 1; i <= 80; i++) {
-      count += 1;
-    }
-    if (count == 80) {
-      resend = true;
-    }
+  Future<void> counter() async {
+    const oneSec = Duration(seconds: 1);
+    Timer.periodic(
+      oneSec,
+      (Timer timer) async {
+        if (count <= 80) count += 1;
+        if (count == 80) {
+          resend = true;
+          count = 0;
+          await resendOtp();
+        }
+      },
+    );
   }
 
   Future<dynamic> resendOtp() async {
     Utils.closeKeyboard();
-    if (!loginFormKey!.currentState!.validate()) {
-      return null;
-    }
+    // if (!loginFormKey!.currentState!.validate()) {
+    //   return null;
+    // }
     SendOtpModel? sendOtpModel = SendOtpModel(status: "", message: "");
 
     await client.postApi(endPointApi: Constants.sendOtp, data: {
@@ -78,6 +86,7 @@ class OtpController extends GetxController {
     count = 0;
     resend = false;
     circularProgress = true;
+    await counter();
   }
 
   Future<dynamic> otpVerify() async {

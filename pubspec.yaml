@@ -18,6 +18,7 @@ dependencies:
   flutter_downloader: ^1.11.6
   path_provider: ^2.1.1
   flutter_download_manager: ^0.5.5
+  upgrader: ^8.4.0
 
   flutter:
     sdk: flutter
@@ -51,10 +52,11 @@ flutter_native_splash:
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/logo.png"
+  image_path: "assets/images/makdairy.png"
   min_sdk_android: 21 # android min sdk min:16, default 21
   # adaptive_icon_background: "#ffffff"
-  adaptive_icon_foreground: "assets/images/logo.png"
+  adaptive_icon_foreground: "assets/images/makdairy.png"
+  remove_alpha_ios: true
 
 flutter:
   uses-material-design: true

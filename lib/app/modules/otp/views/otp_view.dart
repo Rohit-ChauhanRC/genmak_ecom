@@ -47,45 +47,47 @@ class OtpView extends GetView<OtpController> {
                 key: controller.loginFormKey,
                 child: Column(
                   children: [
-                    SizedBox(
-                      width: Get.width - 40,
-                      child: RichText(
-                        overflow: TextOverflow.visible,
-                        text: TextSpan(
-                            text: Constants.plsOtp,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                              fontFamily: "Raleway",
-                              letterSpacing: 1.5,
-                            ),
-                            children: [
-                              TextSpan(
-                                text: "\t\t${controller.mobileNumber}",
-                                style: TextStyle(
+                    Obx(() => SizedBox(
+                          width: Get.width - 40,
+                          child: RichText(
+                            overflow: TextOverflow.visible,
+                            text: TextSpan(
+                                text: Constants.plsOtp,
+                                style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.red[900],
+                                  color: Colors.black,
+                                  fontFamily: "Raleway",
+                                  letterSpacing: 1.5,
                                 ),
-                              ),
-                              const TextSpan(
-                                text: "\n${Constants.regenerate}",
-                              ),
-                              const TextSpan(
-                                text: "\n${Constants.yourOtp}",
-                              ),
-                              TextSpan(
-                                text: "\t\t${Constants.remaining}",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.red[900],
-                                ),
-                              ),
-                            ]),
-                      ),
-                    ),
+                                children: [
+                                  TextSpan(
+                                    text: "\t\t${controller.mobileNumber}",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.red[900],
+                                    ),
+                                  ),
+                                  const TextSpan(
+                                    text: "\n${Constants.regenerate}",
+                                  ),
+                                  const TextSpan(
+                                    text: "\n${Constants.yourOtp}",
+                                  ),
+                                  TextSpan(
+                                    text:
+                                        "\t\t${Constants.remaining}\t ${80 - controller.count}s",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.red[900],
+                                    ),
+                                  ),
+                                ]),
+                          ),
+                        )),
+
                     Container(
                       margin: const EdgeInsets.only(
                         top: 30,
@@ -129,19 +131,21 @@ class OtpView extends GetView<OtpController> {
                     const SizedBox(
                       height: 20,
                     ),
-                    InkWell(
-                      onTap: () {
-                        if (controller.resend) controller.resendOtp();
-                      },
-                      child: Text(
-                        Constants.dontReceive,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.purple[900],
-                        ),
-                      ),
-                    ),
+                    // Obx(() => controller.resend
+                    //     ? InkWell(
+                    //         onTap: () {
+                    //           controller.resendOtp();
+                    //         },
+                    //         child: Text(
+                    //           Constants.dontReceive,
+                    //           style: TextStyle(
+                    //             fontSize: 16,
+                    //             fontWeight: FontWeight.bold,
+                    //             color: Colors.purple[900],
+                    //           ),
+                    //         ),
+                    //       )
+                    //     : const SizedBox()),
                     // controller.circularProgress
                     //     ?
                     Container(
