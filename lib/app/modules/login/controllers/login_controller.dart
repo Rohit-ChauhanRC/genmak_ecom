@@ -61,7 +61,9 @@ class LoginController extends GetxController {
     SendOtpModel? sendOtpModel;
 
     circularProgress = false;
-    if (mobileNumber == "1234567890") {
+    if (mobileNumber == "1234567890" ||
+        mobileNumber == "911234567890" ||
+        mobileNumber == "+911234567890") {
       Get.toNamed(Routes.HOME, arguments: mobileNumber);
     } else {
       await client.postApi(endPointApi: Constants.sendOtp, data: {
