@@ -15,50 +15,30 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text('HomeView'),
-      //   centerTitle: true,
-      // ),
       body: SafeArea(
         child: Stack(
           children: [
-            // WebViewWidget(
-            //   controller: controller.webViewController,
-            // ),
-            // Obx(
-            //   () => controller.circularProgress
-            //       ? Center(
-            //           child: CircularProgressIndicator(
-            //             value: controller.progress.toDouble(),
-            //             backgroundColor: Colors.purple[900],
-            //           ),
-            //         )
-            //       : const Stack(),
-            // )
-
             InAppWebView(
               key: controller.webViewKey,
               initialUrlRequest: URLRequest(
                   url: WebUri(
                       "https://app.maklifedairy.in:5017/index.php/Login/Check_Login/${controller.mobileNumber.toString()}")),
               initialSettings: controller.settings,
-              // pullToRefreshController: controller.pullToRefreshController,
               onWebViewCreated: (cx) {
                 controller.webViewController = cx;
               },
-
+              onLoadStop: (cx, url) async {
+                controller.circularProgress = false;
+              },
               onPermissionRequest: (controller, request) async {
                 return PermissionResponse(
                     resources: request.resources,
                     action: PermissionResponseAction.GRANT);
               },
-              // onReceivedError: (cx, request, error) {
-              //   controller.pullToRefreshController!.endRefreshing();
-              // },
-              // onProgressChanged: (cx, progress) {
-              //   controller.progress = progress / 100;
-              // },
-              // onUpdateVisitedHistory: (controller, url, androidIsReload) {},
+              onProgressChanged: (cx, progress) {
+                controller.progress = progress / 100;
+                controller.circularProgress = false;
+              },
               onConsoleMessage: (cx, consoleMessage) {
                 if (kDebugMode) {
                   print(consoleMessage);
@@ -80,21 +60,22 @@ class HomeView extends GetView<HomeController> {
                 if (kDebugMode) {
                   print('onDownloadStart ${request.url.toString()}');
                 }
-                // final taskId = await FlutterDownloader.enqueue(
-                //   url: request.url.toString(),
-                //   savedDir: (await getDownloadsDirectory())!.path,
-                //   showNotification: true,
-                //   saveInPublicStorage: true,
-                //   openFileFromNotification: true,
-                // );
-                // controller.handleClick(request.url);
+
                 await controller.downloadFile(
                     request.url.toString(), request.suggestedFilename);
               },
             ),
-            // controller.progress < 1.0
-            //     ? LinearProgressIndicator(value: controller.progress)
-            //     : Container(),
+            Obx(() => controller.progress < 1.0
+                ? Center(
+                    child: CircularProgressIndicator(
+                    value: controller.progress,
+                  ))
+                : Container()),
+            // Obx(() => Container(
+            //     padding: const EdgeInsets.all(10.0),
+            //     child: controller.progress < 1.0
+            //         ? LinearProgressIndicator(value: controller.progress)
+            //         : Container())),
           ],
         ),
       ),
