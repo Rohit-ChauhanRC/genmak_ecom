@@ -10,6 +10,7 @@ import 'package:genmak_ecom/app/utils/widgets/text_form_widget.dart';
 import 'package:get/get.dart';
 
 import '../controllers/home_controller.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({Key? key}) : super(key: key);
@@ -78,7 +79,7 @@ class HomeView extends GetView<HomeController> {
                 (controller.searchP && controller.productSearch.isNotEmpty)
             ? GetBuilder<HomeController>(builder: (context) {
                 return SizedBox(
-                  height: Get.height / 2.01,
+                  height: Get.height / 2.0,
                   child: GridWidget(
                     product: controller.searchP
                         ? controller.productSearch.toSet().toList()
@@ -103,7 +104,7 @@ class HomeView extends GetView<HomeController> {
                 ),
               )),
         Container(
-          height: Get.height / 3.01,
+          height: Get.height / 3.0,
           // color: Colors.black,
           decoration: BoxDecoration(
             border: Border.all(
@@ -130,7 +131,7 @@ class HomeView extends GetView<HomeController> {
               //   height: 20,
               // ),
               Container(
-                height: Get.height / 4,
+                height: 200.h,
                 decoration: BoxDecoration(
                   border: Border.all(
                     color: AppColors.blackColor,
@@ -142,7 +143,7 @@ class HomeView extends GetView<HomeController> {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: Get.height / 5,
+                      height: Get.height / 4.9,
                       child: Obx(() => controller.orders.isNotEmpty
                           ? ListView.separated(
                               itemCount:
@@ -304,6 +305,8 @@ class HomeView extends GetView<HomeController> {
           children: [
             ElevatedButton(
               onPressed: () async {
+                controller.tcpConn();
+                // await controller.checkP();
                 if (controller.orders.isNotEmpty) await controller.onSave();
               },
               style: ElevatedButton.styleFrom(

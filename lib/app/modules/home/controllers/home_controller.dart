@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:esc_pos_utils_plus/esc_pos_utils_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -12,14 +14,16 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart' hide Image;
+import 'package:lan_scanner/lan_scanner.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:esc_pos_printer_plus/esc_pos_printer_plus.dart';
 import 'package:image/image.dart';
 import 'package:ping_discover_network_plus/ping_discover_network_plus.dart';
-// import 'package:another_brother/custom_paper.dart';
-// import 'package:another_brother/label_info.dart';
-// import 'package:another_brother/printer_info.dart';
-// import 'package:another_brother/type_b_printer.dart';
+//
+import 'package:esp_smartconfig/esp_smartconfig.dart';
+import 'package:network_info_plus/network_info_plus.dart';
+import 'package:tcp_socket_connection/tcp_socket_connection.dart';
 
 class HomeController extends GetxController {
   //
@@ -29,6 +33,12 @@ class HomeController extends GetxController {
   final SellDB sellDB = SellDB();
   final VendorDB vendorDB = VendorDB();
   final ProfileDB profileDB = ProfileDB();
+
+  final provisioner = Provisioner.espTouch();
+  final v = Provisioner.espTouchV2();
+
+  final info = NetworkInfo();
+// final wifiBSSID = await info.getWifiBSSID(); // 11:22:33:44:55:66
 
   String localIp = '';
   List<String> devices = [];
@@ -85,14 +95,27 @@ class HomeController extends GetxController {
   set search(String str) => _search.value = str;
   final TextEditingController? textController = TextEditingController();
 
-  // var printer = new Printer();
-  // var printInfo = PrinterInfo();
-  // printInfo.printerModel = Model.PJ_773;
-  // printInfo.printMode = PrintMode.FIT_TO_PAGE;
-  // printInfo.isAutoCut = true;
-  // printInfo.port = Port.NET;
-  // // Set the label type.
-  // printInfo.paperSize = PaperSize.A4;
+  final RxString _ssid = "".obs;
+  String get ssid => _ssid.value;
+  set ssid(String str) => _ssid.value = str;
+
+  final RxString _bssid = "".obs;
+  String get bssid => _bssid.value;
+  set bssid(String str) => _bssid.value = str;
+
+  final RxString _ip = "".obs;
+  String get ip => _ip.value;
+  set ip(String str) => _ip.value = str;
+
+  final PaperSize paper = PaperSize.mm80;
+
+  final LanScanner scanner = LanScanner();
+
+  final RxList<Host> _hosts = <Host>[].obs;
+  List<Host> get hosts => _hosts;
+  set hosts(List<Host> h) => _hosts.assignAll(h);
+
+  late final Socket sock;
 
   @override
   void onInit() async {
@@ -102,6 +125,19 @@ class HomeController extends GetxController {
     await sellDB.fetchAll();
     fetchInvoiceNo();
     // await fetchProfile();
+
+    provisioner.listen((response) {
+      if (kDebugMode) {
+        print("\n"
+            "\n------------------------------------------------------------------------\n"
+            "Device (${response.bssidText}) is connected to WiFi!"
+            "\n------------------------------------------------------------------------\n");
+      }
+    });
+    // await checkConnectivity();
+    // connectLn();
+    ip = (await info.getWifiIP()).toString();
+    sock = await Socket.connect(ip, 8883);
   }
 
   @override
@@ -121,6 +157,120 @@ class HomeController extends GetxController {
     textController!.clear();
     productSearch.clear();
     searchP = false;
+  }
+
+  void tcpConn() async {
+    // TcpSocketConnection socketConnection = TcpSocketConnection(ip, 8883);
+    // socketConnection.enableConsolePrint(true);
+    // if (await socketConnection.canConnect(30000, attempts: 30)) {
+    //   await socketConnection.connect(30000, (String msg) {
+    //     socketConnection.sendMessage("MessageIsReceived :D ");
+    //   }, attempts: 30);
+    // }
+
+    // final socket = await Socket.connect(ip, 8883);
+    // socket.writeln('Hello, server!');
+
+//     final server = await ServerSocket.bind(ip, 8883);
+
+//     if (kDebugMode) {
+//       print("server.address: ${server.address}");
+//     }
+// server.
+//     server.listen((client) {
+//       handleConnection(client);
+//     });
+    if (kDebugMode) {
+      print(sock.remoteAddress.address);
+    }
+    // Socket.connect(ip, 8883).then((ss) {
+    //   print(ss.address);
+    //   print(ss.port);
+    //   ss.writeln('Hello, World!');
+    // });
+  }
+
+  void handleConnection(Socket client) {
+    print('Connection from'
+        ' ${client.remoteAddress.address}:${client.remotePort}');
+
+    // listen for events from the client
+    client.listen(
+      // handle data from the client
+      (Uint8List data) async {
+        await Future.delayed(Duration(seconds: 20));
+
+        final message = String.fromCharCodes(data);
+        if (message == 'Knock, knock.') {
+          client.write('Who is there?');
+        } else if (message.length < 10) {
+          client.write('$message who?');
+        } else {
+          client.write('Very funny.');
+          client.close();
+        }
+      },
+
+      // handle errors
+      onError: (error) {
+        print(error);
+        client.close();
+      },
+
+      // handle the client closing the connection
+      onDone: () {
+        print('Client left');
+        client.close();
+      },
+    );
+  }
+
+  Future<void> checkConnectivity() async {
+    await Permission.nearbyWifiDevices.request();
+    bssid = (await info.getWifiBSSID()).toString();
+    ip = (await info.getWifiIP()).toString();
+    if (bssid.isNotEmpty) {
+      if (kDebugMode) {
+        print(bssid);
+        print("ip: $ip");
+      }
+      try {
+        await provisioner.start(ProvisioningRequest.fromStrings(
+          ssid: "Admin",
+          bssid: bssid,
+          password: "Admin1234",
+          reservedData: "Hello from Dart",
+        ));
+
+        // provisioner.printInfo(
+        //     info: "print", printFunction: GetUtils.printFunction);
+        await Future.delayed(const Duration(seconds: 10));
+        // provisioner.stop();
+
+        discover();
+      } catch (e, s) {
+        if (kDebugMode) {
+          print("$e, $s");
+        }
+      }
+    }
+  }
+
+  void connectLn() {
+    var stream = scanner.icmpScan(
+      ip,
+      timeout: Duration(seconds: 60),
+      progressCallback: (progress) {
+        print(' $ip');
+      },
+    );
+
+    //  print('Host Length : ${hosts.length}');
+
+    stream.listen((Host device) {
+      hosts.add(device);
+      print('device  : $device');
+    });
   }
 
   fetchInvoiceNo() {
@@ -281,16 +431,16 @@ class HomeController extends GetxController {
     });
   }
 
-  void discover(BuildContext ctx) async {
+  void discover() async {
     // setState(() {
     isDiscovering = true;
     devices.clear();
     found = -1;
     // });
 
-    String ip;
+    // String ip;
     try {
-      ip = '192.168.5.111';
+      ip = ip.toString();
       // log('local ip:\t$ip');
     } catch (e) {
       const snackBar = SnackBar(
@@ -403,24 +553,20 @@ class HomeController extends GetxController {
     printer.cut();
   }
 
-  // void testlog(String printerIp, BuildContext ctx) async {
-  //   final scfMessage = ScaffoldMessenger.of(Get.context!);
-  //   // const PaperSize paper = PaperSize.mm80;
-  //   final profile = await CapabilityProfile.load();
-  //   final printer = NetworkPrinter(paper, profile);
+  Future<void> checkP() async {
+    final profile = await CapabilityProfile.load();
+    final printer = NetworkPrinter(paper, profile);
 
-  //   final PosPrintResult res = await printer.connect(printerIp, port: 8883);
-
-  //   if (res == PosPrintResult.success) {
-  //     // DEMO RECEIPT
-  //     await testReceipt(printer);
-  //     // TEST PRINT
-  //     // await testReceipt(printer);
-  //     printer.disconnect();
-  //   }
-
-  //   final snackBar =
-  //       SnackBar(content: Text(res.msg, textAlign: TextAlign.center));
-  //   scfMessage.showSnackBar(snackBar);
-  // }
+    final PosPrintResult res =
+        // print(profile.name);
+        await printer.connect(ip, port: 8883);
+    Future.delayed(const Duration(seconds: 120));
+    if (res == PosPrintResult.success) {
+      testReceipt(printer);
+      printer.disconnect();
+    }
+    if (kDebugMode) {
+      print('Print result: ${res.msg}');
+    }
+  }
 }
