@@ -305,8 +305,8 @@ class HomeView extends GetView<HomeController> {
           children: [
             ElevatedButton(
               onPressed: () async {
-                controller.tcpConn();
-                // await controller.checkP();
+                // controller.tcpConn();
+                await controller.checkP();
                 if (controller.orders.isNotEmpty) await controller.onSave();
               },
               style: ElevatedButton.styleFrom(

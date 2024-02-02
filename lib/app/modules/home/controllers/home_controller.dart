@@ -115,7 +115,7 @@ class HomeController extends GetxController {
   List<Host> get hosts => _hosts;
   set hosts(List<Host> h) => _hosts.assignAll(h);
 
-  late final Socket sock;
+  // late final Socket sock;
 
   @override
   void onInit() async {
@@ -137,7 +137,7 @@ class HomeController extends GetxController {
     // await checkConnectivity();
     // connectLn();
     ip = (await info.getWifiIP()).toString();
-    sock = await Socket.connect(ip, 8883);
+    // sock = await Socket.connect(ip, 8883);
   }
 
   @override
@@ -168,21 +168,25 @@ class HomeController extends GetxController {
     //   }, attempts: 30);
     // }
 
-    // final socket = await Socket.connect(ip, 8883);
-    // socket.writeln('Hello, server!');
+    await Socket.connect(ip, 8883).then((value) {
+      value.writeln('Hello, server!');
+    });
 
-//     final server = await ServerSocket.bind(ip, 8883);
+    // final server = await ServerSocket.bind(ip, 8883);
 
-//     if (kDebugMode) {
-//       print("server.address: ${server.address}");
-//     }
-// server.
-//     server.listen((client) {
-//       handleConnection(client);
-//     });
-    if (kDebugMode) {
-      print(sock.remoteAddress.address);
-    }
+    // if (kDebugMode) {
+    //   print("server.address: ${server.address}");
+    // }
+
+    // server.listen((client) {
+    //   // handleConnection(client);
+    //   client.add([090]);
+    //   client.writeln('Who is there?');
+    //   if (kDebugMode) {
+    //     print(client.remoteAddress.address);
+    //   }
+    // });
+
     // Socket.connect(ip, 8883).then((ss) {
     //   print(ss.address);
     //   print(ss.port);
@@ -202,7 +206,7 @@ class HomeController extends GetxController {
 
         final message = String.fromCharCodes(data);
         if (message == 'Knock, knock.') {
-          client.write('Who is there?');
+          client.writeln('Who is there?');
         } else if (message.length < 10) {
           client.write('$message who?');
         } else {
