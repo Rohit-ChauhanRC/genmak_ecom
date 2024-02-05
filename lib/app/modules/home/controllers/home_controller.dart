@@ -89,50 +89,19 @@ class HomeController extends GetxController {
             },
           );
 
-    // IsolateNameServer.registerPortWithName(
-    //     _port.sendPort, 'downloader_send_port');
-    // _port.listen((dynamic data) {
-    //   String id = data[0];
-    //   DownloadTaskStatus status = data;
+    IsolateNameServer.registerPortWithName(
+        _port.sendPort, 'downloader_send_port');
+    _port.listen((dynamic data) {
+      String id = data[0];
+      DownloadTaskStatus status = data;
 
-    //   if (status == DownloadTaskStatus.complete) {
-    //     ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
-    //       content: Text("Download $id completed!"),
-    //     ));
-    //   }
-    // });
-    // FlutterDownloader.registerCallback(downloadCallback as DownloadCallback);
-
-    // webViewController
-    //   ..setJavaScriptMode(JavaScriptMode.unrestricted)
-    //   ..setBackgroundColor(const Color(0x00000000))
-    //   ..setNavigationDelegate(
-    //     NavigationDelegate(
-    //       onProgress: (int p) {
-    //         // Update loading bar.
-    //         progress = p;
-    //       },
-    //       onPageStarted: (String url) {
-    //         progress = 1;
-    //       },
-    //       onPageFinished: (String url) {
-    //         circularProgress = false;
-    //       },
-    //       onWebResourceError: (WebResourceError error) {},
-    //       onNavigationRequest: (NavigationRequest request) {
-    //         // if (request.url.startsWith('http://app.maklifedairy.in:5011/')) {
-    //         //   return NavigationDecision.prevent;
-    //         // }
-    //         return NavigationDecision.navigate;
-    //       },
-    //     ),
-    //   )
-    //   ..loadRequest(
-    //     Uri.https('app.maklifedairy.in:5017',
-    //         '/index.php/Login/Check_Login/${mobileNumber.toString()}'),
-    //     // method: LoadRequestMethod.post,
-    //   )
-    //   ..reload();
+      if (status == DownloadTaskStatus.complete) {
+        ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
+          content: Text("Download $id completed!"),
+        ));
+      }
+    });
+    FlutterDownloader.registerCallback(downloadCallback);
   }
 
   @override
@@ -147,11 +116,10 @@ class HomeController extends GetxController {
   }
 
   @pragma('vm:entry-point')
-  static void downloadCallback(
-      String id, DownloadTaskStatus status, int progress) {
-    final SendPort? send =
-        IsolateNameServer.lookupPortByName('downloader_send_port');
-    send?.send([id, status, progress]);
+  static void downloadCallback(String id, int status, int progress) {
+    final SendPort send =
+        IsolateNameServer.lookupPortByName('downloader_send_port')!;
+    send.send([id, status, progress]);
   }
 
   void handleClick(WebUri url) async {
@@ -165,22 +133,22 @@ class HomeController extends GetxController {
       final status = await Permission.storage.request();
       hasStoragePermission = status.isGranted;
     }
-    if (hasStoragePermission) {
-      final taskId = await FlutterDownloader.enqueue(
-        url: url,
-        headers: {},
-        // optional: header send with url (auth token etc)
-        savedDir: (await getApplicationDocumentsDirectory()).path,
-        saveInPublicStorage: true,
-        showNotification: true,
-        openFileFromNotification: true,
-        fileName: filename,
-        allowCellular: true,
-      );
+    // if (hasStoragePermission) {
+    final taskId = await FlutterDownloader.enqueue(
+      url: url,
+      headers: {},
+      // optional: header send with url (auth token etc)
+      savedDir: (await getApplicationDocumentsDirectory()).path,
+      saveInPublicStorage: true,
+      showNotification: true,
+      openFileFromNotification: true,
+      fileName: filename,
+      allowCellular: true,
+    );
 
-      ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
-        content: Text("Download $filename completed!"),
-      ));
-    }
+    ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
+      content: Text("Download $filename completed!"),
+    ));
+    // }
   }
 }
