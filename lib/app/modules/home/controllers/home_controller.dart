@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:esc_pos_utils_plus/esc_pos_utils_plus.dart';
@@ -24,6 +25,10 @@ import 'package:ping_discover_network_plus/ping_discover_network_plus.dart';
 import 'package:esp_smartconfig/esp_smartconfig.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:tcp_socket_connection/tcp_socket_connection.dart';
+import 'package:dio/dio.dart';
+import 'package:web_socket_channel/io.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:http/http.dart' as http;
 
 class HomeController extends GetxController {
   //
@@ -126,18 +131,12 @@ class HomeController extends GetxController {
     fetchInvoiceNo();
     // await fetchProfile();
 
-    provisioner.listen((response) {
-      if (kDebugMode) {
-        print("\n"
-            "\n------------------------------------------------------------------------\n"
-            "Device (${response.bssidText}) is connected to WiFi!"
-            "\n------------------------------------------------------------------------\n");
-      }
-    });
     // await checkConnectivity();
     // connectLn();
     ip = (await info.getWifiIP()).toString();
-    sock = await Socket.connect(ip, 8883);
+    // IOWebSocketChannel.connect('ws://100.120.187.127:8883');
+
+    // sock = await Socket.connect(ip, 8883);
   }
 
   @override
@@ -159,6 +158,18 @@ class HomeController extends GetxController {
     searchP = false;
   }
 
+  void connectionEst() async {
+    try {
+      final Dio dio = Dio();
+      final response =
+          await http.get(Uri.http('$ip:8883', "", {'cmd': "print"}));
+      // handle the response here
+      print(response.statusCode);
+    } catch (e) {
+      print('Error sending command to NodeMCU: $e');
+    }
+  }
+
   void tcpConn() async {
     // TcpSocketConnection socketConnection = TcpSocketConnection(ip, 8883);
     // socketConnection.enableConsolePrint(true);
@@ -171,29 +182,120 @@ class HomeController extends GetxController {
     // final socket = await Socket.connect(ip, 8883);
     // socket.writeln('Hello, server!');
 
-//     final server = await ServerSocket.bind(ip, 8883);
+    runZoned(() async {
+      // final server = await ServerSocket.bind(ip, 8883, shared: true);
 
-//     if (kDebugMode) {
-//       print("server.address: ${server.address}");
-//     }
-// server.
-//     server.listen((client) {
-//       handleConnection(client);
-//     });
-    if (kDebugMode) {
-      print(sock.remoteAddress.address);
-    }
-    // Socket.connect(ip, 8883).then((ss) {
+      // if (kDebugMode) {
+      //   print("server.address: ${server.address}");
+      // }
+      final server = await HttpServer.bind(ip, 8883);
+      print(
+          "server running on ip : ${server.address} on port : ${server.port}");
+
+      // await for (final request in server) {
+      //   print(request.requestedUri);
+
+      //   request.response.writeln("hello world");
+      //   await request.response.flush();
+      //   await request.response.close();
+
+      //   print("response served\n");
+      // }
+
+      // server.pipe();
+      // await Socket.connect(server.address.address, server.port).then((value) {
+      //   value.writeln("HI");
+
+      // TcpSocketConnection socketConnection =
+      //     TcpSocketConnection(server.address.address, 8883);
+
+      // socketConnection.enableConsolePrint(true);
+      // if (await socketConnection.canConnect(5000, attempts: 30)) {
+      //   await socketConnection.connect(5000, (String msg) async {
+      //     socketConnection.sendMessage("MessageIsReceived :D ");
+
+      //   }, attempts: 30);
+      // }
+      // final dio = Dio();
+
+      // final rs = await dio.get(
+      //   "http://$ip:8883",
+      // );
+
+      // if (kDebugMode) {
+      //   print(rs.statusCode);
+      // }
+      print(server.port.toString());
+      final stream = NetworkAnalyzer.i.discover2(
+          server.address.address
+              .substring(0, server.address.address.lastIndexOf('.')),
+          server.port,
+          timeout: const Duration(milliseconds: 2000));
+
+      stream.listen((NetworkAddress addr) async {
+        if (addr.exists) {
+          // log('Found device: ${addr.ip}');
+          if (kDebugMode) {
+            print('Found device: ${addr.ip}');
+          }
+          final profile = await CapabilityProfile.load();
+          final printer = NetworkPrinter(paper, profile);
+
+          final PosPrintResult res =
+              // print(profile.name);
+              await printer.connect(server.address.address,
+                  port: 8883, timeout: const Duration(seconds: 120));
+          Future.delayed(const Duration(seconds: 120));
+          if (res == PosPrintResult.success) {
+            print(server.connectionsInfo().total);
+            testReceipt(printer);
+            // printer.disconnect();
+          }
+          if (kDebugMode) {
+            print('Print result: ${res.msg}');
+          }
+
+          // setState(() {
+          devices.add(addr.ip);
+          found = devices.length;
+          // });
+        }
+      });
+      // server.listen((client) {
+      //   client.writeln("JI");
+
+      //   handleConnection(client);
+      // });
+    });
+    // if (kDebugMode) {
+    //   print(sock.remoteAddress.address);
+    // }
+    // Socket.connect("ws://$ip", 8883).then((ss) {
     //   print(ss.address);
     //   print(ss.port);
     //   ss.writeln('Hello, World!');
+    // });
+    // Socket.connect(ip, 8883).then((socket) {
+    //   print('Connected to: '
+    //       '${socket.remoteAddress.address}:${socket.remotePort}');
+    //   socket.destroy();
+    // });
+    // var socket = await WebSocket.connect('ws://$ip:8883/ws');
+    // socket.add('Hello, World!');
+    // var server = await HttpServer.bind('127.0.0.1', 4040);
+    // server.listen((HttpRequest req) async {
+    //   if (req.uri.path == '/ws') {
+    //     var socket = await WebSocketTransformer.upgrade(req);
+    //     socket.listen(handleMsg);
+    //   }
     // });
   }
 
   void handleConnection(Socket client) {
     print('Connection from'
         ' ${client.remoteAddress.address}:${client.remotePort}');
-
+    client.writeln('Who is there?');
+    print(client.port.toString());
     // listen for events from the client
     client.listen(
       // handle data from the client
@@ -201,14 +303,14 @@ class HomeController extends GetxController {
         await Future.delayed(Duration(seconds: 20));
 
         final message = String.fromCharCodes(data);
-        if (message == 'Knock, knock.') {
-          client.write('Who is there?');
-        } else if (message.length < 10) {
-          client.write('$message who?');
-        } else {
-          client.write('Very funny.');
-          client.close();
-        }
+        // if (message == 'Knock, knock.') {
+        //   client.write('Who is there?');
+        // } else if (message.length < 10) {
+        //   client.write('$message who?');
+        // } else {
+        //   client.write('Very funny.');
+        //   client.close();
+        // }
       },
 
       // handle errors
@@ -220,7 +322,7 @@ class HomeController extends GetxController {
       // handle the client closing the connection
       onDone: () {
         print('Client left');
-        client.close();
+        // client.close();
       },
     );
   }
@@ -244,10 +346,10 @@ class HomeController extends GetxController {
 
         // provisioner.printInfo(
         //     info: "print", printFunction: GetUtils.printFunction);
-        await Future.delayed(const Duration(seconds: 10));
-        // provisioner.stop();
+        await Future.delayed(const Duration(seconds: 60));
+        provisioner.stop();
 
-        discover();
+        // discover();
       } catch (e, s) {
         if (kDebugMode) {
           print("$e, $s");
@@ -433,6 +535,16 @@ class HomeController extends GetxController {
 
   void discover() async {
     // setState(() {
+
+    // final channel =
+    //     WebSocketChannel.connect(Uri.parse('http://100.120.187.127:8883'));
+
+    // await channel.ready;
+
+    // channel.stream.listen((message) {
+    //   channel.sink.add('received!');
+    //   channel.sink.close(1, "close");
+    // });
     isDiscovering = true;
     devices.clear();
     found = -1;
@@ -461,16 +573,21 @@ class HomeController extends GetxController {
     }
     // log('subnet:\t$subnet, port:\t$port');
 
-    final stream = NetworkAnalyzer.i.discover2(subnet, port);
+    final stream = NetworkAnalyzer.i
+        .discover2(subnet, port, timeout: const Duration(milliseconds: 2000));
 
-    stream.listen((NetworkAddress addr) {
+    stream.listen((NetworkAddress addr) async {
       if (addr.exists) {
         // log('Found device: ${addr.ip}');
+        if (kDebugMode) {
+          print('Found device: ${addr.ip}');
+        }
         // setState(() {
         devices.add(addr.ip);
         found = devices.length;
         // });
       }
+      await checkP();
     })
       ..onDone(() {
         // setState(() {
@@ -528,12 +645,12 @@ class HomeController extends GetxController {
         ));
 
     // Print image
-    final ByteData data = await rootBundle.load('assets/logo.png');
-    final Uint8List bytes = data.buffer.asUint8List();
-    final Image? image = decodeImage(bytes);
-    if (image != null) {
-      printer.image(image);
-    }
+    // final ByteData data = await rootBundle.load('assets/images/Paneer.png');
+    // final Uint8List bytes = data.buffer.asUint8List();
+    // final Image? image = decodeImage(bytes);
+    // if (image != null) {
+    //   printer.image(image);
+    // }
     // Print image using alternative commands
     // printer.imageRaster(image);
     // printer.imageRaster(image, imageFn: PosImageFn.graphics);
@@ -559,7 +676,8 @@ class HomeController extends GetxController {
 
     final PosPrintResult res =
         // print(profile.name);
-        await printer.connect(ip, port: 8883);
+        await printer.connect(ip,
+            port: 8883, timeout: const Duration(seconds: 120));
     Future.delayed(const Duration(seconds: 120));
     if (res == PosPrintResult.success) {
       testReceipt(printer);
