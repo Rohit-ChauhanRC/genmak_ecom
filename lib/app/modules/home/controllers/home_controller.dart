@@ -120,7 +120,7 @@ class HomeController extends GetxController {
   List<Host> get hosts => _hosts;
   set hosts(List<Host> h) => _hosts.assignAll(h);
 
-  late final Socket sock;
+  // late final Socket sock;
 
   @override
   void onInit() async {
@@ -179,8 +179,9 @@ class HomeController extends GetxController {
     //   }, attempts: 30);
     // }
 
-    // final socket = await Socket.connect(ip, 8883);
-    // socket.writeln('Hello, server!');
+    await Socket.connect(ip, 8883).then((value) {
+      value.writeln('Hello, server!');
+    });
 
     runZoned(() async {
       // final server = await ServerSocket.bind(ip, 8883, shared: true);
