@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:path_provider/path_provider.dart';
 
 import 'package:esc_pos_utils_plus/esc_pos_utils_plus.dart';
 import 'package:flutter/foundation.dart';
@@ -30,9 +31,14 @@ import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:http/http.dart' as http;
 
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+
 class HomeController extends GetxController {
   //
   final box = GetStorage();
+
+  final pdf = pw.Document();
 
   final ProductDB productDB = ProductDB();
   final SellDB sellDB = SellDB();
@@ -451,8 +457,13 @@ class HomeController extends GetxController {
     }
     box.write("invoiceNo", box.read("invoiceNo") + 1);
     await fetchProduct();
-    orders.assignAll([]);
-    totalAmount = 0.0;
+
+    // final bytes = await pdf.save();
+    // final dir = await getApplicationDocumentsDirectory();
+    // final file = File('${dir.path}/pdfFile');
+
+    // await file.writeAsBytes(bytes);
+    setStatus(pdf, orders[0].name.toString());
   }
 
   handleProductQuantity(int i) {
@@ -687,5 +698,138 @@ class HomeController extends GetxController {
     if (kDebugMode) {
       print('Print result: ${res.msg}');
     }
+  }
+
+  void setStatus(pw.Document value, String order) async {
+    try {
+      final request = http.MultipartRequest(
+          'POST', Uri.parse("http://192.168.193.220/status"));
+      final dir = await getApplicationDocumentsDirectory();
+      final file = File('${dir.path}/pdfFile');
+      request.fields["print"] = """
+      ---------------------
+            Pulkit
+      ----------------------
+${orders.map((e) {
+        return e.name.toString();
+      })}
+
+
+          """;
+      // request.files.add(http.MultipartFile(
+      //     'print',
+      //     File('${dir.path}/pdfFile').readAsBytes().asStream(),
+      //     File('${dir.path}/pdfFile').lengthSync(),
+      //     filename: '${dir.path}/pdfFile'.split("/").last));
+
+      var res = await request.send();
+
+      // var res =
+      //     await http.post(Uri.parse("http://192.168.193.220/status"), body: {
+      //   "print": orders[0].name.toString(),
+      // });
+      if (res.statusCode != 200) {
+        print(res.statusCode);
+        orders.assignAll([]);
+        totalAmount = 0.0;
+      }
+    } on SocketException {
+      print("Connection Error");
+    }
+  }
+
+  void createPrintPage() {
+    pdf.addPage(pw.Page(
+        pageFormat: PdfPageFormat.standard
+            .copyWith(marginBottom: 1.5 * PdfPageFormat.cm),
+        build: (pw.Context context) {
+          return pw.ListView(
+            children: [
+              pw.Align(
+                alignment: pw.Alignment.center,
+                child: pw.Text("Mak Life Dairy Store"),
+              ),
+              pw.Align(
+                alignment: pw.Alignment.center,
+                child: pw.Text("Barnala"),
+              ),
+              pw.Align(
+                alignment: pw.Alignment.centerLeft,
+                child: pw.Text("GSTIN: aqs221"),
+              ),
+              pw.Align(
+                alignment: pw.Alignment.centerLeft,
+                child: pw.Row(
+                  mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                  children: [
+                    pw.Text("Bill No.: 10"),
+                    pw.Column(
+                      children: [
+                        pw.Text("Date: 10/02/24"),
+                        pw.Text("Time: 10:56:57"),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+              pw.Table(
+                children: [
+                  pw.TableRow(
+                      decoration: pw.BoxDecoration(
+                        border: pw.Border.all(),
+                      ),
+                      children: [
+                        pw.Text("Sr."),
+                        pw.Text("Item Name"),
+                        pw.Text("Rate"),
+                        pw.Text("Qty"),
+                        pw.Text("Value"),
+                      ]),
+                  for (int i = 0; i < orders.toSet().length; i++)
+                    pw.TableRow(children: [
+                      pw.Text("${i + 1}"),
+                      pw.Text("${orders[i].name}"),
+                      pw.Text("${orders[i].price}"),
+                      pw.Text("${orders[i].count}"),
+                      pw.Text("${orders[i].price}"),
+                    ]),
+                ],
+              ),
+              pw.Row(
+                  mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                  children: [
+                    pw.Text("Item: ${orders.toSet().length}"),
+                    pw.Text("Amount: ${500}/-"),
+                  ]),
+              pw.Align(
+                alignment: pw.Alignment.center,
+                child: pw.Text("INCLUSIVE OF ALL TAXES"),
+              ),
+              pw.Table(
+                children: [
+                  pw.TableRow(
+                      decoration: pw.BoxDecoration(
+                        border: pw.Border.all(),
+                      ),
+                      children: [
+                        pw.Text("Tax%"),
+                        pw.Text("B.Amt"),
+                        pw.Text("SGST"),
+                        pw.Text("CGST"),
+                        pw.Text("Total"),
+                      ]),
+                  for (int i = 0; i < orders.toSet().length; i++)
+                    pw.TableRow(children: [
+                      pw.Text("${10}"),
+                      pw.Text("${orders[i].price}"),
+                      pw.Text("${10}"),
+                      pw.Text("${10}"),
+                      pw.Text("${500}"),
+                    ]),
+                ],
+              ),
+            ],
+          ); // Center
+        })); // Page
   }
 }

@@ -28,6 +28,8 @@ import '../modules/product_list/bindings/product_list_binding.dart';
 import '../modules/product_list/views/product_list_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
+import '../modules/receipt/bindings/receipt_binding.dart';
+import '../modules/receipt/views/receipt_view.dart';
 import '../modules/receive_products/bindings/receive_products_binding.dart';
 import '../modules/receive_products/views/receive_products_view.dart';
 import '../modules/restore_data/bindings/restore_data_binding.dart';
@@ -141,6 +143,11 @@ class AppPages {
       name: _Paths.OTP,
       page: () => const OtpView(),
       binding: OtpBinding(),
+    ),
+    GetPage(
+      name: _Paths.RECEIPT,
+      page: () => const ReceiptView(),
+      binding: ReceiptBinding(),
     ),
   ];
 }

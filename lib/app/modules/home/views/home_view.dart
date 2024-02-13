@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:genmak_ecom/app/routes/app_pages.dart';
 import 'package:genmak_ecom/app/utils/app_colors/app_colors.dart';
 import 'package:genmak_ecom/app/utils/app_dimens/app_dimens.dart';
 import 'package:genmak_ecom/app/utils/widgets/app_drawer.dart';
@@ -100,7 +101,7 @@ class HomeView extends GetView<HomeController> {
         ),
         Obx(() => controller.products.isNotEmpty ||
                 (controller.searchP && controller.productSearch.isNotEmpty)
-            ? GetBuilder<HomeController>(builder: (context) {
+            ? GetBuilder<HomeController>(builder: (_) {
                 return SizedBox(
                   height: Get.height / 2.0,
                   child: GridWidget(
@@ -330,6 +331,8 @@ class HomeView extends GetView<HomeController> {
           children: [
             ElevatedButton(
               onPressed: () async {
+                controller.createPrintPage();
+                // Get.toNamed(Routes.RECEIPT, arguments: controller.orders);
                 // controller.connectionEst();
                 // controller.tcpConn();
                 // controller.discover();

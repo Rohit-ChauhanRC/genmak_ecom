@@ -27,9 +27,9 @@ class GridWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 4,
-          mainAxisExtent: 250,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: MediaQuery.of(context).size.width > 650 ? 4 : 2,
+          mainAxisExtent: MediaQuery.of(context).size.width > 650 ? 250 : 155,
         ),
         itemCount: product.length,
         itemBuilder: (_, i) {
@@ -49,7 +49,7 @@ class GridWidget extends StatelessWidget {
               handleProductQuantity(i);
             },
             child: Container(
-              height: 200,
+              height: MediaQuery.of(context).size.width > 650 ? 200 : 120,
               width: 120,
               margin: const EdgeInsets.all(10),
               decoration: BoxDecoration(
@@ -64,7 +64,9 @@ class GridWidget extends StatelessWidget {
                 children: [
                   product[i].picture != null
                       ? SizedBox(
-                          height: 140,
+                          height: MediaQuery.of(context).size.width > 650
+                              ? 140
+                              : 70,
                           width: Get.width,
                           child: ClipRRect(
                             borderRadius: const BorderRadius.only(
@@ -77,7 +79,9 @@ class GridWidget extends StatelessWidget {
                           ),
                         )
                       : SizedBox(
-                          height: 140,
+                          height: MediaQuery.of(context).size.width > 650
+                              ? 140
+                              : 70,
                           width: Get.width,
                           child: ClipRRect(
                             borderRadius: const BorderRadius.only(
