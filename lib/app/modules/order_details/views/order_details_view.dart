@@ -39,17 +39,17 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Invoice Id:",
+                    "Invoice No.:",
                     style: TextStyle(
                       fontSize: AppDimens.font22,
-                      color: AppColors.reddishColor,
+                      color: AppColors.blackColor,
                     ),
                   ),
                   Text(
                     controller.receive.invoiceId ?? "",
                     style: TextStyle(
                       fontSize: AppDimens.font22,
-                      color: AppColors.brownColor,
+                      color: AppColors.whiteColor,
                     ),
                   ),
                 ],
@@ -65,14 +65,14 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                     "Date:",
                     style: TextStyle(
                       fontSize: AppDimens.font22,
-                      color: AppColors.reddishColor,
+                      color: AppColors.blackColor,
                     ),
                   ),
                   Text(
                     controller.receive.receivingDate ?? "",
                     style: TextStyle(
                       fontSize: AppDimens.font22,
-                      color: AppColors.brownColor,
+                      color: AppColors.whiteColor,
                     ),
                   ),
                 ],
@@ -88,14 +88,14 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                     "Vendor:",
                     style: TextStyle(
                       fontSize: AppDimens.font22,
-                      color: AppColors.reddishColor,
+                      color: AppColors.blackColor,
                     ),
                   ),
                   Text(
                     controller.receive.vendorName ?? "",
                     style: TextStyle(
                       fontSize: AppDimens.font22,
-                      color: AppColors.brownColor,
+                      color: AppColors.whiteColor,
                     ),
                   ),
                 ],
@@ -111,14 +111,14 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                     "Total amount:",
                     style: TextStyle(
                       fontSize: AppDimens.font22,
-                      color: AppColors.reddishColor,
+                      color: AppColors.blackColor,
                     ),
                   ),
                   Text(
                     controller.receive.totalAmount ?? "",
                     style: TextStyle(
                       fontSize: AppDimens.font22,
-                      color: AppColors.brownColor,
+                      color: AppColors.whiteColor,
                     ),
                   ),
                 ],
@@ -130,9 +130,9 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                 "Product List: ",
                 style: TextStyle(
                   fontSize: AppDimens.font22,
-                  color: AppColors.reddishColor,
+                  color: AppColors.blackColor,
                   decoration: TextDecoration.underline,
-                  decorationColor: AppColors.reddishColor,
+                  decorationColor: AppColors.blackColor,
                   decorationStyle: TextDecorationStyle.solid,
                 ),
               ),
@@ -141,7 +141,7 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
               ),
               SizedBox(
                 height: Get.height / 2,
-                // color: AppColors.brownColor,
+                // color: AppColors.whiteColor,
                 child: Obx(() => controller.receiveProduct.isNotEmpty
                     ? ListView.builder(
                         shrinkWrap: true,
@@ -156,7 +156,7 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                                 color: AppColors.blackColor,
                               ),
                               borderRadius: BorderRadius.circular(20),
-                              color: AppColors.bgColor,
+                              color: AppColors.bgColor1,
                             ),
                             padding: const EdgeInsets.all(10),
                             margin: const EdgeInsets.all(10),
@@ -173,14 +173,14 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                                       "Product:",
                                       style: TextStyle(
                                         fontSize: AppDimens.font18,
-                                        color: AppColors.reddishColor,
+                                        color: AppColors.blackColor,
                                       ),
                                     ),
                                     Text(
                                       data.productName ?? "",
                                       style: TextStyle(
                                         fontSize: AppDimens.font18,
-                                        color: AppColors.brownColor,
+                                        color: AppColors.whiteColor,
                                       ),
                                     ),
                                   ],
@@ -197,14 +197,14 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                                       "Quantity:",
                                       style: TextStyle(
                                         fontSize: AppDimens.font18,
-                                        color: AppColors.reddishColor,
+                                        color: AppColors.blackColor,
                                       ),
                                     ),
                                     Text(
                                       data.productQuantity ?? "0",
                                       style: TextStyle(
                                         fontSize: AppDimens.font18,
-                                        color: AppColors.brownColor,
+                                        color: AppColors.whiteColor,
                                       ),
                                     ),
                                   ],
@@ -222,7 +222,7 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                             child: Text(
                           "No data found...",
                           style: TextStyle(
-                            color: AppColors.brownColor,
+                            color: AppColors.blackColor,
                             fontSize: AppDimens.font30,
                             fontWeight: FontWeight.bold,
                           ),

@@ -34,6 +34,16 @@ class AddProductView extends GetView<AddProductController> {
               const SizedBox(
                 height: 20,
               ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Product Name :",
+                  style: TextStyle(
+                    fontSize: AppDimens.font22,
+                    color: AppColors.blackColor,
+                  ),
+                ),
+              ),
               TextFormWidget(
                 label: "Please enter Name...",
                 onChanged: (val) => controller.name = val,
@@ -41,6 +51,16 @@ class AddProductView extends GetView<AddProductController> {
               ),
               const SizedBox(
                 height: 20,
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Product Weight :",
+                  style: TextStyle(
+                    fontSize: AppDimens.font22,
+                    color: AppColors.blackColor,
+                  ),
+                ),
               ),
               TextFormWidget(
                 label: "Please enter Product Weight...",
@@ -50,6 +70,16 @@ class AddProductView extends GetView<AddProductController> {
               const SizedBox(
                 height: 20,
               ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Price :",
+                  style: TextStyle(
+                    fontSize: AppDimens.font22,
+                    color: AppColors.blackColor,
+                  ),
+                ),
+              ),
               TextFormWidget(
                 label: "Please enter Price...",
                 onChanged: (val) => controller.price = val,
@@ -57,6 +87,16 @@ class AddProductView extends GetView<AddProductController> {
               ),
               const SizedBox(
                 height: 20,
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "GST :",
+                  style: TextStyle(
+                    fontSize: AppDimens.font22,
+                    color: AppColors.blackColor,
+                  ),
+                ),
               ),
               TextFormWidget(
                 label: "Please enter GST...",
@@ -66,6 +106,16 @@ class AddProductView extends GetView<AddProductController> {
               const SizedBox(
                 height: 20,
               ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Discount :",
+                  style: TextStyle(
+                    fontSize: AppDimens.font22,
+                    color: AppColors.blackColor,
+                  ),
+                ),
+              ),
               TextFormWidget(
                 label: "Please enter Discount...",
                 onChanged: (val) => controller.discount = val,
@@ -74,6 +124,16 @@ class AddProductView extends GetView<AddProductController> {
               const SizedBox(
                 height: 20,
               ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "HSNCode :",
+                  style: TextStyle(
+                    fontSize: AppDimens.font22,
+                    color: AppColors.blackColor,
+                  ),
+                ),
+              ),
               TextFormWidget(
                 label: "Please enter HSNCode...",
                 onChanged: (val) => controller.hsnCode = val,
@@ -81,6 +141,16 @@ class AddProductView extends GetView<AddProductController> {
               ),
               const SizedBox(
                 height: 20,
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Description :",
+                  style: TextStyle(
+                    fontSize: AppDimens.font22,
+                    color: AppColors.blackColor,
+                  ),
+                ),
               ),
               TextFormWidget(
                 label: "Please enter description...",
@@ -104,9 +174,12 @@ class AddProductView extends GetView<AddProductController> {
                   ),
                   Obx(
                     () => SizedBox(
-                      width: 200,
+                      width: 150,
                       child: ListTile(
-                        title: const Text('Yes'),
+                        title: const Text(
+                          'Yes',
+                          style: TextStyle(color: Colors.black),
+                        ),
                         leading: Radio(
                           value: 0,
                           groupValue: controller.check,
@@ -122,9 +195,12 @@ class AddProductView extends GetView<AddProductController> {
                     ),
                   ),
                   Obx(() => SizedBox(
-                        width: 200,
+                        width: 130,
                         child: ListTile(
-                          title: const Text('No'),
+                          title: const Text(
+                            'No',
+                            style: TextStyle(color: Colors.black),
+                          ),
                           leading: Radio(
                             value: 1,
                             groupValue: controller.check,
@@ -150,8 +226,11 @@ class AddProductView extends GetView<AddProductController> {
                 },
                 style: Theme.of(context).elevatedButtonTheme.style!.copyWith(
                     backgroundColor:
-                        MaterialStatePropertyAll(AppColors.brownColor)),
-                child: const Text("Add"),
+                        MaterialStatePropertyAll(AppColors.whiteColor)),
+                child: Text(
+                  "Add",
+                  style: TextStyle(color: AppColors.blackColor),
+                ),
               )
             ],
           ),

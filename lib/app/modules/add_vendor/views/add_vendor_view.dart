@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:genmak_ecom/app/utils/app_colors/app_colors.dart';
+import 'package:genmak_ecom/app/utils/app_dimens/app_dimens.dart';
 import 'package:genmak_ecom/app/utils/widgets/text_form_widget.dart';
 
 import 'package:get/get.dart';
@@ -21,6 +22,16 @@ class AddVendorView extends GetView<AddVendorController> {
           key: controller.vendorFormKey,
           child: ListView(
             children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Name :",
+                  style: TextStyle(
+                    fontSize: AppDimens.font22,
+                    color: AppColors.blackColor,
+                  ),
+                ),
+              ),
               TextFormWidget(
                 label: "Please enter Vendor Name...",
                 onChanged: (val) => controller.name = val,
@@ -28,6 +39,16 @@ class AddVendorView extends GetView<AddVendorController> {
               ),
               const SizedBox(
                 height: 20,
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Mobile No :",
+                  style: TextStyle(
+                    fontSize: AppDimens.font22,
+                    color: AppColors.blackColor,
+                  ),
+                ),
               ),
               TextFormWidget(
                 label: "Please enter Vendor Mobile No...",
@@ -37,6 +58,16 @@ class AddVendorView extends GetView<AddVendorController> {
               const SizedBox(
                 height: 20,
               ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "GSTIN No :",
+                  style: TextStyle(
+                    fontSize: AppDimens.font22,
+                    color: AppColors.blackColor,
+                  ),
+                ),
+              ),
               TextFormWidget(
                 label: "Please enter Vendor GSTIN No...",
                 onChanged: (val) => controller.gst = val,
@@ -44,6 +75,16 @@ class AddVendorView extends GetView<AddVendorController> {
               ),
               const SizedBox(
                 height: 20,
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Vendor Address :",
+                  style: TextStyle(
+                    fontSize: AppDimens.font22,
+                    color: AppColors.blackColor,
+                  ),
+                ),
               ),
               TextFormWidget(
                 label: "Please enter Vendor Address...",
@@ -57,10 +98,12 @@ class AddVendorView extends GetView<AddVendorController> {
                 onPressed: () {
                   controller.checkValidate();
                 },
-                style: Theme.of(context).elevatedButtonTheme.style!.copyWith(
-                    backgroundColor:
-                        MaterialStatePropertyAll(AppColors.brownColor)),
-                child: const Text("Add"),
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.whiteColor),
+                child: Text(
+                  "Add",
+                  style: TextStyle(color: AppColors.blackColor),
+                ),
               )
             ],
           ),

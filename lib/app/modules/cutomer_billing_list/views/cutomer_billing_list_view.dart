@@ -42,6 +42,8 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
                           width: 10,
                         ),
                         ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.whiteColor),
                             onPressed: () async {
                               if (controller.textController!.text
                                   .toString()
@@ -50,17 +52,25 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
                                     controller.textController!.text);
                               }
                             },
-                            child: const Text("Search")),
+                            child: Text(
+                              "Search",
+                              style: TextStyle(color: AppColors.blackColor),
+                            )),
                         const SizedBox(
                           width: 10,
                         ),
                         ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.whiteColor),
                             onPressed: () async {
                               // controller.textController!.clear();
                               // controller.searchP = false;
                               await controller.all();
                             },
-                            child: const Text("All"))
+                            child: Text(
+                              "All",
+                              style: TextStyle(color: AppColors.blackColor),
+                            ))
                       ],
                     ),
                   ),
@@ -72,7 +82,7 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
                       // reverse: true,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
+                        crossAxisCount: 4,
                         mainAxisExtent: 150,
                       ),
                       itemCount: controller.receiveList.length,
@@ -90,7 +100,7 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
                                 color: AppColors.blackColor,
                               ),
                               borderRadius: BorderRadius.circular(20),
-                              color: AppColors.whiteColor,
+                              color: AppColors.bgColor,
                             ),
                             padding: const EdgeInsets.all(10),
                             margin: const EdgeInsets.all(10),
@@ -104,17 +114,17 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "Invoice Id:",
+                                      "Invoice No.:",
                                       style: TextStyle(
                                         fontSize: AppDimens.font18,
-                                        color: AppColors.reddishColor,
+                                        color: AppColors.blackColor,
                                       ),
                                     ),
                                     Text(
                                       data.invoiceId.toString(),
                                       style: TextStyle(
                                         fontSize: AppDimens.font18,
-                                        color: AppColors.brownColor,
+                                        color: AppColors.redColor,
                                       ),
                                     ),
                                   ],
@@ -131,14 +141,14 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
                                       "Date:",
                                       style: TextStyle(
                                         fontSize: AppDimens.font18,
-                                        color: AppColors.reddishColor,
+                                        color: AppColors.blackColor,
                                       ),
                                     ),
                                     Text(
                                       data.receivingDate ?? "",
                                       style: TextStyle(
                                         fontSize: AppDimens.font18,
-                                        color: AppColors.brownColor,
+                                        color: AppColors.redColor,
                                       ),
                                     ),
                                   ],
@@ -154,7 +164,7 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
                                 //       "Amount",
                                 //       style: TextStyle(
                                 //         fontSize: AppDimens.font18,
-                                //         color: AppColors.reddishColor,
+                                //         color: AppColors.blackColor,
                                 //       ),
                                 //     ),
                                 //     Text(
@@ -180,7 +190,7 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
                     child: Text(
                   "No data found...",
                   style: TextStyle(
-                    color: AppColors.brownColor,
+                    color: AppColors.blackColor,
                     fontSize: AppDimens.font30,
                     fontWeight: FontWeight.bold,
                   ),

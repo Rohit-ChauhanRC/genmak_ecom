@@ -28,13 +28,33 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
           key: controller.receiveFormKey,
           child: ListView(
             children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Invoice No. :",
+                  style: TextStyle(
+                    fontSize: AppDimens.font22,
+                    color: AppColors.blackColor,
+                  ),
+                ),
+              ),
               TextFormWidget(
-                label: "Please enter invoice id...",
+                label: "Please enter invoice no...",
                 onChanged: (val) => controller.invoiceId = val,
                 validator: (v) => v!.isEmpty ? "Field is required!" : null,
               ),
               const SizedBox(
                 height: 20,
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Total amount :",
+                  style: TextStyle(
+                    fontSize: AppDimens.font22,
+                    color: AppColors.blackColor,
+                  ),
+                ),
               ),
               TextFormWidget(
                 label: "Please enter total amount...",
@@ -48,6 +68,18 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
               const SizedBox(
                 height: 20,
               ),
+              controller.vendors.isNotEmpty
+                  ? Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Select Vendor :",
+                        style: TextStyle(
+                          fontSize: AppDimens.font22,
+                          color: AppColors.blackColor,
+                        ),
+                      ),
+                    )
+                  : const SizedBox(),
               Obx(() => controller.vendors.isNotEmpty
                   ? InputDecorator(
                       decoration: const InputDecoration(
@@ -74,36 +106,48 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                       ),
                     )
                   : const SizedBox()),
-              Container(
-                margin: const EdgeInsets.only(top: 20),
-                child: Row(
-                  children: [
-                    const Text(
-                      "if vendor not available in the above list please,",
-                      style: TextStyle(
-                        fontSize: AppDimens.font18,
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Get.toNamed(Routes.ADD_VENDOR);
-                      },
-                      child: Text(
-                        "\tclick here",
-                        style: TextStyle(
-                          fontSize: AppDimens.font18,
-                          color: AppColors.reddishColor,
-                          decoration: TextDecoration.underline,
-                          decorationColor: AppColors.reddishColor,
-                          decorationStyle: TextDecorationStyle.solid,
-                        ),
+              controller.vendors.isNotEmpty
+                  ? Container(
+                      margin: const EdgeInsets.only(top: 20),
+                      child: Row(
+                        children: [
+                          const Text(
+                            "if vendor not available in the above list please,",
+                            style: TextStyle(
+                              fontSize: AppDimens.font18,
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Get.toNamed(Routes.ADD_VENDOR);
+                            },
+                            child: Text(
+                              "\tclick here",
+                              style: TextStyle(
+                                fontSize: AppDimens.font18,
+                                color: AppColors.reddishColor,
+                                decoration: TextDecoration.underline,
+                                decorationColor: AppColors.reddishColor,
+                                decorationStyle: TextDecorationStyle.solid,
+                              ),
+                            ),
+                          )
+                        ],
                       ),
                     )
-                  ],
-                ),
-              ),
+                  : const SizedBox(),
               const SizedBox(
                 height: 20,
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Receiving Date :",
+                  style: TextStyle(
+                    fontSize: AppDimens.font22,
+                    color: AppColors.blackColor,
+                  ),
+                ),
               ),
               DateTimePickerWidget(
                 hintText: "Receiving Date",
@@ -134,6 +178,16 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                         padding: const EdgeInsets.all(10),
                         child: Column(
                           children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "Address :",
+                                style: TextStyle(
+                                  fontSize: AppDimens.font22,
+                                  color: AppColors.blackColor,
+                                ),
+                              ),
+                            ),
                             Obx(() => controller.products.isNotEmpty
                                 ? InputDecorator(
                                     decoration: const InputDecoration(
@@ -215,6 +269,16 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                             const SizedBox(
                               height: 20,
                             ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "Address :",
+                                style: TextStyle(
+                                  fontSize: AppDimens.font22,
+                                  color: AppColors.blackColor,
+                                ),
+                              ),
+                            ),
                             Obx(() => controller.products.isNotEmpty
                                 ? TextFormWidget(
                                     validator: (v) => v!.isEmpty
@@ -278,9 +342,12 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                 },
                 style: Theme.of(context).elevatedButtonTheme.style!.copyWith(
                     backgroundColor:
-                        MaterialStatePropertyAll(AppColors.brownColor)),
-                child: const Text("Submit"),
-              )
+                        MaterialStatePropertyAll(AppColors.whiteColor)),
+                child: Text(
+                  "Submit",
+                  style: TextStyle(color: AppColors.blackColor),
+                ),
+              ),
             ],
           ),
         ),

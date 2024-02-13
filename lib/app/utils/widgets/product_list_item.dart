@@ -53,7 +53,7 @@ class ProductListItem extends StatelessWidget {
                         "Name: ",
                         style: TextStyle(
                           fontSize: AppDimens.font22,
-                          color: AppColors.brownColor,
+                          color: AppColors.blackColor,
                         ),
                       ),
                       const SizedBox(
@@ -63,7 +63,7 @@ class ProductListItem extends StatelessWidget {
                         product.name ?? "",
                         style: TextStyle(
                           fontSize: AppDimens.font22,
-                          color: AppColors.reddishColor,
+                          color: AppColors.whiteColor,
                         ),
                       ),
                     ],
@@ -78,7 +78,7 @@ class ProductListItem extends StatelessWidget {
                         "Weight:",
                         style: TextStyle(
                           fontSize: AppDimens.font22,
-                          color: AppColors.brownColor,
+                          color: AppColors.blackColor,
                         ),
                       ),
                       const SizedBox(
@@ -88,7 +88,7 @@ class ProductListItem extends StatelessWidget {
                         product.weight ?? "",
                         style: TextStyle(
                           fontSize: AppDimens.font22,
-                          color: AppColors.reddishColor,
+                          color: AppColors.whiteColor,
                         ),
                       ),
                     ],
@@ -103,7 +103,7 @@ class ProductListItem extends StatelessWidget {
                         "Price",
                         style: TextStyle(
                           fontSize: AppDimens.font22,
-                          color: AppColors.brownColor,
+                          color: AppColors.blackColor,
                         ),
                       ),
                       const SizedBox(
@@ -113,7 +113,7 @@ class ProductListItem extends StatelessWidget {
                         "₹${product.price}" ?? "₹0.0",
                         style: TextStyle(
                           fontSize: AppDimens.font22,
-                          color: AppColors.reddishColor,
+                          color: AppColors.whiteColor,
                         ),
                       ),
                     ],
@@ -128,7 +128,7 @@ class ProductListItem extends StatelessWidget {
                         "Quntity",
                         style: TextStyle(
                           fontSize: AppDimens.font22,
-                          color: AppColors.brownColor,
+                          color: AppColors.blackColor,
                         ),
                       ),
                       const SizedBox(
@@ -138,7 +138,7 @@ class ProductListItem extends StatelessWidget {
                         product.quantity.toString() ?? "0",
                         style: TextStyle(
                           fontSize: AppDimens.font22,
-                          color: AppColors.reddishColor,
+                          color: AppColors.whiteColor,
                         ),
                       ),
                     ],

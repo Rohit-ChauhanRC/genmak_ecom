@@ -5,7 +5,7 @@ class TextFormWidget extends StatelessWidget {
   const TextFormWidget({
     super.key,
     this.onChanged,
-    required this.label,
+    this.label,
     this.keyboardType,
     this.readOnly = false,
     this.initialValue,
@@ -14,7 +14,7 @@ class TextFormWidget extends StatelessWidget {
   });
 
   final void Function(String)? onChanged;
-  final String label;
+  final String? label;
   final TextInputType? keyboardType;
   final bool readOnly;
   final String? initialValue;
@@ -37,8 +37,8 @@ class TextFormWidget extends StatelessWidget {
       readOnly: readOnly,
       keyboardType: keyboardType ?? TextInputType.text,
       decoration: InputDecoration(
-        label: Text(label),
-      ),
+          // label: Text(label!),
+          ),
     );
   }
 }

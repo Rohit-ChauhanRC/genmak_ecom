@@ -42,7 +42,7 @@ class VendorListItem extends StatelessWidget {
                         "Name: ",
                         style: TextStyle(
                           fontSize: AppDimens.font22,
-                          color: AppColors.brownColor,
+                          color: AppColors.blackColor,
                         ),
                       ),
                       const SizedBox(
@@ -52,7 +52,7 @@ class VendorListItem extends StatelessWidget {
                         vendorModel.name ?? "",
                         style: TextStyle(
                           fontSize: AppDimens.font22,
-                          color: AppColors.reddishColor,
+                          color: AppColors.whiteColor,
                         ),
                       ),
                     ],
@@ -67,7 +67,7 @@ class VendorListItem extends StatelessWidget {
                         "Mobile No.:",
                         style: TextStyle(
                           fontSize: AppDimens.font22,
-                          color: AppColors.brownColor,
+                          color: AppColors.blackColor,
                         ),
                       ),
                       const SizedBox(
@@ -77,7 +77,7 @@ class VendorListItem extends StatelessWidget {
                         vendorModel.mobileNo.toString() ?? "",
                         style: TextStyle(
                           fontSize: AppDimens.font22,
-                          color: AppColors.reddishColor,
+                          color: AppColors.whiteColor,
                         ),
                       ),
                     ],
@@ -92,7 +92,7 @@ class VendorListItem extends StatelessWidget {
                         "GSTIN No.",
                         style: TextStyle(
                           fontSize: AppDimens.font22,
-                          color: AppColors.brownColor,
+                          color: AppColors.blackColor,
                         ),
                       ),
                       const SizedBox(
@@ -102,7 +102,7 @@ class VendorListItem extends StatelessWidget {
                         "₹${vendorModel.gst}" ?? "",
                         style: TextStyle(
                           fontSize: AppDimens.font22,
-                          color: AppColors.reddishColor,
+                          color: AppColors.whiteColor,
                         ),
                       ),
                     ],
@@ -117,7 +117,7 @@ class VendorListItem extends StatelessWidget {
                         "Address",
                         style: TextStyle(
                           fontSize: AppDimens.font22,
-                          color: AppColors.brownColor,
+                          color: AppColors.blackColor,
                         ),
                       ),
                       const SizedBox(
@@ -127,7 +127,7 @@ class VendorListItem extends StatelessWidget {
                         vendorModel.address.toString() ?? "",
                         style: TextStyle(
                           fontSize: AppDimens.font22,
-                          color: AppColors.reddishColor,
+                          color: AppColors.whiteColor,
                         ),
                       ),
                     ],

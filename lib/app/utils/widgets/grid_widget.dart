@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:genmak_ecom/app/data/models/product_model.dart';
 import 'package:genmak_ecom/app/utils/app_colors/app_colors.dart';
 import 'package:genmak_ecom/app/utils/app_dimens/app_dimens.dart';
@@ -64,7 +65,7 @@ class GridWidget extends StatelessWidget {
                   product[i].picture != null
                       ? SizedBox(
                           height: 140,
-                          width: 232,
+                          width: Get.width,
                           child: ClipRRect(
                             borderRadius: const BorderRadius.only(
                                 topLeft: Radius.circular(20),
@@ -75,19 +76,29 @@ class GridWidget extends StatelessWidget {
                             ),
                           ),
                         )
-                      : Image.asset(
-                          "assets/images/Paneer.png",
-                          height: 120,
-                          width: 120,
-                          fit: BoxFit.cover,
+                      : SizedBox(
+                          height: 140,
+                          width: Get.width,
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(20),
+                                topRight: Radius.circular(20)),
+                            child: Image.asset(
+                              "assets/images/Paneer.png",
+                              height: 120,
+                              width: 120,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
+
                   // const SizedBox(
                   //   height: 2,
                   // ),
                   SizedBox(
-                    // width: 100,
+                    width: 100.w,
                     child: Text(
-                      product[i].name!,
+                      "${product[i].name!}-${product[i].price!}",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: AppColors.whiteColor,
@@ -151,26 +162,26 @@ class GridWidget extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Container(
-                    // margin: const EdgeInsets.only(top: 10),
-                    padding: const EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(
-                          color: Colors.black,
-                        ),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Text(
-                      "₹${product[i].price}",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: AppColors.brownColor,
-                        fontSize: AppDimens.font12,
-                        overflow: TextOverflow.visible,
-                      ),
-                      overflow: TextOverflow.visible,
-                    ),
-                  ),
+                  // Container(
+                  //   // margin: const EdgeInsets.only(top: 10),
+                  //   padding: const EdgeInsets.all(5),
+                  //   decoration: BoxDecoration(
+                  //       color: Colors.white,
+                  //       border: Border.all(
+                  //         color: Colors.black,
+                  //       ),
+                  //       borderRadius: BorderRadius.circular(10)),
+                  //   child: Text(
+                  //     "₹${product[i].price}",
+                  //     textAlign: TextAlign.center,
+                  //     style: TextStyle(
+                  //       color: AppColors.brownColor,
+                  //       fontSize: AppDimens.font12,
+                  //       overflow: TextOverflow.visible,
+                  //     ),
+                  //     overflow: TextOverflow.visible,
+                  //   ),
+                  // ),
                 ],
               ),
             ),

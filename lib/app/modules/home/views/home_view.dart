@@ -18,7 +18,16 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Genmak Info India Limited'),
+        title: SizedBox(
+          width: Get.width * 0.6,
+          child: const Text(
+            'Genmak Info India Limited',
+            // overflow: TextOverflow.visible,
+            style: TextStyle(
+              color: Colors.black,
+            ),
+          ),
+        ),
         centerTitle: true,
         actions: [
           Obx(() => CircleAvatar(
@@ -39,9 +48,12 @@ class HomeView extends GetView<HomeController> {
       drawer: AppDrawer(),
       body: ListView(shrinkWrap: true, children: [
         Container(
+          height: 30.h,
           margin: const EdgeInsets.only(left: 10, right: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: ListView(
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            // mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
                 width: Get.width / 2,
@@ -61,17 +73,28 @@ class HomeView extends GetView<HomeController> {
                       controller.searchProduct(controller.textController!.text);
                     }
                   },
-                  child: const Text("Search")),
+                  child: const Text(
+                    "Search",
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  )),
               const SizedBox(
                 width: 10,
               ),
               ElevatedButton(
+                  style: Theme.of(context).elevatedButtonTheme.style,
                   onPressed: () async {
                     // controller.textController!.clear();
                     // controller.searchP = false;
                     await controller.all();
                   },
-                  child: const Text("All"))
+                  child: const Text(
+                    "All",
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  )),
             ],
           ),
         ),
@@ -96,7 +119,7 @@ class HomeView extends GetView<HomeController> {
                   child: Text(
                     "No data found!...",
                     style: TextStyle(
-                      color: AppColors.brownColor,
+                      color: AppColors.blackColor,
                       fontSize: AppDimens.font24,
                       fontWeight: FontWeight.bold,
                     ),
@@ -104,9 +127,11 @@ class HomeView extends GetView<HomeController> {
                 ),
               )),
         Container(
-          height: Get.height / 3.0,
+          // height: Get.height / 4,
           // color: Colors.black,
+          margin: const EdgeInsets.all(10),
           decoration: BoxDecoration(
+            color: AppColors.bgColor,
             border: Border.all(
               color: AppColors.blackColor,
             ),
@@ -122,7 +147,7 @@ class HomeView extends GetView<HomeController> {
                   "Order",
                   style: TextStyle(
                     fontSize: AppDimens.font24,
-                    color: AppColors.brownColor,
+                    color: AppColors.blackColor,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -131,19 +156,19 @@ class HomeView extends GetView<HomeController> {
               //   height: 20,
               // ),
               Container(
-                height: 200.h,
+                // height: Get.height / 9,
                 decoration: BoxDecoration(
                   border: Border.all(
                     color: AppColors.blackColor,
                   ),
-                  color: Colors.white,
+                  color: AppColors.whiteColor,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 margin: const EdgeInsets.all(20),
                 child: Column(
                   children: [
                     SizedBox(
-                      height: Get.height / 4.9,
+                      height: Get.height / 5,
                       child: Obx(() => controller.orders.isNotEmpty
                           ? ListView.separated(
                               itemCount:
@@ -270,7 +295,7 @@ class HomeView extends GetView<HomeController> {
                             "Total Amount",
                             style: TextStyle(
                               fontSize: AppDimens.font24,
-                              color: AppColors.brownColor,
+                              color: AppColors.blackColor,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -279,7 +304,7 @@ class HomeView extends GetView<HomeController> {
                                   "₹${controller.totalAmount.toString()}",
                                   style: TextStyle(
                                     fontSize: AppDimens.font24,
-                                    color: AppColors.brownColor,
+                                    color: AppColors.blackColor,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 )
@@ -287,7 +312,7 @@ class HomeView extends GetView<HomeController> {
                                   "₹0.0",
                                   style: TextStyle(
                                     fontSize: AppDimens.font24,
-                                    color: AppColors.brownColor,
+                                    color: AppColors.blackColor,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 )),
@@ -305,16 +330,19 @@ class HomeView extends GetView<HomeController> {
           children: [
             ElevatedButton(
               onPressed: () async {
-                controller.connectionEst();
+                // controller.connectionEst();
                 // controller.tcpConn();
                 // controller.discover();
                 // await controller.checkP();
                 if (controller.orders.isNotEmpty) await controller.onSave();
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.brownColor,
+                backgroundColor: AppColors.whiteColor,
               ),
-              child: const Text("Save"),
+              child: Text(
+                "Save",
+                style: TextStyle(color: AppColors.blackColor),
+              ),
             ),
             // const SizedBox(
             //   width: 20,
@@ -327,6 +355,9 @@ class HomeView extends GetView<HomeController> {
             //   child: const Text("Cart"),
             // )
           ],
+        ),
+        const SizedBox(
+          height: 20,
         ),
       ]),
       // floatingActionButton:

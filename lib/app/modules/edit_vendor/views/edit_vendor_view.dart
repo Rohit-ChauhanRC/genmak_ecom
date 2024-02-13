@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:genmak_ecom/app/utils/app_colors/app_colors.dart';
+import 'package:genmak_ecom/app/utils/app_dimens/app_dimens.dart';
 import 'package:genmak_ecom/app/utils/widgets/text_form_widget.dart';
 
 import 'package:get/get.dart';
@@ -22,6 +23,16 @@ class EditVendorView extends GetView<EditVendorController> {
                 key: controller.vendorFormKey,
                 child: ListView(
                   children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Vendor Name :",
+                        style: TextStyle(
+                          fontSize: AppDimens.font22,
+                          color: AppColors.blackColor,
+                        ),
+                      ),
+                    ),
                     TextFormWidget(
                       label: "Please enter Vendor Name...",
                       onChanged: (val) => controller.name = val,
@@ -29,6 +40,16 @@ class EditVendorView extends GetView<EditVendorController> {
                     ),
                     const SizedBox(
                       height: 20,
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Mobile No :",
+                        style: TextStyle(
+                          fontSize: AppDimens.font22,
+                          color: AppColors.blackColor,
+                        ),
+                      ),
                     ),
                     TextFormWidget(
                       label: "Please enter Vendor Mobile No...",
@@ -38,6 +59,16 @@ class EditVendorView extends GetView<EditVendorController> {
                     const SizedBox(
                       height: 20,
                     ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "GSTIN No :",
+                        style: TextStyle(
+                          fontSize: AppDimens.font22,
+                          color: AppColors.blackColor,
+                        ),
+                      ),
+                    ),
                     TextFormWidget(
                       label: "Please enter Vendor GSTIN No...",
                       onChanged: (val) => controller.gst = val,
@@ -45,6 +76,16 @@ class EditVendorView extends GetView<EditVendorController> {
                     ),
                     const SizedBox(
                       height: 20,
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Address :",
+                        style: TextStyle(
+                          fontSize: AppDimens.font22,
+                          color: AppColors.blackColor,
+                        ),
+                      ),
                     ),
                     TextFormWidget(
                       label: "Please enter Vendor Address...",
@@ -61,13 +102,16 @@ class EditVendorView extends GetView<EditVendorController> {
                           onPressed: () {
                             controller.checkValidate();
                           },
-                          child: Text("Update"),
                           style: Theme.of(context)
                               .elevatedButtonTheme
                               .style!
                               .copyWith(
                                   backgroundColor: MaterialStatePropertyAll(
-                                      AppColors.brownColor)),
+                                      AppColors.whiteColor)),
+                          child: Text(
+                            "Update",
+                            style: TextStyle(color: AppColors.blackColor),
+                          ),
                         ),
                         const SizedBox(
                           width: 20,
@@ -76,13 +120,12 @@ class EditVendorView extends GetView<EditVendorController> {
                           onPressed: () {
                             controller.deleteProductTable();
                           },
-                          child: Text("Delete"),
-                          style: Theme.of(context)
-                              .elevatedButtonTheme
-                              .style!
-                              .copyWith(
-                                  backgroundColor: MaterialStatePropertyAll(
-                                      AppColors.reddishColor)),
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.whiteColor),
+                          child: const Text(
+                            "Delete",
+                            style: TextStyle(color: Colors.red),
+                          ),
                         ),
                       ],
                     )

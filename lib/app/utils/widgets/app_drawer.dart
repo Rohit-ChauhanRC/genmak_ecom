@@ -15,9 +15,10 @@ class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Theme.of(context).drawerTheme.backgroundColor,
+      backgroundColor: AppColors.blackColor,
+      // backgroundColor: Theme.of(context).drawerTheme.backgroundColor,
       elevation: 10,
-      width: Get.width / 3,
+      width: Get.width * 0.7,
       child: ListView(
         children: [
           Column(

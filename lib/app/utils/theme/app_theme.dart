@@ -11,7 +11,7 @@ class AppTheme {
 
     final bodyText2 = textTheme.copyWith(
       bodyMedium: TextStyle(
-        color: AppColors.bgColor,
+        color: AppColors.bgColor1,
         fontSize: AppDimens.font18,
         fontWeight: FontWeight.w700,
       ),
@@ -20,38 +20,40 @@ class AppTheme {
     return ThemeData(
         fontFamily: "Nunito",
         colorScheme: ColorScheme.light(
-          background: AppColors.bgColor,
+          background: AppColors.bgColor1,
         ),
         appBarTheme: AppBarTheme(
-          backgroundColor: AppColors.bgColor,
+          backgroundColor: AppColors.bgColor1,
           titleTextStyle: TextStyle(
-            color: AppColors.brownColor,
+            color: AppColors.blackColor,
             fontFamily: "Kalnia_Expanded-Bold",
-            fontSize: AppDimens.font40,
+            fontSize: AppDimens.font30,
             fontWeight: FontWeight.bold,
+            // overflow: TextOverflow.visible,
           ),
           iconTheme: IconThemeData(
-            color: AppColors.brownColor,
+            color: AppColors.blackColor,
             size: 40,
           ),
           actionsIconTheme: IconThemeData(
-            color: AppColors.brownColor,
+            color: AppColors.blackColor,
           ),
         ),
-        buttonTheme: ButtonThemeData(
-          buttonColor: AppColors.brownColor,
-          height: 50,
-          minWidth: 300,
-          textTheme: ButtonTextTheme.normal,
-        ),
+        // buttonTheme: ButtonThemeData(
+        //   buttonColor: AppColors.whiteColor,
+
+        //   height: 50,
+        //   minWidth: 300,
+        //   textTheme: ButtonTextTheme.normal,
+        // ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.brownColor,
+            backgroundColor: AppColors.whiteColor,
             textStyle: const TextStyle(
-              // color: Colors.white,
+              color: Colors.black,
               fontSize: AppDimens.font22,
             ),
-            foregroundColor: Colors.white,
+            // foregroundColor: Colors.white,
           ),
         ),
         inputDecorationTheme: InputDecorationTheme(

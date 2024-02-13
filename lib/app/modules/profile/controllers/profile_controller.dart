@@ -60,7 +60,7 @@ class ProfileController extends GetxController {
 
   Future<void> fetchProfile() async {
     profile = homeController.profile;
-    if (profile != null) {
+    if (profile != null && profile != "") {
       name = profile.name!;
       address = profile.address!;
       contact = profile.contact!;

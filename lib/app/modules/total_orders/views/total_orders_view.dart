@@ -42,25 +42,38 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                           width: 10,
                         ),
                         ElevatedButton(
-                            onPressed: () async {
-                              if (controller.textController!.text
-                                  .toString()
-                                  .isNotEmpty) {
-                                controller.searchProduct(
-                                    controller.textController!.text);
-                              }
-                            },
-                            child: const Text("Search")),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.blackColor,
+                          ),
+                          onPressed: () async {
+                            if (controller.textController!.text
+                                .toString()
+                                .isNotEmpty) {
+                              controller.searchProduct(
+                                  controller.textController!.text);
+                            }
+                          },
+                          child: Text(
+                            "Search",
+                            style: TextStyle(color: AppColors.blackColor),
+                          ),
+                        ),
                         const SizedBox(
                           width: 10,
                         ),
                         ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.blackColor,
+                            ),
                             onPressed: () async {
                               // controller.textController!.clear();
                               // controller.searchP = false;
                               await controller.all();
                             },
-                            child: const Text("All"))
+                            child: Text(
+                              "All",
+                              style: TextStyle(color: AppColors.blackColor),
+                            ))
                       ],
                     ),
                   ),
@@ -101,17 +114,17 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "Invoice Id:",
+                                      "Invoice No.:",
                                       style: TextStyle(
                                         fontSize: AppDimens.font18,
-                                        color: AppColors.reddishColor,
+                                        color: AppColors.blackColor,
                                       ),
                                     ),
                                     Text(
                                       data.invoiceId ?? "",
                                       style: TextStyle(
                                         fontSize: AppDimens.font18,
-                                        color: AppColors.brownColor,
+                                        color: AppColors.whiteColor,
                                       ),
                                     ),
                                   ],
@@ -128,14 +141,14 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                                       "Date:",
                                       style: TextStyle(
                                         fontSize: AppDimens.font18,
-                                        color: AppColors.reddishColor,
+                                        color: AppColors.blackColor,
                                       ),
                                     ),
                                     Text(
                                       data.receivingDate ?? "",
                                       style: TextStyle(
                                         fontSize: AppDimens.font18,
-                                        color: AppColors.brownColor,
+                                        color: AppColors.whiteColor,
                                       ),
                                     ),
                                   ],
@@ -152,14 +165,14 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                                       "Vendor",
                                       style: TextStyle(
                                         fontSize: AppDimens.font18,
-                                        color: AppColors.reddishColor,
+                                        color: AppColors.blackColor,
                                       ),
                                     ),
                                     Text(
                                       data.vendorName ?? "",
                                       style: TextStyle(
                                         fontSize: AppDimens.font18,
-                                        color: AppColors.brownColor,
+                                        color: AppColors.whiteColor,
                                       ),
                                     ),
                                   ],
@@ -178,7 +191,7 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                     child: Text(
                   "No data found...",
                   style: TextStyle(
-                    color: AppColors.brownColor,
+                    color: AppColors.blackColor,
                     fontSize: AppDimens.font30,
                     fontWeight: FontWeight.bold,
                   ),

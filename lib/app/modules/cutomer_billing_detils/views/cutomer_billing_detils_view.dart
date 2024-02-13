@@ -39,10 +39,11 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Invoice Id:",
+                    "Invoice No.:",
                     style: TextStyle(
                       fontSize: AppDimens.font22,
-                      color: AppColors.reddishColor,
+                      color: AppColors.blackColor,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
@@ -65,7 +66,8 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
                     "Date:",
                     style: TextStyle(
                       fontSize: AppDimens.font22,
-                      color: AppColors.reddishColor,
+                      color: AppColors.blackColor,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
@@ -88,7 +90,8 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
                     "Product:",
                     style: TextStyle(
                       fontSize: AppDimens.font22,
-                      color: AppColors.reddishColor,
+                      color: AppColors.blackColor,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
@@ -111,7 +114,8 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
                     "Total amount:",
                     style: TextStyle(
                       fontSize: AppDimens.font22,
-                      color: AppColors.reddishColor,
+                      color: AppColors.blackColor,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   Obx(() => Text(
@@ -130,21 +134,27 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
                 "Product List: ",
                 style: TextStyle(
                   fontSize: AppDimens.font22,
-                  color: AppColors.reddishColor,
+                  color: AppColors.blackColor,
                   decoration: TextDecoration.underline,
-                  decorationColor: AppColors.reddishColor,
+                  decorationColor: AppColors.blackColor,
                   decorationStyle: TextDecorationStyle.solid,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(
                 height: 20,
               ),
               SizedBox(
-                height: Get.height / 2,
+                // height: Get.height / 2,
                 // color: AppColors.brownColor,
                 child: Obx(() => controller.receiveProduct.isNotEmpty
-                    ? ListView.builder(
+                    ? GridView.builder(
                         shrinkWrap: true,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          mainAxisExtent: 150,
+                        ),
                         itemCount: controller.receiveProduct.length,
                         itemBuilder: (ctx, index) {
                           final data = controller.receiveProduct[index];
@@ -173,14 +183,15 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
                                       "Product:",
                                       style: TextStyle(
                                         fontSize: AppDimens.font18,
-                                        color: AppColors.reddishColor,
+                                        color: AppColors.blackColor,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                     Text(
                                       data.productName ?? "",
                                       style: TextStyle(
                                         fontSize: AppDimens.font18,
-                                        color: AppColors.brownColor,
+                                        color: AppColors.redColor,
                                       ),
                                     ),
                                   ],
@@ -197,14 +208,15 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
                                       "Quantity:",
                                       style: TextStyle(
                                         fontSize: AppDimens.font18,
-                                        color: AppColors.reddishColor,
+                                        color: AppColors.blackColor,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                     Text(
                                       data.productQuantity ?? "0",
                                       style: TextStyle(
                                         fontSize: AppDimens.font18,
-                                        color: AppColors.brownColor,
+                                        color: AppColors.redColor,
                                       ),
                                     ),
                                   ],
@@ -221,14 +233,15 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
                                       "Price:",
                                       style: TextStyle(
                                         fontSize: AppDimens.font18,
-                                        color: AppColors.reddishColor,
+                                        color: AppColors.blackColor,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                     Text(
                                       "₹${data.price}/-" ?? "0",
                                       style: TextStyle(
                                         fontSize: AppDimens.font18,
-                                        color: AppColors.brownColor,
+                                        color: AppColors.redColor,
                                       ),
                                     ),
                                   ],
@@ -246,7 +259,7 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
                             child: Text(
                           "No data found...",
                           style: TextStyle(
-                            color: AppColors.brownColor,
+                            color: AppColors.blackColor,
                             fontSize: AppDimens.font30,
                             fontWeight: FontWeight.bold,
                           ),

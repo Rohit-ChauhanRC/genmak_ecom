@@ -18,7 +18,7 @@ class ProfileView extends GetView<ProfileController> {
         centerTitle: true,
       ),
       body: Container(
-        margin: const EdgeInsets.all(10),
+        margin: const EdgeInsets.all(20),
         // width: Get.width / 1.2,
         // alignment: Alignment.center,
         child: Column(
@@ -41,19 +41,39 @@ class ProfileView extends GetView<ProfileController> {
                 "Customer ID: 223234",
                 style: TextStyle(
                   fontSize: AppDimens.font22,
-                  color: AppColors.brownColor,
+                  color: AppColors.blackColor,
                 ),
               ),
             ),
             const SizedBox(
               height: 20,
             ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Shop Name :",
+                style: TextStyle(
+                  fontSize: AppDimens.font22,
+                  color: AppColors.blackColor,
+                ),
+              ),
+            ),
             TextFormWidget(
-              label: "Please enter Shop Name...",
+              // label: "Please enter Shop Name...",
               onChanged: (val) {},
             ),
             const SizedBox(
               height: 20,
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Shop Address :",
+                style: TextStyle(
+                  fontSize: AppDimens.font22,
+                  color: AppColors.blackColor,
+                ),
+              ),
             ),
             TextFormWidget(
               label: "Pleae enter Shop Address...",
@@ -61,6 +81,16 @@ class ProfileView extends GetView<ProfileController> {
             ),
             const SizedBox(
               height: 20,
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Contact No :",
+                style: TextStyle(
+                  fontSize: AppDimens.font22,
+                  color: AppColors.blackColor,
+                ),
+              ),
             ),
             TextFormWidget(
               label: "Pleae enter Contact No...",
@@ -73,9 +103,13 @@ class ProfileView extends GetView<ProfileController> {
             SizedBox(
                 // width: Get.width / 8,
                 child: ElevatedButton(
-                    // style: ElevatedButton.styleFrom(maximumSize: Size(200, 50)),
                     onPressed: () {},
-                    child: const Text("Save"))),
+                    child: Text(
+                      "Save",
+                      style: TextStyle(
+                        color: AppColors.blackColor,
+                      ),
+                    ))),
           ],
         ),
       ),

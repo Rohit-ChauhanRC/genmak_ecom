@@ -27,12 +27,15 @@ class ProductListView extends GetView<ProductListController> {
                 shrinkWrap: true,
                 children: [
                   Container(
+                    height: MediaQuery.of(context).size.width > 650 ? 70 : 50,
                     margin: const EdgeInsets.only(left: 10, right: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    child: ListView(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      // mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
-                          width: Get.width / 2,
+                          width: Get.width / 3,
                           child: TextFormWidget(
                             textController:
                                 controller.homeController.textController,
@@ -45,6 +48,9 @@ class ProductListView extends GetView<ProductListController> {
                           width: 10,
                         ),
                         ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.whiteColor,
+                            ),
                             onPressed: () async {
                               if (controller.homeController.textController!.text
                                   .toString()
@@ -54,17 +60,26 @@ class ProductListView extends GetView<ProductListController> {
                                         .homeController.textController!.text);
                               }
                             },
-                            child: const Text("Search")),
+                            child: Text(
+                              "Search",
+                              style: TextStyle(color: AppColors.blackColor),
+                            )),
                         const SizedBox(
                           width: 10,
                         ),
                         ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.whiteColor,
+                            ),
                             onPressed: () async {
                               // controller.textController!.clear();
                               // controller.searchP = false;
                               await controller.homeController.all();
                             },
-                            child: const Text("All"))
+                            child: Text(
+                              "All",
+                              style: TextStyle(color: AppColors.blackColor),
+                            ))
                       ],
                     ),
                   ),
@@ -92,7 +107,7 @@ class ProductListView extends GetView<ProductListController> {
                     child: Text(
                   "No data found...",
                   style: TextStyle(
-                    color: AppColors.brownColor,
+                    color: AppColors.blackColor,
                     fontSize: AppDimens.font30,
                     fontWeight: FontWeight.bold,
                   ),

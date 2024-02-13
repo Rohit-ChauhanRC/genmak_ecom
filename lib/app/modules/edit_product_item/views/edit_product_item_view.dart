@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:genmak_ecom/app/utils/app_colors/app_colors.dart';
+import 'package:genmak_ecom/app/utils/app_dimens/app_dimens.dart';
 import 'package:genmak_ecom/app/utils/widgets/text_form_widget.dart';
 import 'package:genmak_ecom/app/utils/widgets/upload_image_widget.dart';
 
@@ -35,6 +36,16 @@ class EditProductItemView extends GetView<EditProductItemController> {
                     const SizedBox(
                       height: 20,
                     ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Name :",
+                        style: TextStyle(
+                          fontSize: AppDimens.font22,
+                          color: AppColors.blackColor,
+                        ),
+                      ),
+                    ),
                     Obx(() => TextFormWidget(
                           label: "Please enter name...",
                           onChanged: (val) => controller.name = val,
@@ -42,6 +53,16 @@ class EditProductItemView extends GetView<EditProductItemController> {
                         )),
                     const SizedBox(
                       height: 20,
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Product weight :",
+                        style: TextStyle(
+                          fontSize: AppDimens.font22,
+                          color: AppColors.blackColor,
+                        ),
+                      ),
                     ),
                     Obx(() => TextFormWidget(
                           label: "Please enter product weight...",
@@ -51,6 +72,16 @@ class EditProductItemView extends GetView<EditProductItemController> {
                     const SizedBox(
                       height: 20,
                     ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Price :",
+                        style: TextStyle(
+                          fontSize: AppDimens.font22,
+                          color: AppColors.blackColor,
+                        ),
+                      ),
+                    ),
                     Obx(() => TextFormWidget(
                           label: "Please enter price...",
                           onChanged: (val) => controller.price = val!,
@@ -58,6 +89,16 @@ class EditProductItemView extends GetView<EditProductItemController> {
                         )),
                     const SizedBox(
                       height: 20,
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Quantity :",
+                        style: TextStyle(
+                          fontSize: AppDimens.font22,
+                          color: AppColors.blackColor,
+                        ),
+                      ),
                     ),
                     Obx(() => TextFormWidget(
                           label: "Please enter quantity...",
@@ -82,13 +123,16 @@ class EditProductItemView extends GetView<EditProductItemController> {
                           onPressed: () {
                             controller.checkValidate();
                           },
-                          child: Text("Update"),
                           style: Theme.of(context)
                               .elevatedButtonTheme
                               .style!
                               .copyWith(
                                   backgroundColor: MaterialStatePropertyAll(
-                                      AppColors.brownColor)),
+                                      AppColors.whiteColor)),
+                          child: Text(
+                            "Update",
+                            style: TextStyle(color: AppColors.blackColor),
+                          ),
                         ),
                         const SizedBox(
                           width: 20,
@@ -97,13 +141,14 @@ class EditProductItemView extends GetView<EditProductItemController> {
                           onPressed: () {
                             controller.deleteProductTable();
                           },
-                          child: Text("Delete"),
                           style: Theme.of(context)
                               .elevatedButtonTheme
                               .style!
                               .copyWith(
                                   backgroundColor: MaterialStatePropertyAll(
-                                      AppColors.reddishColor)),
+                                      AppColors.whiteColor)),
+                          child: const Text("Delete",
+                              style: TextStyle(color: Colors.red)),
                         ),
                       ],
                     )

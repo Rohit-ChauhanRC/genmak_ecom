@@ -44,6 +44,8 @@ class VendorListView extends GetView<VendorListController> {
                           width: 10,
                         ),
                         ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.whiteColor),
                             onPressed: () async {
                               if (controller.textController!.text
                                   .toString()
@@ -52,17 +54,25 @@ class VendorListView extends GetView<VendorListController> {
                                     controller.textController!.text);
                               }
                             },
-                            child: const Text("Search")),
+                            child: Text(
+                              "Search",
+                              style: TextStyle(color: AppColors.blackColor),
+                            )),
                         const SizedBox(
                           width: 10,
                         ),
                         ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.whiteColor),
                             onPressed: () async {
                               // controller.textController!.clear();
                               // controller.searchP = false;
                               await controller.all();
                             },
-                            child: const Text("All"))
+                            child: Text(
+                              "All",
+                              style: TextStyle(color: AppColors.blackColor),
+                            ))
                       ],
                     ),
                   ),
@@ -87,7 +97,7 @@ class VendorListView extends GetView<VendorListController> {
                     child: Text(
                   "No data found...",
                   style: TextStyle(
-                    color: AppColors.brownColor,
+                    color: AppColors.blackColor,
                     fontSize: AppDimens.font30,
                     fontWeight: FontWeight.bold,
                   ),
