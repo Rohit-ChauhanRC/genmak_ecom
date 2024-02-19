@@ -49,6 +49,7 @@ class HomeController extends GetxController {
   final v = Provisioner.espTouchV2();
 
   final info = NetworkInfo();
+
 // final wifiBSSID = await info.getWifiBSSID(); // 11:22:33:44:55:66
 
   String localIp = '';
@@ -463,9 +464,18 @@ class HomeController extends GetxController {
     // final file = File('${dir.path}/pdfFile');
 
     // await file.writeAsBytes(bytes);
-    final it = await NetworkInterface.list();
-    print(it);
-    setStatus(pdf, orders[0].name.toString());
+    // final it = await NetworkInterface.list();
+    // print(it);
+    // final channel = WebSocketChannel.connect(
+    //   Uri.parse('wss://ws.ifelse.io:8883'),
+    //   // Uri.parse('wss://echo.websocket.events:8883'),
+    // );
+    WebSocketChannel channel =
+        IOWebSocketChannel.connect("wss://ws.ifelse.io/");
+
+    channel.sink.add('Hello!');
+
+    // setStatus(pdf, orders[0].name.toString());
   }
 
   handleProductQuantity(int i) {
