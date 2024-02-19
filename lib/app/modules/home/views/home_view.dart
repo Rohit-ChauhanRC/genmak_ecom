@@ -211,24 +211,43 @@ class HomeView extends GetView<HomeController> {
                                                           .remove_circle_outline,
                                                       color: AppColors
                                                           .reddishColor,
+                                                      size: 20,
                                                     ),
                                                   ),
-                                                  const SizedBox(
-                                                    width: 20,
+                                                  SizedBox(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                    .size
+                                                                    .width >
+                                                                650
+                                                            ? 20
+                                                            : 5,
                                                   ),
                                                   Text(
                                                     " ${controller.orders.toSet().toList()[i].count}",
                                                     style: TextStyle(
                                                       fontSize:
-                                                          AppDimens.font24,
+                                                          MediaQuery.of(context)
+                                                                      .size
+                                                                      .width >
+                                                                  650
+                                                              ? AppDimens.font24
+                                                              : AppDimens
+                                                                  .font16,
                                                       color:
                                                           AppColors.brownColor,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                     ),
                                                   ),
-                                                  const SizedBox(
-                                                    width: 20,
+                                                  SizedBox(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                    .size
+                                                                    .width >
+                                                                650
+                                                            ? 20
+                                                            : 5,
                                                   ),
                                                   InkWell(
                                                     onTap: () {
@@ -238,29 +257,52 @@ class HomeView extends GetView<HomeController> {
                                                       Icons.add_circle_outlined,
                                                       color:
                                                           AppColors.brownColor,
+                                                      size: 20,
                                                     ),
                                                   ),
                                                 ],
                                               ),
                                             ),
                                             SizedBox(
-                                              width: Get.width / 2.7,
+                                              width: MediaQuery.of(context)
+                                                          .size
+                                                          .width >
+                                                      650
+                                                  ? Get.width / 2.7
+                                                  : Get.width / 3.5,
                                               child: Text(
                                                 "${data.name}",
                                                 overflow: TextOverflow.visible,
                                                 style: TextStyle(
-                                                  fontSize: AppDimens.font24,
+                                                  fontSize:
+                                                      MediaQuery.of(context)
+                                                                  .size
+                                                                  .width >
+                                                              650
+                                                          ? AppDimens.font24
+                                                          : AppDimens.font16,
                                                   color: AppColors.brownColor,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
                                             ),
                                             SizedBox(
-                                              width: Get.width / 6,
+                                              width: MediaQuery.of(context)
+                                                          .size
+                                                          .width >
+                                                      650
+                                                  ? Get.width / 6
+                                                  : Get.width / 7,
                                               child: Text(
                                                 "₹${int.tryParse(data.price!)! * data.count!}",
                                                 style: TextStyle(
-                                                  fontSize: AppDimens.font24,
+                                                  fontSize:
+                                                      MediaQuery.of(context)
+                                                                  .size
+                                                                  .width >
+                                                              650
+                                                          ? AppDimens.font24
+                                                          : AppDimens.font16,
                                                   color: AppColors.brownColor,
                                                   fontWeight: FontWeight.bold,
                                                 ),
@@ -337,6 +379,7 @@ class HomeView extends GetView<HomeController> {
                 // controller.tcpConn();
                 // controller.discover();
                 // await controller.checkP();
+                // controller.checkIp();
                 if (controller.orders.isNotEmpty) await controller.onSave();
               },
               style: ElevatedButton.styleFrom(

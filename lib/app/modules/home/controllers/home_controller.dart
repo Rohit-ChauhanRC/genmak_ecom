@@ -119,6 +119,10 @@ class HomeController extends GetxController {
   String get ip => _ip.value;
   set ip(String str) => _ip.value = str;
 
+  // final RxString _apiUrl = "".obs;
+  // String get apiUrl => _apiUrl.value;
+  // set apiUrl(String str) => _apiUrl.value = str;
+
   final PaperSize paper = PaperSize.mm80;
 
   final LanScanner scanner = LanScanner();
@@ -136,6 +140,7 @@ class HomeController extends GetxController {
     await fetchProduct();
     await sellDB.fetchAll();
     fetchInvoiceNo();
+    // await checkIp();
     // await fetchProfile();
 
     // await checkConnectivity();
@@ -459,23 +464,8 @@ class HomeController extends GetxController {
     box.write("invoiceNo", box.read("invoiceNo") + 1);
     await fetchProduct();
 
-    // final bytes = await pdf.save();
-    // final dir = await getApplicationDocumentsDirectory();
-    // final file = File('${dir.path}/pdfFile');
-
-    // await file.writeAsBytes(bytes);
-    // final it = await NetworkInterface.list();
-    // print(it);
-    // final channel = WebSocketChannel.connect(
-    //   Uri.parse('wss://ws.ifelse.io:8883'),
-    //   // Uri.parse('wss://echo.websocket.events:8883'),
-    // );
-    WebSocketChannel channel =
-        IOWebSocketChannel.connect("wss://ws.ifelse.io/");
-
-    channel.sink.add('Hello!');
-
-    // setStatus(pdf, orders[0].name.toString());
+    // setStatus();
+    await checkIp();
   }
 
   handleProductQuantity(int i) {
@@ -712,10 +702,39 @@ class HomeController extends GetxController {
     }
   }
 
-  void setStatus(pw.Document value, String order) async {
+  Future<void> checkIp() async {
+    for (var interface in await NetworkInterface.list()) {
+      for (var addr in interface.addresses) {
+        if (addr.type == InternetAddressType.IPv4 &&
+            addr.address.startsWith('192')) {
+          ip = addr.address.split(".").getRange(0, 3).join(".");
+          for (var i = 0; i < 255; i++) {
+            apiLopp(i);
+          }
+        }
+      }
+    }
+  }
+
+  apiLopp(int i) async {
     try {
-      final request = http.MultipartRequest(
-          'POST', Uri.parse("http://192.168.193.220/status"));
+      var res = await http.post(Uri.parse("http://$ip.$i/status"), body: {
+        "print": "connectivity",
+      });
+      if (res.statusCode == 200) {
+        // apiUrl = "http://$ip.$i/status";
+        print(res.statusCode);
+        print("http://$ip.$i/status");
+        setStatus("http://$ip.$i/status");
+      }
+    } catch (e) {
+      // apiLopp(i);
+    }
+  }
+
+  void setStatus(String apiUrl) async {
+    try {
+      final request = http.MultipartRequest('POST', Uri.parse(apiUrl));
       final dir = await getApplicationDocumentsDirectory();
       final file = File('${dir.path}/pdfFile');
       request.fields["print"] = """
