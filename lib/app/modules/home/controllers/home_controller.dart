@@ -145,7 +145,7 @@ class HomeController extends GetxController {
 
     // await checkConnectivity();
     // connectLn();
-    ip = (await info.getWifiIP()).toString();
+    // ip = (await info.getWifiIP()).toString();
     // IOWebSocketChannel.connect('ws://100.120.187.127:8883');
 
     // sock = await Socket.connect(ip, 8883);
@@ -719,7 +719,7 @@ class HomeController extends GetxController {
   apiLopp(int i) async {
     try {
       var res = await http.post(Uri.parse("http://$ip.$i/status"), body: {
-        "print": "connectivity",
+        "print": "",
       });
       if (res.statusCode == 200) {
         // apiUrl = "http://$ip.$i/status";
@@ -734,38 +734,33 @@ class HomeController extends GetxController {
 
   void setStatus(String apiUrl) async {
     try {
+      Runes input = Runes(' \u{20B9}');
       final request = http.MultipartRequest('POST', Uri.parse(apiUrl));
       final dir = await getApplicationDocumentsDirectory();
-      final file = File('${dir.path}/pdfFile');
+      // final file = File('${dir.path}/pdfFile');
       request.fields["print"] = """
-        GENAMK INFO INDIA PVT LTD
-        SOHNA ROAD, GURUGRAM
-  GSTIN:29AAMFN3642F123 PH:080-23232323
-                        DATE: ${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}
-  BILL NO.: 10          TIME: ${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}      
-  - - - - - - - - - - - - - - - - - - - - - - - - - -
-  SR.  ITEM NAME                  RATE    QTY  VALUE       
+  GENAMK INFO INDIA PVT LTD
+  SOHNA ROAD, GURUGRAM
+  GSTIN:29AAMFN3642F123 
+  PH:080-23232323
+  DATE: ${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}  TIME: ${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}
+  BILL NO.: 10                
+  - - - - - - - - - - - - - - - 
+  SR.  ITEM NAME RATE QTY VALUE       
   ${orders.toSet().toList().map((e) {
-        return """${e.id}.  ${e.name}                  ${e.price}    ${e.count}  ${int.parse(e.price!) * e.count!}""";
+        return """${e.id}.  ${e.name} Rs.${e.price}/-  ${e.count}  Rs.${int.parse(e.price!) * e.count!}/-""";
       })}
 
-
-          """;
+ """;
 
       var res = await request.send();
 
-      // var res =
-      //     await http.post(Uri.parse("http://192.168.193.220/status"), body: {
-      //   "print": orders[0].name.toString(),
-      // });
       if (res.statusCode == 200) {
         print(res.statusCode);
         orders.assignAll([]);
         totalAmount = 0.0;
       }
-    } on SocketException {
-      print("Connection Error");
-    }
+    } catch (e) {}
   }
 
   void createPrintPage() {
