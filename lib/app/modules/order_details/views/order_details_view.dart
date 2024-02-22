@@ -3,6 +3,7 @@ import 'package:genmak_ecom/app/utils/app_colors/app_colors.dart';
 import 'package:genmak_ecom/app/utils/app_dimens/app_dimens.dart';
 
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../controllers/order_details_controller.dart';
 
@@ -12,7 +13,19 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Order Details'),
+        iconTheme: IconThemeData(
+          color: AppColors.blackColor,
+          size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
+        ),
+        title: Text(
+          'Order Details',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: MediaQuery.of(Get.context!).size.width > 650
+                ? AppDimens.font30
+                : AppDimens.font18,
+          ),
+        ),
         centerTitle: true,
       ),
       body: Align(
@@ -24,7 +37,7 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
               color: AppColors.blackColor,
             ),
             borderRadius: BorderRadius.circular(20),
-            color: AppColors.whiteColor,
+            color: AppColors.bgColor,
           ),
           width: Get.width / 1.3,
           height: Get.height / 1.3,
@@ -41,14 +54,18 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                   Text(
                     "Invoice No.:",
                     style: TextStyle(
-                      fontSize: AppDimens.font22,
+                      fontSize: MediaQuery.of(Get.context!).size.width > 650
+                          ? AppDimens.font22
+                          : AppDimens.font16,
                       color: AppColors.blackColor,
                     ),
                   ),
                   Text(
                     controller.receive.invoiceId ?? "",
                     style: TextStyle(
-                      fontSize: AppDimens.font22,
+                      fontSize: MediaQuery.of(Get.context!).size.width > 650
+                          ? AppDimens.font22
+                          : AppDimens.font16,
                       color: AppColors.whiteColor,
                     ),
                   ),
@@ -64,14 +81,20 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                   Text(
                     "Date:",
                     style: TextStyle(
-                      fontSize: AppDimens.font22,
+                      fontSize: MediaQuery.of(Get.context!).size.width > 650
+                          ? AppDimens.font22
+                          : AppDimens.font16,
                       color: AppColors.blackColor,
                     ),
                   ),
                   Text(
-                    controller.receive.receivingDate ?? "",
+                    DateFormat("dd/MM/yyyy").format(DateTime.parse(
+                            controller.receive.receivingDate!)) ??
+                        "",
                     style: TextStyle(
-                      fontSize: AppDimens.font22,
+                      fontSize: MediaQuery.of(Get.context!).size.width > 650
+                          ? AppDimens.font22
+                          : AppDimens.font16,
                       color: AppColors.whiteColor,
                     ),
                   ),
@@ -87,14 +110,18 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                   Text(
                     "Vendor:",
                     style: TextStyle(
-                      fontSize: AppDimens.font22,
+                      fontSize: MediaQuery.of(Get.context!).size.width > 650
+                          ? AppDimens.font22
+                          : AppDimens.font16,
                       color: AppColors.blackColor,
                     ),
                   ),
                   Text(
                     controller.receive.vendorName ?? "",
                     style: TextStyle(
-                      fontSize: AppDimens.font22,
+                      fontSize: MediaQuery.of(Get.context!).size.width > 650
+                          ? AppDimens.font22
+                          : AppDimens.font16,
                       color: AppColors.whiteColor,
                     ),
                   ),
@@ -110,14 +137,18 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                   Text(
                     "Total amount:",
                     style: TextStyle(
-                      fontSize: AppDimens.font22,
+                      fontSize: MediaQuery.of(Get.context!).size.width > 650
+                          ? AppDimens.font22
+                          : AppDimens.font16,
                       color: AppColors.blackColor,
                     ),
                   ),
                   Text(
                     controller.receive.totalAmount ?? "",
                     style: TextStyle(
-                      fontSize: AppDimens.font22,
+                      fontSize: MediaQuery.of(Get.context!).size.width > 650
+                          ? AppDimens.font22
+                          : AppDimens.font16,
                       color: AppColors.whiteColor,
                     ),
                   ),
@@ -129,7 +160,9 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
               Text(
                 "Product List: ",
                 style: TextStyle(
-                  fontSize: AppDimens.font22,
+                  fontSize: MediaQuery.of(Get.context!).size.width > 650
+                      ? AppDimens.font22
+                      : AppDimens.font18,
                   color: AppColors.blackColor,
                   decoration: TextDecoration.underline,
                   decorationColor: AppColors.blackColor,
@@ -139,8 +172,11 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
               const SizedBox(
                 height: 20,
               ),
-              SizedBox(
-                height: Get.height / 2,
+              Container(
+                // color: Colors.white,
+                height: MediaQuery.of(Get.context!).size.width > 650
+                    ? Get.height * 0.5
+                    : Get.height * 0.4,
                 // color: AppColors.whiteColor,
                 child: Obx(() => controller.receiveProduct.isNotEmpty
                     ? ListView.builder(
@@ -150,7 +186,9 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                           final data = controller.receiveProduct[index];
 
                           return Container(
-                            height: 200,
+                            height: MediaQuery.of(Get.context!).size.width > 650
+                                ? 200
+                                : 100,
                             decoration: BoxDecoration(
                               border: Border.all(
                                 color: AppColors.blackColor,
@@ -172,14 +210,24 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                                     Text(
                                       "Product:",
                                       style: TextStyle(
-                                        fontSize: AppDimens.font18,
+                                        fontSize: MediaQuery.of(Get.context!)
+                                                    .size
+                                                    .width >
+                                                650
+                                            ? AppDimens.font16
+                                            : AppDimens.font14,
                                         color: AppColors.blackColor,
                                       ),
                                     ),
                                     Text(
                                       data.productName ?? "",
                                       style: TextStyle(
-                                        fontSize: AppDimens.font18,
+                                        fontSize: MediaQuery.of(Get.context!)
+                                                    .size
+                                                    .width >
+                                                650
+                                            ? AppDimens.font18
+                                            : AppDimens.font14,
                                         color: AppColors.whiteColor,
                                       ),
                                     ),
@@ -196,14 +244,24 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                                     Text(
                                       "Quantity:",
                                       style: TextStyle(
-                                        fontSize: AppDimens.font18,
+                                        fontSize: MediaQuery.of(Get.context!)
+                                                    .size
+                                                    .width >
+                                                650
+                                            ? AppDimens.font18
+                                            : AppDimens.font14,
                                         color: AppColors.blackColor,
                                       ),
                                     ),
                                     Text(
                                       data.productQuantity ?? "0",
                                       style: TextStyle(
-                                        fontSize: AppDimens.font18,
+                                        fontSize: MediaQuery.of(Get.context!)
+                                                    .size
+                                                    .width >
+                                                650
+                                            ? AppDimens.font18
+                                            : AppDimens.font14,
                                         color: AppColors.whiteColor,
                                       ),
                                     ),

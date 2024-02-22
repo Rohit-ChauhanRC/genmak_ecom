@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:path_provider/path_provider.dart';
+import 'package:collection/collection.dart';
 
 import 'package:esc_pos_utils_plus/esc_pos_utils_plus.dart';
 import 'package:flutter/foundation.dart';
@@ -16,19 +16,16 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart' hide Image;
+import 'package:intl/intl.dart';
 import 'package:lan_scanner/lan_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:esc_pos_printer_plus/esc_pos_printer_plus.dart';
-import 'package:image/image.dart';
 import 'package:ping_discover_network_plus/ping_discover_network_plus.dart';
 //
 import 'package:esp_smartconfig/esp_smartconfig.dart';
 import 'package:network_info_plus/network_info_plus.dart';
-import 'package:tcp_socket_connection/tcp_socket_connection.dart';
 import 'package:dio/dio.dart';
-import 'package:web_socket_channel/io.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:pdf/pdf.dart';
@@ -436,8 +433,13 @@ class HomeController extends GetxController {
     if (orders.toSet().toList().isNotEmpty) {
       for (var i = 0; i < orders.toSet().toList().length; i++) {
         totalAmount += (int.tryParse(orders.toSet().toList()[i].price!)! *
-                orders.toSet().toList()[i].count!)
-            .toDouble();
+                    orders.toSet().toList()[i].count!)
+                .toDouble() +
+            (int.tryParse(orders.toSet().toList()[i].price!)! *
+                        orders.toSet().toList()[i].count!)
+                    .toDouble() *
+                (int.tryParse(orders.toSet().toList()[i].gst!)!) /
+                100;
       }
     }
     return totalAmount;
@@ -719,12 +721,18 @@ class HomeController extends GetxController {
   apiLopp(int i) async {
     try {
       var res = await http.post(Uri.parse("http://$ip.$i/status"), body: {
-        "print": "",
+        "print": """
+  GENAMK INFO INDIA PVT LTD
+  SOHNA ROAD, GURUGRAM
+  GSTIN:29AAMFN3642F123
+  PH:080-23232323
+  DATE: ${DateFormat("dd/MM/yyyy").add_Hms().format(DateTime.now())}
+  BILL NO.: 10""",
       });
       if (res.statusCode == 200) {
         // apiUrl = "http://$ip.$i/status";
         print(res.statusCode);
-        print("http://$ip.$i/status");
+        // print("http://$ip.$i/status");
         setStatus("http://$ip.$i/status");
       }
     } catch (e) {
@@ -732,35 +740,104 @@ class HomeController extends GetxController {
     }
   }
 
+  List<Map<double, double>> calulateGST() {
+    final gst = orders.toSet().map((e) => (
+          int.parse(e.gst!) / 2,
+          (int.parse(e.price!) * e.count! * int.parse(e.gst!) / 100) / 2
+        ));
+
+    final lis1 = [];
+
+    final listOFMAp = gst.toList().map((e) {
+      lis1.add(e.$1);
+      return {e.$1: e.$2};
+    });
+    var mergedMap = <double, List<double>>{};
+
+    for (var map in listOFMAp.toList()) {
+      for (var e in map.entries) {
+        (mergedMap[e.key] ??= []).add(e.value);
+      }
+    }
+    final List<Map<double, double>> c1 = [];
+    for (var e in mergedMap.entries) {
+      c1.add(e.value.length > 1
+          ? {e.key: e.value.reduce((a, b) => a + b)}
+          : {
+              e.key: double.parse(
+                  e.value.toString().replaceAll("[", "").replaceAll("]", ""))
+            });
+    }
+    if (kDebugMode) {
+      print(c1);
+    }
+
+    return c1;
+  }
+
   void setStatus(String apiUrl) async {
+    final subtotalPrice = orders
+        .toSet()
+        .map((e) => int.parse(e.price!) * e.count!)
+        .fold(
+            0,
+            (previousValue, element) =>
+                int.parse(previousValue.toString()) + element);
+    final count = orders.toSet().map((e) => e.count).fold(
+        0,
+        (previousValue, element) =>
+            int.parse(previousValue.toString()) + element!);
+    List<Map<double, double>> gstList = calulateGST();
+    late int count1 = 0;
+    final li = orders.toSet().map((e) {
+      count1 = count1 + 1;
+      return """$count1.  ${e.name!} \n     Rs.${e.price}/-   ${e.count}   Rs.${int.parse(e.price!) * e.count!}/-\n"""
+          .toString()
+          .replaceAll("(", "")
+          .replaceAll(",", "")
+          .replaceAll(")", "");
+    });
+
+    late double az = 0.0;
+    final gstli = gstList
+        .toSet()
+        .map((e) {
+          az = az + e.values.first;
+          return """${e.keys.first}   ${e.values.first}   ${e.values.first}/-\n   """;
+        })
+        .toString()
+        .replaceAll("(", "")
+        .replaceAll(",", "")
+        .replaceAll(")", "");
+
     try {
-      Runes input = Runes(' \u{20B9}');
-      final request = http.MultipartRequest('POST', Uri.parse(apiUrl));
-      final dir = await getApplicationDocumentsDirectory();
-      // final file = File('${dir.path}/pdfFile');
-      request.fields["print"] = """
-  GENAMK INFO INDIA PVT LTD
-  SOHNA ROAD, GURUGRAM
-  GSTIN:29AAMFN3642F123 
-  PH:080-23232323
-  DATE: ${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}  TIME: ${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}
-  BILL NO.: 10                
-  - - - - - - - - - - - - - - - 
-  SR.  ITEM NAME RATE QTY VALUE       
-  ${orders.toSet().toList().map((e) {
-        return """${e.id}.  ${e.name} Rs.${e.price}/-  ${e.count}  Rs.${int.parse(e.price!) * e.count!}/-""";
-      })}
-
- """;
-
-      var res = await request.send();
-
+      var res = await http.post(Uri.parse(apiUrl), body: {
+        "print": """
+  - - - - - - - - - - - - - - -
+  SR. RATE    QTY   AMOUNT
+  $li
+  - - - - - - - - - - - - - - -
+  Subtotal   $count   Rs.$subtotalPrice/-
+  - - - - - - - - - - - - - - -
+    %    CGST   SGST
+    $gstli
+  - - - - - - - - - - - - - - -
+  Rs.$az/-   Rs.$az/-
+  - - - - - - - - - - - - - - -
+  Total   Rs.$subtotalPrice/-
+  - - - - - - - - - - - - - - -
+      Thank You
+    
+ """,
+      });
       if (res.statusCode == 200) {
-        print(res.statusCode);
+        print("send");
         orders.assignAll([]);
         totalAmount = 0.0;
       }
-    } catch (e) {}
+    } catch (e) {
+      // apiLopp(i);
+    }
   }
 
   void createPrintPage() {

@@ -13,7 +13,19 @@ class EditVendorView extends GetView<EditVendorController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('EditVendorView'),
+        iconTheme: IconThemeData(
+          color: AppColors.blackColor,
+          size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
+        ),
+        title: Text(
+          'EditVendorView',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: MediaQuery.of(Get.context!).size.width > 650
+                ? AppDimens.font30
+                : AppDimens.font18,
+          ),
+        ),
         centerTitle: true,
       ),
       body: Obx(() => !controller.progressBar
@@ -28,7 +40,9 @@ class EditVendorView extends GetView<EditVendorController> {
                       child: Text(
                         "Vendor Name :",
                         style: TextStyle(
-                          fontSize: AppDimens.font22,
+                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                              ? AppDimens.font22
+                              : AppDimens.font16,
                           color: AppColors.blackColor,
                         ),
                       ),
@@ -38,15 +52,19 @@ class EditVendorView extends GetView<EditVendorController> {
                       onChanged: (val) => controller.name = val,
                       initialValue: controller.name,
                     ),
-                    const SizedBox(
-                      height: 20,
+                    SizedBox(
+                      height: MediaQuery.of(Get.context!).size.width > 650
+                          ? 20
+                          : 10,
                     ),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
                         "Mobile No :",
                         style: TextStyle(
-                          fontSize: AppDimens.font22,
+                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                              ? AppDimens.font22
+                              : AppDimens.font16,
                           color: AppColors.blackColor,
                         ),
                       ),
@@ -56,15 +74,19 @@ class EditVendorView extends GetView<EditVendorController> {
                       onChanged: (val) => controller.mobileNumber = val,
                       initialValue: controller.mobileNumber,
                     ),
-                    const SizedBox(
-                      height: 20,
+                    SizedBox(
+                      height: MediaQuery.of(Get.context!).size.width > 650
+                          ? 20
+                          : 10,
                     ),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
                         "GSTIN No :",
                         style: TextStyle(
-                          fontSize: AppDimens.font22,
+                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                              ? AppDimens.font22
+                              : AppDimens.font16,
                           color: AppColors.blackColor,
                         ),
                       ),
@@ -74,15 +96,19 @@ class EditVendorView extends GetView<EditVendorController> {
                       onChanged: (val) => controller.gst = val,
                       initialValue: controller.gst,
                     ),
-                    const SizedBox(
-                      height: 20,
+                    SizedBox(
+                      height: MediaQuery.of(Get.context!).size.width > 650
+                          ? 20
+                          : 10,
                     ),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
                         "Address :",
                         style: TextStyle(
-                          fontSize: AppDimens.font22,
+                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                              ? AppDimens.font22
+                              : AppDimens.font16,
                           color: AppColors.blackColor,
                         ),
                       ),
@@ -92,8 +118,10 @@ class EditVendorView extends GetView<EditVendorController> {
                       onChanged: (val) => controller.address = val,
                       initialValue: controller.address,
                     ),
-                    const SizedBox(
-                      height: 20,
+                    SizedBox(
+                      height: MediaQuery.of(Get.context!).size.width > 650
+                          ? 20
+                          : 10,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,

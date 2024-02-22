@@ -15,11 +15,21 @@ class ProductListView extends GetView<ProductListController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Product List'),
+        iconTheme: IconThemeData(
+          color: AppColors.blackColor,
+          size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
+        ),
+        title: Text('Product List',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: MediaQuery.of(Get.context!).size.width > 650
+                  ? AppDimens.font30
+                  : AppDimens.font18,
+            )),
         centerTitle: true,
       ),
       body: Container(
-        margin: const EdgeInsets.all(20),
+        // margin: const EdgeInsets.all(20),
         height: Get.height,
         width: Get.width,
         child: Obx(() => controller.homeController.products.isNotEmpty
@@ -35,7 +45,7 @@ class ProductListView extends GetView<ProductListController> {
                       // mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
-                          width: Get.width / 3,
+                          width: Get.width / 2.5,
                           child: TextFormWidget(
                             textController:
                                 controller.homeController.textController,

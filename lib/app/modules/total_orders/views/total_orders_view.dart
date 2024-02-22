@@ -6,6 +6,7 @@ import 'package:genmak_ecom/app/utils/app_dimens/app_dimens.dart';
 import 'package:genmak_ecom/app/utils/widgets/text_form_widget.dart';
 
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../controllers/total_orders_controller.dart';
 
@@ -15,22 +16,39 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Total Orders'),
+        iconTheme: IconThemeData(
+          color: AppColors.blackColor,
+          size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
+        ),
+        title: Text(
+          'Total Orders',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: MediaQuery.of(Get.context!).size.width > 650
+                ? AppDimens.font30
+                : AppDimens.font18,
+          ),
+        ),
         centerTitle: true,
       ),
       body: Container(
-        margin: const EdgeInsets.all(20),
+        // margin: const EdgeInsets.all(20),
         child: Obx(() => controller.receiveList.isNotEmpty
             ? ListView(
                 shrinkWrap: true,
                 children: [
                   Container(
+                    height: MediaQuery.of(context).size.width > 650 ? 70 : 50,
                     margin: const EdgeInsets.only(left: 10, right: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+
+                    // margin: const EdgeInsets.only(left: 10, right: 10),
+                    child: ListView(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      // mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
-                          width: Get.width / 2,
+                          width: Get.width / 2.5,
                           child: TextFormWidget(
                             textController: controller.textController,
                             label: "Search...",
@@ -43,8 +61,8 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                         ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.blackColor,
-                          ),
+                              // backgroundColor: AppColors.blackColor,
+                              ),
                           onPressed: () async {
                             if (controller.textController!.text
                                 .toString()
@@ -63,8 +81,8 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                         ),
                         ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.blackColor,
-                            ),
+                                // backgroundColor: AppColors.blackColor,
+                                ),
                             onPressed: () async {
                               // controller.textController!.clear();
                               // controller.searchP = false;
@@ -80,12 +98,13 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                   Container(
                     margin: const EdgeInsets.only(top: 20),
                     height: Get.height / 1.2,
-                    child: GridView.builder(
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisExtent: 150,
-                      ),
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      // gridDelegate:
+                      //     const SliverGridDelegateWithFixedCrossAxisCount(
+                      //   crossAxisCount: 1,
+                      //   mainAxisExtent: 200,
+                      // ),
                       itemCount: controller.receiveList.length,
                       itemBuilder: (context, index) {
                         ReceivingModel data = controller.receiveList[index];
@@ -95,12 +114,20 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                             Get.toNamed(Routes.ORDER_DETAILS, arguments: data);
                           },
                           child: Container(
+                            height: MediaQuery.of(Get.context!).size.width > 650
+                                ? 250
+                                : 150,
+                            width: MediaQuery.of(Get.context!).size.width > 650
+                                ? 200
+                                : 150,
+                            // margin: const EdgeInsets.all(10),
+
                             decoration: BoxDecoration(
                               border: Border.all(
                                 color: AppColors.blackColor,
                               ),
                               borderRadius: BorderRadius.circular(20),
-                              color: AppColors.whiteColor,
+                              color: AppColors.bgColor,
                             ),
                             padding: const EdgeInsets.all(10),
                             margin: const EdgeInsets.all(10),
@@ -116,14 +143,24 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                                     Text(
                                       "Invoice No.:",
                                       style: TextStyle(
-                                        fontSize: AppDimens.font18,
+                                        fontSize: MediaQuery.of(Get.context!)
+                                                    .size
+                                                    .width >
+                                                650
+                                            ? AppDimens.font22
+                                            : AppDimens.font16,
                                         color: AppColors.blackColor,
                                       ),
                                     ),
                                     Text(
                                       data.invoiceId ?? "",
                                       style: TextStyle(
-                                        fontSize: AppDimens.font18,
+                                        fontSize: MediaQuery.of(Get.context!)
+                                                    .size
+                                                    .width >
+                                                650
+                                            ? AppDimens.font22
+                                            : AppDimens.font16,
                                         color: AppColors.whiteColor,
                                       ),
                                     ),
@@ -140,14 +177,27 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                                     Text(
                                       "Date:",
                                       style: TextStyle(
-                                        fontSize: AppDimens.font18,
+                                        fontSize: MediaQuery.of(Get.context!)
+                                                    .size
+                                                    .width >
+                                                650
+                                            ? AppDimens.font22
+                                            : AppDimens.font16,
                                         color: AppColors.blackColor,
                                       ),
                                     ),
                                     Text(
-                                      data.receivingDate ?? "",
+                                      DateFormat("dd/MM/yyyy").format(
+                                              DateTime.parse(
+                                                  data.receivingDate!)) ??
+                                          "",
                                       style: TextStyle(
-                                        fontSize: AppDimens.font18,
+                                        fontSize: MediaQuery.of(Get.context!)
+                                                    .size
+                                                    .width >
+                                                650
+                                            ? AppDimens.font22
+                                            : AppDimens.font16,
                                         color: AppColors.whiteColor,
                                       ),
                                     ),
@@ -164,14 +214,24 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                                     Text(
                                       "Vendor",
                                       style: TextStyle(
-                                        fontSize: AppDimens.font18,
+                                        fontSize: MediaQuery.of(Get.context!)
+                                                    .size
+                                                    .width >
+                                                650
+                                            ? AppDimens.font22
+                                            : AppDimens.font16,
                                         color: AppColors.blackColor,
                                       ),
                                     ),
                                     Text(
                                       data.vendorName ?? "",
                                       style: TextStyle(
-                                        fontSize: AppDimens.font18,
+                                        fontSize: MediaQuery.of(Get.context!)
+                                                    .size
+                                                    .width >
+                                                650
+                                            ? AppDimens.font22
+                                            : AppDimens.font16,
                                         color: AppColors.whiteColor,
                                       ),
                                     ),

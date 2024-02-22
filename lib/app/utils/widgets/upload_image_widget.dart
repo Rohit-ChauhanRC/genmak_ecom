@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:genmak_ecom/app/utils/app_colors/app_colors.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UploadImageWidget extends StatelessWidget {
@@ -27,7 +28,7 @@ class UploadImageWidget extends StatelessWidget {
     return InkWell(
       onTap: onTap ?? () {},
       child: CircleAvatar(
-        radius: 100,
+        radius: MediaQuery.of(Get.context!).size.width > 650 ? 100 : 50,
         backgroundColor: AppColors.greenColor,
         // color: Colors.white,
         backgroundImage: imageDb == false &&

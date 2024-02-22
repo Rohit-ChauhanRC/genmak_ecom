@@ -14,7 +14,19 @@ class ProfileView extends GetView<ProfileController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile'),
+        iconTheme: IconThemeData(
+          color: AppColors.blackColor,
+          size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
+        ),
+        title: Text(
+          'Profile',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: MediaQuery.of(Get.context!).size.width > 650
+                ? AppDimens.font30
+                : AppDimens.font18,
+          ),
+        ),
         centerTitle: true,
       ),
       body: Container(
@@ -40,20 +52,24 @@ class ProfileView extends GetView<ProfileController> {
               child: Text(
                 "Customer ID: 223234",
                 style: TextStyle(
-                  fontSize: AppDimens.font22,
+                  fontSize: MediaQuery.of(Get.context!).size.width > 650
+                      ? AppDimens.font22
+                      : AppDimens.font16,
                   color: AppColors.blackColor,
                 ),
               ),
             ),
-            const SizedBox(
-              height: 20,
+            SizedBox(
+              height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
             ),
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
                 "Shop Name :",
                 style: TextStyle(
-                  fontSize: AppDimens.font22,
+                  fontSize: MediaQuery.of(Get.context!).size.width > 650
+                      ? AppDimens.font22
+                      : AppDimens.font16,
                   color: AppColors.blackColor,
                 ),
               ),
@@ -62,15 +78,17 @@ class ProfileView extends GetView<ProfileController> {
               // label: "Please enter Shop Name...",
               onChanged: (val) {},
             ),
-            const SizedBox(
-              height: 20,
+            SizedBox(
+              height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
             ),
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
                 "Shop Address :",
                 style: TextStyle(
-                  fontSize: AppDimens.font22,
+                  fontSize: MediaQuery.of(Get.context!).size.width > 650
+                      ? AppDimens.font22
+                      : AppDimens.font16,
                   color: AppColors.blackColor,
                 ),
               ),
@@ -79,15 +97,17 @@ class ProfileView extends GetView<ProfileController> {
               label: "Pleae enter Shop Address...",
               onChanged: (val) {},
             ),
-            const SizedBox(
-              height: 20,
+            SizedBox(
+              height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
             ),
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
                 "Contact No :",
                 style: TextStyle(
-                  fontSize: AppDimens.font22,
+                  fontSize: MediaQuery.of(Get.context!).size.width > 650
+                      ? AppDimens.font22
+                      : AppDimens.font16,
                   color: AppColors.blackColor,
                 ),
               ),
@@ -97,8 +117,8 @@ class ProfileView extends GetView<ProfileController> {
               onChanged: (val) {},
               keyboardType: TextInputType.phone,
             ),
-            const SizedBox(
-              height: 20,
+            SizedBox(
+              height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
             ),
             SizedBox(
                 // width: Get.width / 8,

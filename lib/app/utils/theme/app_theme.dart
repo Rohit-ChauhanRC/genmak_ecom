@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:genmak_ecom/app/utils/app_colors/app_colors.dart';
 import 'package:genmak_ecom/app/utils/app_dimens/app_dimens.dart';
+import 'package:get/get.dart';
 
 class AppTheme {
-  const AppTheme._();
+  //  AppTheme._();
 
   static ThemeData get theme {
     final themeData = ThemeData.light();
@@ -27,13 +28,9 @@ class AppTheme {
           titleTextStyle: TextStyle(
             color: AppColors.blackColor,
             fontFamily: "Kalnia_Expanded-Bold",
-            fontSize: AppDimens.font30,
+
             fontWeight: FontWeight.bold,
             // overflow: TextOverflow.visible,
-          ),
-          iconTheme: IconThemeData(
-            color: AppColors.blackColor,
-            size: 40,
           ),
           actionsIconTheme: IconThemeData(
             color: AppColors.blackColor,
@@ -49,9 +46,11 @@ class AppTheme {
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.whiteColor,
-            textStyle: const TextStyle(
+            textStyle: TextStyle(
               color: Colors.black,
-              fontSize: AppDimens.font22,
+              // fontSize: MediaQuery.of(Get.context!).size.width > 650
+              //     ? AppDimens.font22
+              //     : AppDimens.font16,
             ),
             // foregroundColor: Colors.white,
           ),
@@ -59,16 +58,18 @@ class AppTheme {
         inputDecorationTheme: InputDecorationTheme(
           fillColor: AppColors.whiteColor,
           filled: true,
+          isDense: true,
+          contentPadding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30),
             borderSide: BorderSide(
-              color: AppColors.brownColor,
+              color: AppColors.blackColor,
             ),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30),
             borderSide: BorderSide(
-              color: AppColors.brownColor,
+              color: AppColors.blackColor,
             ),
           ),
           errorBorder: OutlineInputBorder(

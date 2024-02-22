@@ -18,7 +18,19 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Receive Products'),
+        iconTheme: IconThemeData(
+          color: AppColors.blackColor,
+          size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
+        ),
+        title: Text(
+          'Receive Products',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: MediaQuery.of(Get.context!).size.width > 650
+                ? AppDimens.font30
+                : AppDimens.font18,
+          ),
+        ),
         centerTitle: true,
       ),
       body: Container(
@@ -33,7 +45,9 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                 child: Text(
                   "Invoice No. :",
                   style: TextStyle(
-                    fontSize: AppDimens.font22,
+                    fontSize: MediaQuery.of(Get.context!).size.width > 650
+                        ? AppDimens.font22
+                        : AppDimens.font16,
                     color: AppColors.blackColor,
                   ),
                 ),
@@ -43,15 +57,17 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                 onChanged: (val) => controller.invoiceId = val,
                 validator: (v) => v!.isEmpty ? "Field is required!" : null,
               ),
-              const SizedBox(
-                height: 20,
+              SizedBox(
+                height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
               ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   "Total amount :",
                   style: TextStyle(
-                    fontSize: AppDimens.font22,
+                    fontSize: MediaQuery.of(Get.context!).size.width > 650
+                        ? AppDimens.font22
+                        : AppDimens.font16,
                     color: AppColors.blackColor,
                   ),
                 ),
@@ -62,19 +78,21 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                 keyboardType: TextInputType.number,
                 validator: (v) => v!.isEmpty ? "Field is required!" : null,
               ),
-              const SizedBox(
-                height: 20,
+              SizedBox(
+                height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              // const SizedBox(
+              //   height: 20,
+              // ),
               controller.vendors.isNotEmpty
                   ? Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
                         "Select Vendor :",
                         style: TextStyle(
-                          fontSize: AppDimens.font22,
+                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                              ? AppDimens.font22
+                              : AppDimens.font16,
                           color: AppColors.blackColor,
                         ),
                       ),
@@ -111,10 +129,13 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                       margin: const EdgeInsets.only(top: 20),
                       child: Row(
                         children: [
-                          const Text(
+                          Text(
                             "if vendor not available in the above list please,",
                             style: TextStyle(
-                              fontSize: AppDimens.font18,
+                              fontSize:
+                                  MediaQuery.of(Get.context!).size.width > 650
+                                      ? AppDimens.font18
+                                      : AppDimens.font10,
                             ),
                           ),
                           InkWell(
@@ -124,7 +145,10 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                             child: Text(
                               "\tclick here",
                               style: TextStyle(
-                                fontSize: AppDimens.font18,
+                                fontSize:
+                                    MediaQuery.of(Get.context!).size.width > 650
+                                        ? AppDimens.font18
+                                        : AppDimens.font10,
                                 color: AppColors.reddishColor,
                                 decoration: TextDecoration.underline,
                                 decorationColor: AppColors.reddishColor,
@@ -136,15 +160,17 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                       ),
                     )
                   : const SizedBox(),
-              const SizedBox(
-                height: 20,
+              SizedBox(
+                height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
               ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   "Receiving Date :",
                   style: TextStyle(
-                    fontSize: AppDimens.font22,
+                    fontSize: MediaQuery.of(Get.context!).size.width > 650
+                        ? AppDimens.font22
+                        : AppDimens.font16,
                     color: AppColors.blackColor,
                   ),
                 ),
@@ -153,8 +179,8 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                 hintText: "Receiving Date",
                 onChanged: (val) => controller.receivingDate = val.toString(),
               ),
-              const SizedBox(
-                height: 20,
+              SizedBox(
+                height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
               ),
               Container(
                 height: Get.height / 2.3,
@@ -181,9 +207,13 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                             Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                "Address :",
+                                "Select Product :",
                                 style: TextStyle(
-                                  fontSize: AppDimens.font22,
+                                  fontSize:
+                                      MediaQuery.of(Get.context!).size.width >
+                                              650
+                                          ? AppDimens.font22
+                                          : AppDimens.font16,
                                   color: AppColors.blackColor,
                                 ),
                               ),
@@ -238,13 +268,24 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                                   )
                                 : const SizedBox()),
                             Container(
-                              margin: const EdgeInsets.only(top: 20),
+                              margin: const EdgeInsets.only(top: 10),
                               child: Row(
                                 children: [
-                                  const Text(
-                                    "if product not available in the above list please,",
-                                    style: TextStyle(
-                                      fontSize: AppDimens.font18,
+                                  SizedBox(
+                                    // width: Get.width * 0.7,
+                                    child: Text(
+                                      "if product not available in the above list please,",
+                                      // maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        fontSize: MediaQuery.of(Get.context!)
+                                                    .size
+                                                    .width >
+                                                650
+                                            ? AppDimens.font18
+                                            : AppDimens.font10,
+                                        overflow: TextOverflow.visible,
+                                      ),
                                     ),
                                   ),
                                   InkWell(
@@ -254,7 +295,12 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                                     child: Text(
                                       "\tclick here",
                                       style: TextStyle(
-                                        fontSize: AppDimens.font18,
+                                        fontSize: MediaQuery.of(Get.context!)
+                                                    .size
+                                                    .width >
+                                                650
+                                            ? AppDimens.font18
+                                            : AppDimens.font10,
                                         color: AppColors.reddishColor,
                                         decoration: TextDecoration.underline,
                                         decorationColor: AppColors.reddishColor,
@@ -266,15 +312,22 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                                 ],
                               ),
                             ),
-                            const SizedBox(
-                              height: 20,
+                            SizedBox(
+                              height:
+                                  MediaQuery.of(Get.context!).size.width > 650
+                                      ? 20
+                                      : 10,
                             ),
                             Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                "Address :",
+                                "Quantity :",
                                 style: TextStyle(
-                                  fontSize: AppDimens.font22,
+                                  fontSize:
+                                      MediaQuery.of(Get.context!).size.width >
+                                              650
+                                          ? AppDimens.font22
+                                          : AppDimens.font16,
                                   color: AppColors.blackColor,
                                 ),
                               ),

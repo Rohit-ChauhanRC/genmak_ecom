@@ -100,14 +100,17 @@ class GridWidget extends StatelessWidget {
                   //   height: 2,
                   // ),
                   SizedBox(
-                    width: 100.w,
+                    // width: 100.w,
                     child: Text(
                       "${product[i].name!}-${product[i].price!}",
+                      maxLines: 2,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: AppColors.whiteColor,
-                        fontSize: AppDimens.font18,
-                        overflow: TextOverflow.visible,
+                        fontSize: MediaQuery.of(context).size.width > 650
+                            ? AppDimens.font18
+                            : AppDimens.font14,
+                        overflow: TextOverflow.ellipsis,
                         fontWeight: FontWeight.bold,
                       ),
                       overflow: TextOverflow.visible,
@@ -116,22 +119,47 @@ class GridWidget extends StatelessWidget {
                   // const SizedBox(
                   //   height: 2,
                   // ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(left: 10),
-                        padding: const EdgeInsets.all(5),
-                        decoration: BoxDecoration(
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.only(left: 10),
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(
+                                color: Colors.black,
+                              ),
+                              borderRadius: BorderRadius.circular(20)),
+                          // width: 100,
+                          child: ObxValue(
+                            (v) => Text(
+                              product[i].quantity.toString(),
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: AppColors.brownColor,
+                                fontSize: AppDimens.font12,
+                                overflow: TextOverflow.visible,
+                              ),
+                              overflow: TextOverflow.visible,
+                            ),
+                            product[i].quantity!.obs,
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(right: 10),
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
                             color: Colors.white,
                             border: Border.all(
                               color: Colors.black,
                             ),
-                            borderRadius: BorderRadius.circular(20)),
-                        // width: 100,
-                        child: ObxValue(
-                          (v) => Text(
-                            product[i].quantity.toString(),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Text(
+                            "${product[i].weight}",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: AppColors.brownColor,
@@ -140,31 +168,9 @@ class GridWidget extends StatelessWidget {
                             ),
                             overflow: TextOverflow.visible,
                           ),
-                          product[i].quantity!.obs,
                         ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(right: 10),
-                        padding: const EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(
-                            color: Colors.black,
-                          ),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Text(
-                          "${product[i].weight}",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: AppColors.brownColor,
-                            fontSize: AppDimens.font12,
-                            overflow: TextOverflow.visible,
-                          ),
-                          overflow: TextOverflow.visible,
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   // Container(
                   //   // margin: const EdgeInsets.only(top: 10),
@@ -216,144 +222,5 @@ class GridWidget extends StatelessWidget {
           // : const SizedBox()
           // );
         });
-  }
-
-  Widget getCard({
-    required Uint8List? picture,
-    required String title,
-    required String quantity,
-    required String price,
-    required String volume,
-    required void Function()? onTap,
-    required ProductModel? model,
-  }) {
-    return Obx(() => int.tryParse(quantity)! >= 1
-        ? InkWell(
-            onTap: onTap,
-            child: Container(
-              height: 200,
-              width: 120,
-              margin: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: AppColors.creamColor1,
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(
-                  color: Colors.black,
-                ),
-              ),
-              padding: const EdgeInsets.all(0),
-              child: Column(
-                children: [
-                  picture != null
-                      ? SizedBox(
-                          height: 140,
-                          width: 190,
-                          child: ClipRRect(
-                            borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                topRight: Radius.circular(20)),
-                            child: Image.memory(
-                              picture!,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                        )
-                      : Image.asset(
-                          "assets/images/Paneer.png",
-                          height: 120,
-                          width: 120,
-                          fit: BoxFit.cover,
-                        ),
-                  // const SizedBox(
-                  //   height: 2,
-                  // ),
-                  SizedBox(
-                    // width: 100,
-                    child: Text(
-                      title,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: AppColors.whiteColor,
-                        fontSize: AppDimens.font18,
-                        overflow: TextOverflow.visible,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      overflow: TextOverflow.visible,
-                    ),
-                  ),
-                  // const SizedBox(
-                  //   height: 2,
-                  // ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                          margin: const EdgeInsets.only(left: 10),
-                          padding: const EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(
-                                color: Colors.black,
-                              ),
-                              borderRadius: BorderRadius.circular(20)),
-                          // width: 100,
-                          child: Text(
-                            quantity,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: AppColors.brownColor,
-                              fontSize: AppDimens.font12,
-                              overflow: TextOverflow.visible,
-                            ),
-                            overflow: TextOverflow.visible,
-                          )),
-                      Container(
-                        margin: const EdgeInsets.only(right: 10),
-                        padding: const EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(
-                            color: Colors.black,
-                          ),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Text(
-                          "${volume != "" ? volume : 0}",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: AppColors.brownColor,
-                            fontSize: AppDimens.font12,
-                            overflow: TextOverflow.visible,
-                          ),
-                          overflow: TextOverflow.visible,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    // margin: const EdgeInsets.only(top: 10),
-                    padding: const EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(
-                          color: Colors.black,
-                        ),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Text(
-                      "₹$price" ?? "0",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: AppColors.brownColor,
-                        fontSize: AppDimens.font12,
-                        overflow: TextOverflow.visible,
-                      ),
-                      overflow: TextOverflow.visible,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          )
-        : const SizedBox());
   }
 }

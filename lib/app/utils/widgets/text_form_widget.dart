@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
 class TextFormWidget extends StatelessWidget {
   const TextFormWidget({
@@ -23,22 +24,25 @@ class TextFormWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: textController,
-      validator: validator,
-      initialValue: initialValue,
-      autovalidateMode: AutovalidateMode.always,
-      onChanged: onChanged,
-      inputFormatters: [
-        if (keyboardType == TextInputType.number ||
-            keyboardType == TextInputType.phone)
-          FilteringTextInputFormatter.digitsOnly,
-      ],
-      readOnly: readOnly,
-      keyboardType: keyboardType ?? TextInputType.text,
-      decoration: InputDecoration(
-          // label: Text(label!),
-          ),
+    return SizedBox(
+      // height: 80,
+      child: TextFormField(
+        controller: textController,
+        validator: validator,
+        initialValue: initialValue,
+        autovalidateMode: AutovalidateMode.always,
+        onChanged: onChanged,
+        inputFormatters: [
+          if (keyboardType == TextInputType.number ||
+              keyboardType == TextInputType.phone)
+            FilteringTextInputFormatter.digitsOnly,
+        ],
+        readOnly: readOnly,
+        keyboardType: keyboardType ?? TextInputType.text,
+        decoration: InputDecoration(
+            // label: Text(label!),
+            ),
+      ),
     );
   }
 }

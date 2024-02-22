@@ -15,6 +15,10 @@ class ProductModel {
   final String? description;
   final Uint8List? picture;
   late int? count;
+  int? active;
+  String? gst;
+  String? discount;
+  String? hsnCode;
 
   ProductModel({
     this.id,
@@ -25,6 +29,10 @@ class ProductModel {
     this.description,
     this.picture,
     this.count,
+    this.active,
+    this.discount,
+    this.gst,
+    this.hsnCode,
   });
 
   factory ProductModel.fromMap(Map<String, dynamic> json) => ProductModel(
@@ -36,6 +44,10 @@ class ProductModel {
         description: json["description"] ?? "",
         picture: json["picture"] ?? "",
         count: json["count"] ?? 0,
+        active: json["active"] ?? 0,
+        discount: json["discount"] ?? 0,
+        gst: json["gst"] ?? 0,
+        hsnCode: json["hsnCode"] ?? 0,
       );
 
   Map<String, dynamic> toMap() => {
@@ -47,5 +59,9 @@ class ProductModel {
         "description": description,
         "picture": picture,
         "count": count,
+        "hsnCode": hsnCode,
+        "gst": gst,
+        "discount": discount,
+        "active": active,
       };
 }

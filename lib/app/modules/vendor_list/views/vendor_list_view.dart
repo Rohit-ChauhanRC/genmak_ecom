@@ -15,24 +15,40 @@ class VendorListView extends GetView<VendorListController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Vendor List'),
+        iconTheme: IconThemeData(
+          color: AppColors.blackColor,
+          size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
+        ),
+        title: Text(
+          'Vendor List',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: MediaQuery.of(Get.context!).size.width > 650
+                ? AppDimens.font30
+                : AppDimens.font18,
+          ),
+        ),
         centerTitle: true,
       ),
       body: Container(
-        margin: const EdgeInsets.all(20),
+        // margin: const EdgeInsets.all(20),
         height: Get.height,
         width: Get.width,
         child: Obx(() => controller.vendors.isNotEmpty
             ? ListView(
                 shrinkWrap: true,
+                // scrollDirection: Axis.horizontal,
                 children: [
                   Container(
+                    height: MediaQuery.of(context).size.width > 650 ? 70 : 50,
                     margin: const EdgeInsets.only(left: 10, right: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    child: ListView(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      // mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
-                          width: Get.width / 2,
+                          width: Get.width / 3,
                           child: TextFormWidget(
                             textController: controller.textController,
                             label: "Search...",

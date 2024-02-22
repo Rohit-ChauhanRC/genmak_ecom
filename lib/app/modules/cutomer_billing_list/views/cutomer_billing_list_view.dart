@@ -5,6 +5,7 @@ import 'package:genmak_ecom/app/utils/app_colors/app_colors.dart';
 import 'package:genmak_ecom/app/utils/widgets/text_form_widget.dart';
 
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../../utils/app_dimens/app_dimens.dart';
 import '../controllers/cutomer_billing_list_controller.dart';
@@ -15,19 +16,36 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cutomer Billing List'),
+        iconTheme: IconThemeData(
+          color: AppColors.blackColor,
+          size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
+        ),
+        title: Text(
+          'Cutomer Billing List',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: MediaQuery.of(Get.context!).size.width > 650
+                ? AppDimens.font30
+                : AppDimens.font18,
+          ),
+        ),
         centerTitle: true,
       ),
       body: Container(
-        margin: const EdgeInsets.all(20),
+        // margin: const EdgeInsets.all(20),
         child: Obx(() => controller.receiveList.isNotEmpty
             ? ListView(
                 shrinkWrap: true,
                 children: [
                   Container(
+                    height: MediaQuery.of(context).size.width > 650 ? 70 : 50,
                     margin: const EdgeInsets.only(left: 10, right: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+
+                    // margin: const EdgeInsets.only(left: 10, right: 10),
+                    child: ListView(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      // mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
                           width: Get.width / 2,
@@ -80,10 +98,15 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
                     child: GridView.builder(
                       shrinkWrap: true,
                       // reverse: true,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 4,
-                        mainAxisExtent: 150,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount:
+                            MediaQuery.of(Get.context!).size.width > 650
+                                ? 4
+                                : 1,
+                        mainAxisExtent:
+                            MediaQuery.of(Get.context!).size.width > 650
+                                ? 150
+                                : 100,
                       ),
                       itemCount: controller.receiveList.length,
                       itemBuilder: (context, index) {
@@ -116,21 +139,35 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
                                     Text(
                                       "Invoice No.:",
                                       style: TextStyle(
-                                        fontSize: AppDimens.font18,
+                                        fontSize: MediaQuery.of(Get.context!)
+                                                    .size
+                                                    .width >
+                                                650
+                                            ? AppDimens.font22
+                                            : AppDimens.font16,
                                         color: AppColors.blackColor,
                                       ),
                                     ),
                                     Text(
                                       data.invoiceId.toString(),
                                       style: TextStyle(
-                                        fontSize: AppDimens.font18,
+                                        fontSize: MediaQuery.of(Get.context!)
+                                                    .size
+                                                    .width >
+                                                650
+                                            ? AppDimens.font22
+                                            : AppDimens.font16,
                                         color: AppColors.redColor,
                                       ),
                                     ),
                                   ],
                                 ),
-                                const SizedBox(
-                                  height: 10,
+                                SizedBox(
+                                  height:
+                                      MediaQuery.of(Get.context!).size.width >
+                                              650
+                                          ? 10
+                                          : 5,
                                 ),
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -140,14 +177,29 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
                                     Text(
                                       "Date:",
                                       style: TextStyle(
-                                        fontSize: AppDimens.font18,
+                                        fontSize: MediaQuery.of(Get.context!)
+                                                    .size
+                                                    .width >
+                                                650
+                                            ? AppDimens.font18
+                                            : AppDimens.font16,
                                         color: AppColors.blackColor,
                                       ),
                                     ),
                                     Text(
-                                      data.receivingDate ?? "",
+                                      data.receivingDate != null &&
+                                              data.receivingDate != ""
+                                          ? DateFormat("dd/MM/yyyy").format(
+                                              DateTime.parse(
+                                                  data.receivingDate!))
+                                          : "",
                                       style: TextStyle(
-                                        fontSize: AppDimens.font18,
+                                        fontSize: MediaQuery.of(Get.context!)
+                                                    .size
+                                                    .width >
+                                                650
+                                            ? AppDimens.font18
+                                            : AppDimens.font16,
                                         color: AppColors.redColor,
                                       ),
                                     ),

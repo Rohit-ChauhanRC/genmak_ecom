@@ -19,20 +19,27 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: AppColors.blackColor,
+          size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
+        ),
         title: SizedBox(
           width: Get.width * 0.6,
-          child: const Text(
+          child: Text(
             'Genmak Info India Limited',
             // overflow: TextOverflow.visible,
             style: TextStyle(
               color: Colors.black,
+              fontSize: MediaQuery.of(Get.context!).size.width > 650
+                  ? AppDimens.font30
+                  : AppDimens.font18,
             ),
           ),
         ),
         centerTitle: true,
         actions: [
           Obx(() => CircleAvatar(
-                radius: 50,
+                radius: MediaQuery.of(Get.context!).size.width > 650 ? 50 : 20,
                 backgroundColor: AppColors.greenColor,
                 // color: Colors.white,
                 backgroundImage: controller.personPic != null &&
@@ -43,7 +50,10 @@ class HomeView extends GetView<HomeController> {
                         fit: BoxFit.contain,
                       ).image
                     : Image.asset("assets/images/images.png").image,
-              ))
+              )),
+          const SizedBox(
+            width: 10,
+          ),
         ],
       ),
       drawer: AppDrawer(),
@@ -147,7 +157,9 @@ class HomeView extends GetView<HomeController> {
                 child: Text(
                   "Order",
                   style: TextStyle(
-                    fontSize: AppDimens.font24,
+                    fontSize: MediaQuery.of(Get.context!).size.width > 650
+                        ? AppDimens.font24
+                        : AppDimens.font18,
                     color: AppColors.blackColor,
                     fontWeight: FontWeight.bold,
                   ),
@@ -196,7 +208,7 @@ class HomeView extends GetView<HomeController> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             SizedBox(
-                                              width: Get.width / 6,
+                                              // width: Get.width / 6,
                                               child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
@@ -294,7 +306,7 @@ class HomeView extends GetView<HomeController> {
                                                   ? Get.width / 6
                                                   : Get.width / 7,
                                               child: Text(
-                                                "₹${int.tryParse(data.price!)! * data.count!}",
+                                                "₹${int.tryParse(data.price!)! * data.count! + (int.tryParse(data.price!)! * data.count!) * int.parse(data.gst!) / 100}",
                                                 style: TextStyle(
                                                   fontSize:
                                                       MediaQuery.of(context)
@@ -315,7 +327,9 @@ class HomeView extends GetView<HomeController> {
                               },
                               separatorBuilder:
                                   (BuildContext context, int index) {
-                                return const Divider();
+                                return Obx(() => controller.orders.isNotEmpty
+                                    ? const Divider()
+                                    : const SizedBox());
                               },
                             )
                           : const SizedBox()),
@@ -337,7 +351,10 @@ class HomeView extends GetView<HomeController> {
                           Text(
                             "Total Amount",
                             style: TextStyle(
-                              fontSize: AppDimens.font24,
+                              fontSize:
+                                  MediaQuery.of(Get.context!).size.width > 650
+                                      ? AppDimens.font24
+                                      : AppDimens.font18,
                               color: AppColors.blackColor,
                               fontWeight: FontWeight.bold,
                             ),
@@ -346,7 +363,11 @@ class HomeView extends GetView<HomeController> {
                               ? Text(
                                   "₹${controller.totalAmount.toString()}",
                                   style: TextStyle(
-                                    fontSize: AppDimens.font24,
+                                    fontSize:
+                                        MediaQuery.of(Get.context!).size.width >
+                                                650
+                                            ? AppDimens.font24
+                                            : AppDimens.font18,
                                     color: AppColors.blackColor,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -354,7 +375,11 @@ class HomeView extends GetView<HomeController> {
                               : Text(
                                   "₹0.0",
                                   style: TextStyle(
-                                    fontSize: AppDimens.font24,
+                                    fontSize:
+                                        MediaQuery.of(Get.context!).size.width >
+                                                650
+                                            ? AppDimens.font24
+                                            : AppDimens.font18,
                                     color: AppColors.blackColor,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -373,13 +398,7 @@ class HomeView extends GetView<HomeController> {
           children: [
             ElevatedButton(
               onPressed: () async {
-                controller.createPrintPage();
-                // Get.toNamed(Routes.RECEIPT, arguments: controller.orders);
-                // controller.connectionEst();
-                // controller.tcpConn();
-                // controller.discover();
-                // await controller.checkP();
-                // controller.checkIp();
+                // controller.calulateGST();
                 if (controller.orders.isNotEmpty) await controller.onSave();
               },
               style: ElevatedButton.styleFrom(

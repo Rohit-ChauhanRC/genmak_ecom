@@ -14,7 +14,19 @@ class EditProductItemView extends GetView<EditProductItemController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Product'),
+        iconTheme: IconThemeData(
+          color: AppColors.blackColor,
+          size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
+        ),
+        title: Text(
+          'Edit Product',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: MediaQuery.of(Get.context!).size.width > 650
+                ? AppDimens.font30
+                : AppDimens.font18,
+          ),
+        ),
         centerTitle: true,
       ),
       body: Obx(() => !controller.progressBar
@@ -41,7 +53,9 @@ class EditProductItemView extends GetView<EditProductItemController> {
                       child: Text(
                         "Name :",
                         style: TextStyle(
-                          fontSize: AppDimens.font22,
+                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                              ? AppDimens.font22
+                              : AppDimens.font16,
                           color: AppColors.blackColor,
                         ),
                       ),
@@ -51,15 +65,19 @@ class EditProductItemView extends GetView<EditProductItemController> {
                           onChanged: (val) => controller.name = val,
                           initialValue: controller.name,
                         )),
-                    const SizedBox(
-                      height: 20,
+                    SizedBox(
+                      height: MediaQuery.of(Get.context!).size.width > 650
+                          ? 20
+                          : 10,
                     ),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
                         "Product weight :",
                         style: TextStyle(
-                          fontSize: AppDimens.font22,
+                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                              ? AppDimens.font22
+                              : AppDimens.font16,
                           color: AppColors.blackColor,
                         ),
                       ),
@@ -77,7 +95,9 @@ class EditProductItemView extends GetView<EditProductItemController> {
                       child: Text(
                         "Price :",
                         style: TextStyle(
-                          fontSize: AppDimens.font22,
+                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                              ? AppDimens.font22
+                              : AppDimens.font16,
                           color: AppColors.blackColor,
                         ),
                       ),
@@ -87,15 +107,19 @@ class EditProductItemView extends GetView<EditProductItemController> {
                           onChanged: (val) => controller.price = val!,
                           initialValue: controller.price.toString(),
                         )),
-                    const SizedBox(
-                      height: 20,
+                    SizedBox(
+                      height: MediaQuery.of(Get.context!).size.width > 650
+                          ? 20
+                          : 10,
                     ),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
                         "Quantity :",
                         style: TextStyle(
-                          fontSize: AppDimens.font22,
+                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                              ? AppDimens.font22
+                              : AppDimens.font16,
                           color: AppColors.blackColor,
                         ),
                       ),
@@ -105,6 +129,183 @@ class EditProductItemView extends GetView<EditProductItemController> {
                           onChanged: (val) => controller.quantity = val!,
                           initialValue: controller.quantity.toString(),
                         )),
+                    SizedBox(
+                      height: MediaQuery.of(Get.context!).size.width > 650
+                          ? 20
+                          : 10,
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "GST :",
+                        style: TextStyle(
+                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                              ? AppDimens.font22
+                              : AppDimens.font16,
+                          color: AppColors.blackColor,
+                        ),
+                      ),
+                    ),
+                    TextFormWidget(
+                      label: "Please enter GST...",
+                      initialValue: controller.gst,
+                      onChanged: (val) => controller.gst = val,
+                      // validator: (v) =>
+                      //     v!.isEmpty ? "Field is required!" : null,
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(Get.context!).size.width > 650
+                          ? 20
+                          : 10,
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Discount :",
+                        style: TextStyle(
+                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                              ? AppDimens.font22
+                              : AppDimens.font16,
+                          color: AppColors.blackColor,
+                        ),
+                      ),
+                    ),
+                    TextFormWidget(
+                      label: "Please enter Discount...",
+                      initialValue: controller.discount,
+                      onChanged: (val) => controller.discount = val,
+                      // validator: (v) => v!.isEmpty ? "Field is required!" : null,
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(Get.context!).size.width > 650
+                          ? 20
+                          : 10,
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "HSNCode :",
+                        style: TextStyle(
+                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                              ? AppDimens.font22
+                              : AppDimens.font16,
+                          color: AppColors.blackColor,
+                        ),
+                      ),
+                    ),
+                    TextFormWidget(
+                      initialValue: controller.hsnCode,
+                      label: "Please enter HSNCode...",
+                      onChanged: (val) => controller.hsnCode = val,
+                      // validator: (v) => v!.isEmpty ? "Field is required!" : null,
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(Get.context!).size.width > 650
+                          ? 20
+                          : 10,
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Description :",
+                        style: TextStyle(
+                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                              ? AppDimens.font22
+                              : AppDimens.font16,
+                          color: AppColors.blackColor,
+                        ),
+                      ),
+                    ),
+                    TextFormWidget(
+                      initialValue: controller.decription,
+                      label: "Please enter description...",
+                      onChanged: (val) => controller.decription = val,
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(Get.context!).size.width > 650
+                          ? 20
+                          : 10,
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(
+                          child: Text(
+                            "\tActive: ",
+                            style: TextStyle(
+                              fontSize:
+                                  MediaQuery.of(Get.context!).size.width > 650
+                                      ? AppDimens.font22
+                                      : AppDimens.font16,
+                              decoration: TextDecoration.underline,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Obx(
+                              () => SizedBox(
+                                width: 130,
+                                child: ListTile(
+                                  title: Text(
+                                    'Yes',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: MediaQuery.of(Get.context!)
+                                                    .size
+                                                    .width >
+                                                650
+                                            ? AppDimens.font18
+                                            : AppDimens.font12),
+                                  ),
+                                  leading: Radio(
+                                    value: 0,
+                                    groupValue: controller.check,
+                                    onChanged: (value) {
+                                      print(value);
+                                      controller.check = value!;
+                                      // setState(() {
+                                      // selectedOption = value!;
+                                      // });
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Obx(() => SizedBox(
+                                  width: 130,
+                                  child: ListTile(
+                                    title: Text(
+                                      'No',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: MediaQuery.of(Get.context!)
+                                                      .size
+                                                      .width >
+                                                  650
+                                              ? AppDimens.font18
+                                              : AppDimens.font12),
+                                    ),
+                                    leading: Radio(
+                                      value: 1,
+                                      groupValue: controller.check,
+                                      onChanged: (value) {
+                                        print(value);
+                                        controller.check = value!;
+
+                                        // setState(() {
+                                        // selectedOption = value!;
+                                        // });
+                                      },
+                                    ),
+                                  ),
+                                )),
+                          ],
+                        ),
+                      ],
+                    ),
                     const SizedBox(
                       height: 20,
                     ),

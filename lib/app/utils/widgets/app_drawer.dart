@@ -24,7 +24,8 @@ class AppDrawer extends StatelessWidget {
           Column(
             children: [
               Obx(() => CircleAvatar(
-                    radius: 70,
+                    radius:
+                        MediaQuery.of(Get.context!).size.width > 650 ? 70 : 45,
                     backgroundColor: AppColors.greenColor,
                     // color: Colors.white,
                     backgroundImage: controller.personPic != null &&
@@ -53,13 +54,15 @@ class AppDrawer extends StatelessWidget {
                   "Profile",
                   style: TextStyle(
                     color: AppColors.whiteColor,
-                    fontSize: AppDimens.font26,
+                    fontSize: MediaQuery.of(Get.context!).size.width > 650
+                        ? AppDimens.font26
+                        : AppDimens.font18,
                   ),
                 ),
                 leading: Icon(
                   Icons.person,
                   color: AppColors.whiteColor,
-                  size: 40,
+                  size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
                 ),
               ),
               ListTile(
@@ -67,13 +70,15 @@ class AppDrawer extends StatelessWidget {
                   "Admin",
                   style: TextStyle(
                     color: AppColors.whiteColor,
-                    fontSize: AppDimens.font26,
+                    fontSize: MediaQuery.of(Get.context!).size.width > 650
+                        ? AppDimens.font26
+                        : AppDimens.font18,
                   ),
                 ),
                 leading: Icon(
                   Icons.admin_panel_settings,
                   color: AppColors.whiteColor,
-                  size: 40,
+                  size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
                 ),
                 onTap: () {
                   Get.toNamed(Routes.ADMIN);
@@ -87,13 +92,15 @@ class AppDrawer extends StatelessWidget {
               "Billing",
               style: TextStyle(
                 color: AppColors.whiteColor,
-                fontSize: AppDimens.font26,
+                fontSize: MediaQuery.of(Get.context!).size.width > 650
+                    ? AppDimens.font26
+                    : AppDimens.font18,
               ),
             ),
             leading: Icon(
               Icons.home,
               color: AppColors.whiteColor,
-              size: 40,
+              size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
             ),
             onTap: () {
               Get.toNamed(Routes.HOME);

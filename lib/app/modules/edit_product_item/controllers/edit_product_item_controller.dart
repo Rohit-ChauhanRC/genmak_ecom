@@ -54,6 +54,26 @@ class EditProductItemController extends GetxController {
   Uint8List get imageLocal => _imageLocal.value;
   set imageLocal(Uint8List pic) => _imageLocal.value = pic;
 
+  final RxString _gst = ''.obs;
+  String get gst => _gst.value;
+  set gst(String str) => _gst.value = str;
+
+  final RxString _discount = '0.0'.obs;
+  String get discount => _discount.value;
+  set discount(String str) => _discount.value = str;
+
+  final RxString _hsnCode = ''.obs;
+  String get hsnCode => _hsnCode.value;
+  set hsnCode(String str) => _hsnCode.value = str;
+
+  final RxInt _check = 0.obs;
+  int get check => _check.value;
+  set check(int i) => _check.value = i;
+
+  final RxString _decription = ''.obs;
+  String get decription => _decription.value;
+  set decription(String mobileNumber) => _decription.value = decription;
+
   @override
   void onInit() async {
     super.onInit();
@@ -105,6 +125,10 @@ class EditProductItemController extends GetxController {
       picture: (imgeDb)
           ? imageLocal
           : File(personPic.path.toString()).readAsBytesSync(),
+      gst: gst,
+      active: check,
+      discount: discount,
+      hsnCode: hsnCode,
     )
         .then((value) async {
       await _homeController.fetchProduct();
@@ -130,6 +154,12 @@ class EditProductItemController extends GetxController {
       description = value.description.toString();
       imageLocal = value.picture!;
       imageDb = true;
+      gst = value.gst!;
+      check = value.active!;
+      discount = value.discount!;
+      decription = value.description!;
+      hsnCode = value.hsnCode!;
+      print(value.gst);
     }).then((value) {
       progressBar = false;
     });
