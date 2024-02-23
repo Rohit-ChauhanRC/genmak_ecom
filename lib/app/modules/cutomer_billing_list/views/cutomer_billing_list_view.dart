@@ -243,7 +243,9 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
                   "No data found...",
                   style: TextStyle(
                     color: AppColors.blackColor,
-                    fontSize: AppDimens.font30,
+                    fontSize: MediaQuery.of(Get.context!).size.width > 650
+                        ? AppDimens.font30
+                        : AppDimens.font18,
                     fontWeight: FontWeight.bold,
                   ),
                 )),

@@ -36,16 +36,6 @@ class GridWidget extends StatelessWidget {
           var grid = product[i];
           return InkWell(
             onTap: () {
-              // if (int.tryParse(product[i].quantity!)! >= 1) {
-              //   product[i].count = product[i].count! + 1;
-              //   product[i].quantity =
-              //       (int.tryParse(product[i].quantity.toString())! - 1)
-              //           .toString();
-              //   print(product[i].quantity);
-
-              //   orders.add(product[i]);
-              //   total();
-              // }
               handleProductQuantity(i);
             },
             child: Container(
@@ -53,7 +43,7 @@ class GridWidget extends StatelessWidget {
               width: 120,
               margin: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: AppColors.creamColor1,
+                color: AppColors.buttonColor,
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
                   color: Colors.black,

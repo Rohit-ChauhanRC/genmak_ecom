@@ -15,7 +15,7 @@ class ReceivingDB {
     "vendorName" TEXT NOT NULL,
     "vendorId" TEXT NOT NULL,
     "totalAmount" TEXT NOT NULL,
-    "receivingDate" INTEGER DEFAULT (cast(strftime('%s','now') as int)),
+    "receivingDate" TEXT,
     "productName" TEXT NOT NULL,
     "productId" TEXT NOT NULL,
     "productQuantity" INTEGER,

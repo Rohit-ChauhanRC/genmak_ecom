@@ -5,6 +5,7 @@ class ProfileModel {
   final String? name;
   final String? address;
   final String? contact;
+  final String? gst;
   late String? customerId;
   final Uint8List? picture;
 
@@ -13,6 +14,7 @@ class ProfileModel {
     this.name,
     this.address,
     this.contact,
+    this.gst,
     this.customerId,
     this.picture,
   });
@@ -22,6 +24,7 @@ class ProfileModel {
         name: json["name"] ?? "",
         address: json["address"] ?? "",
         contact: json["contact"] ?? '',
+        gst: json["gst"] ?? '',
         customerId: json["customerId"] ?? "",
         picture: json["picture"] ?? "",
       );
@@ -33,5 +36,6 @@ class ProfileModel {
         "contact": contact,
         "customerId": customerId,
         "picture": picture,
+        "gst": gst,
       };
 }

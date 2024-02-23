@@ -15,13 +15,13 @@ class ProfileView extends GetView<ProfileController> {
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(
-          color: AppColors.blackColor,
+          color: AppColors.whiteColor,
           size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
         ),
         title: Text(
           'Profile',
           style: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: MediaQuery.of(Get.context!).size.width > 650
                 ? AppDimens.font30
                 : AppDimens.font18,
@@ -29,109 +29,154 @@ class ProfileView extends GetView<ProfileController> {
         ),
         centerTitle: true,
       ),
-      body: Container(
-        margin: const EdgeInsets.all(20),
-        // width: Get.width / 1.2,
-        // alignment: Alignment.center,
-        child: Column(
-          // shrinkWrap: true,
-          children: [
-            const SizedBox(
-              height: 20,
-            ),
-            Obx(() => UploadImageWidget(
-                  imageFile: controller.homeController.personPic,
-                  onTap: controller.homeController.getImage1,
-                  bytes: controller.homeController.personPicM,
-                  imageDb: controller.homeController.memoryImg,
-                )),
-            const SizedBox(
-              height: 20,
-            ),
-            SizedBox(
-              child: Text(
-                "Customer ID: 223234",
-                style: TextStyle(
-                  fontSize: MediaQuery.of(Get.context!).size.width > 650
-                      ? AppDimens.font22
-                      : AppDimens.font16,
-                  color: AppColors.blackColor,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
-            ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "Shop Name :",
-                style: TextStyle(
-                  fontSize: MediaQuery.of(Get.context!).size.width > 650
-                      ? AppDimens.font22
-                      : AppDimens.font16,
-                  color: AppColors.blackColor,
-                ),
-              ),
-            ),
-            TextFormWidget(
-              // label: "Please enter Shop Name...",
-              onChanged: (val) {},
-            ),
-            SizedBox(
-              height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
-            ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "Shop Address :",
-                style: TextStyle(
-                  fontSize: MediaQuery.of(Get.context!).size.width > 650
-                      ? AppDimens.font22
-                      : AppDimens.font16,
-                  color: AppColors.blackColor,
-                ),
-              ),
-            ),
-            TextFormWidget(
-              label: "Pleae enter Shop Address...",
-              onChanged: (val) {},
-            ),
-            SizedBox(
-              height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
-            ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "Contact No :",
-                style: TextStyle(
-                  fontSize: MediaQuery.of(Get.context!).size.width > 650
-                      ? AppDimens.font22
-                      : AppDimens.font16,
-                  color: AppColors.blackColor,
-                ),
-              ),
-            ),
-            TextFormWidget(
-              label: "Pleae enter Contact No...",
-              onChanged: (val) {},
-              keyboardType: TextInputType.phone,
-            ),
-            SizedBox(
-              height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
-            ),
-            SizedBox(
-                // width: Get.width / 8,
-                child: ElevatedButton(
-                    onPressed: () {},
-                    child: Text(
-                      "Save",
-                      style: TextStyle(
-                        color: AppColors.blackColor,
+      body: Obx(() => !controller.progressBar
+          ? SingleChildScrollView(
+              child: Container(
+                margin: const EdgeInsets.all(20),
+                // width: Get.width / 1.2,
+                // alignment: Alignment.center,
+                child: Column(
+                  // shrinkWrap: true,
+                  children: [
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                              MediaQuery.of(Get.context!).size.width > 650
+                                  ? 100
+                                  : 50),
+                          border: Border.all(
+                            color: AppColors.buttonColor,
+                            width: 2,
+                          )),
+                      child: Obx(() => UploadImageWidget(
+                            imageFile: controller.homeController.personPic,
+                            onTap: controller.homeController.getImage1,
+                            bytes: controller.homeController.personPicM,
+                            imageDb: controller.homeController.memoryImg,
+                          )),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    SizedBox(
+                      child: Text(
+                        "Customer ID: 223234",
+                        style: TextStyle(
+                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                              ? AppDimens.font22
+                              : AppDimens.font16,
+                          color: AppColors.blackColor,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ))),
-          ],
-        ),
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(Get.context!).size.width > 650
+                          ? 20
+                          : 10,
+                    ),
+                    _textContainer("Shop Name:", controller.name),
+                    // Obx(() => TextFormWidget(
+                    //       // label: "Please enter Shop Name...",
+                    //       onChanged: (val) => controller.name = val,
+                    //       initialValue: controller.name,
+                    //     )),
+                    SizedBox(
+                      height: MediaQuery.of(Get.context!).size.width > 650
+                          ? 20
+                          : 10,
+                    ),
+                    _textContainer("GSTIN No.:", controller.gst),
+
+                    // Obx(() => TextFormWidget(
+                    //       // label: "Please enter Shop Name...",
+                    //       onChanged: (val) => controller.gst = val,
+                    //       initialValue: controller.gst,
+                    //     )),
+                    SizedBox(
+                      height: MediaQuery.of(Get.context!).size.width > 650
+                          ? 20
+                          : 10,
+                    ),
+
+                    _textContainer("Shop Address:", controller.address),
+
+                    SizedBox(
+                      height: MediaQuery.of(Get.context!).size.width > 650
+                          ? 20
+                          : 10,
+                    ),
+
+                    _textContainer("Contact No.:", controller.contact),
+
+                    SizedBox(
+                      height: MediaQuery.of(Get.context!).size.width > 650
+                          ? 20
+                          : 10,
+                    ),
+                    SizedBox(
+                        // width: Get.width / 8,
+                        child: ElevatedButton(
+                            onPressed: () async {
+                              // if (controller.homeController.memoryImg) {
+                              //   await controller.updateProfile();
+                              //   print("id exist");
+                              // } else {
+                              //   print("id not exist");
+
+                              await controller.createProfile();
+                              // }
+                            },
+                            child: Text(
+                              "Save",
+                              style: TextStyle(
+                                color: AppColors.whiteColor,
+                              ),
+                            ))),
+                  ],
+                ),
+              ),
+            )
+          : const CircularProgressIndicator()),
+    );
+  }
+
+  Widget _textContainer(String title, String value) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Row(
+        children: [
+          SizedBox(
+            width: Get.width * 0.4,
+            child: Text(
+              title,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontSize: MediaQuery.of(Get.context!).size.width > 650
+                    ? AppDimens.font22
+                    : AppDimens.font16,
+                color: AppColors.blackColor,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          SizedBox(
+            width: Get.width * 0.4,
+            child: Text(
+              value,
+              overflow: TextOverflow.visible,
+              style: TextStyle(
+                fontSize: MediaQuery.of(Get.context!).size.width > 650
+                    ? AppDimens.font22
+                    : AppDimens.font16,
+                color: AppColors.blackColor,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

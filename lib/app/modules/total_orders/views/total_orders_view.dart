@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:genmak_ecom/app/data/models/receiving_model.dart';
 import 'package:genmak_ecom/app/routes/app_pages.dart';
 import 'package:genmak_ecom/app/utils/app_colors/app_colors.dart';
@@ -17,13 +18,13 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(
-          color: AppColors.blackColor,
+          color: AppColors.whiteColor,
           size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
         ),
         title: Text(
           'Total Orders',
           style: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: MediaQuery.of(Get.context!).size.width > 650
                 ? AppDimens.font30
                 : AppDimens.font18,
@@ -38,18 +39,26 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                 shrinkWrap: true,
                 children: [
                   Container(
-                    height: MediaQuery.of(context).size.width > 650 ? 70 : 50,
-                    margin: const EdgeInsets.only(left: 10, right: 10),
-
+                    color: AppColors.buttonColor,
+                    height: 35.h,
+                    margin: const EdgeInsets.only(top: 20),
+                    padding: EdgeInsets.only(
+                      left:
+                          MediaQuery.of(Get.context!).size.width > 650 ? 10 : 3,
+                      right:
+                          MediaQuery.of(Get.context!).size.width > 650 ? 10 : 3,
+                    ),
                     // margin: const EdgeInsets.only(left: 10, right: 10),
                     child: ListView(
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
                       // mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(
-                          width: Get.width / 2.5,
+                        Container(
+                          padding: const EdgeInsets.all(4),
+                          width: Get.width / 2.4,
                           child: TextFormWidget(
+                            suffix: true,
                             textController: controller.textController,
                             label: "Search...",
                             onChanged: (v) =>
@@ -59,39 +68,44 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                         const SizedBox(
                           width: 10,
                         ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              // backgroundColor: AppColors.blackColor,
-                              ),
-                          onPressed: () async {
-                            if (controller.textController!.text
-                                .toString()
-                                .isNotEmpty) {
-                              controller.searchProduct(
-                                  controller.textController!.text);
-                            }
-                          },
-                          child: Text(
-                            "Search",
-                            style: TextStyle(color: AppColors.blackColor),
+                        Container(
+                          padding: const EdgeInsets.all(6),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.bgColor1,
+                            ),
+                            onPressed: () async {
+                              if (controller.textController!.text
+                                  .toString()
+                                  .isNotEmpty) {
+                                controller.searchProduct(
+                                    controller.textController!.text);
+                              }
+                            },
+                            child: Text(
+                              "Search",
+                              style: TextStyle(color: AppColors.blackColor),
+                            ),
                           ),
                         ),
                         const SizedBox(
                           width: 10,
                         ),
-                        ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                // backgroundColor: AppColors.blackColor,
+                        Container(
+                            padding: const EdgeInsets.all(6),
+                            child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.bgColor1,
                                 ),
-                            onPressed: () async {
-                              // controller.textController!.clear();
-                              // controller.searchP = false;
-                              await controller.all();
-                            },
-                            child: Text(
-                              "All",
-                              style: TextStyle(color: AppColors.blackColor),
-                            ))
+                                onPressed: () async {
+                                  // controller.textController!.clear();
+                                  // controller.searchP = false;
+                                  await controller.all();
+                                },
+                                child: Text(
+                                  "All",
+                                  style: TextStyle(color: AppColors.blackColor),
+                                )))
                       ],
                     ),
                   ),
@@ -100,11 +114,6 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                     height: Get.height / 1.2,
                     child: ListView.builder(
                       shrinkWrap: true,
-                      // gridDelegate:
-                      //     const SliverGridDelegateWithFixedCrossAxisCount(
-                      //   crossAxisCount: 1,
-                      //   mainAxisExtent: 200,
-                      // ),
                       itemCount: controller.receiveList.length,
                       itemBuilder: (context, index) {
                         ReceivingModel data = controller.receiveList[index];
@@ -127,7 +136,7 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                                 color: AppColors.blackColor,
                               ),
                               borderRadius: BorderRadius.circular(20),
-                              color: AppColors.bgColor,
+                              color: AppColors.whiteColor,
                             ),
                             padding: const EdgeInsets.all(10),
                             margin: const EdgeInsets.all(10),
@@ -150,6 +159,7 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                                             ? AppDimens.font22
                                             : AppDimens.font16,
                                         color: AppColors.blackColor,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                     Text(
@@ -161,7 +171,7 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                                                 650
                                             ? AppDimens.font22
                                             : AppDimens.font16,
-                                        color: AppColors.whiteColor,
+                                        color: AppColors.blackColor,
                                       ),
                                     ),
                                   ],
@@ -184,6 +194,7 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                                             ? AppDimens.font22
                                             : AppDimens.font16,
                                         color: AppColors.blackColor,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                     Text(
@@ -198,7 +209,7 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                                                 650
                                             ? AppDimens.font22
                                             : AppDimens.font16,
-                                        color: AppColors.whiteColor,
+                                        color: AppColors.blackColor,
                                       ),
                                     ),
                                   ],
@@ -221,6 +232,7 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                                             ? AppDimens.font22
                                             : AppDimens.font16,
                                         color: AppColors.blackColor,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                     Text(
@@ -232,7 +244,7 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                                                 650
                                             ? AppDimens.font22
                                             : AppDimens.font16,
-                                        color: AppColors.whiteColor,
+                                        color: AppColors.blackColor,
                                       ),
                                     ),
                                   ],
@@ -252,7 +264,9 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                   "No data found...",
                   style: TextStyle(
                     color: AppColors.blackColor,
-                    fontSize: AppDimens.font30,
+                    fontSize: MediaQuery.of(Get.context!).size.width > 650
+                        ? AppDimens.font30
+                        : AppDimens.font18,
                     fontWeight: FontWeight.bold,
                   ),
                 )),

@@ -14,13 +14,13 @@ class EditVendorView extends GetView<EditVendorController> {
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(
-          color: AppColors.blackColor,
+          color: AppColors.whiteColor,
           size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
         ),
         title: Text(
-          'EditVendorView',
+          'Edit Vendor Details',
           style: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: MediaQuery.of(Get.context!).size.width > 650
                 ? AppDimens.font30
                 : AppDimens.font18,
@@ -44,6 +44,7 @@ class EditVendorView extends GetView<EditVendorController> {
                               ? AppDimens.font22
                               : AppDimens.font16,
                           color: AppColors.blackColor,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
@@ -66,6 +67,7 @@ class EditVendorView extends GetView<EditVendorController> {
                               ? AppDimens.font22
                               : AppDimens.font16,
                           color: AppColors.blackColor,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
@@ -88,6 +90,7 @@ class EditVendorView extends GetView<EditVendorController> {
                               ? AppDimens.font22
                               : AppDimens.font16,
                           color: AppColors.blackColor,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
@@ -110,6 +113,7 @@ class EditVendorView extends GetView<EditVendorController> {
                               ? AppDimens.font22
                               : AppDimens.font16,
                           color: AppColors.blackColor,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
@@ -135,10 +139,10 @@ class EditVendorView extends GetView<EditVendorController> {
                               .style!
                               .copyWith(
                                   backgroundColor: MaterialStatePropertyAll(
-                                      AppColors.whiteColor)),
+                                      AppColors.buttonColor)),
                           child: Text(
                             "Update",
-                            style: TextStyle(color: AppColors.blackColor),
+                            style: TextStyle(color: AppColors.whiteColor),
                           ),
                         ),
                         const SizedBox(
@@ -152,7 +156,7 @@ class EditVendorView extends GetView<EditVendorController> {
                               backgroundColor: AppColors.whiteColor),
                           child: const Text(
                             "Delete",
-                            style: TextStyle(color: Colors.red),
+                            style: TextStyle(color: Colors.black),
                           ),
                         ),
                       ],

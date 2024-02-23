@@ -15,6 +15,7 @@ class ProfileDB {
     "name" TEXT NOT NULL,
     "address" TEXT,
     "contact" TEXT,
+    "gst" TEXT,
     "customerId" TEXT,
     "picture" BLOB,
     PRIMARY KEY("id" AUTOINCREMENT)
@@ -23,18 +24,19 @@ class ProfileDB {
   }
 
   Future<int> create({
-    required String name,
-    required String address,
-    required String contact,
+    String? name,
+    String? address,
+    String? contact,
+    String? gst,
     String? customerId,
     Uint8List? picture,
   }) async {
     final database = await DataBaseService().database;
     return await database.rawInsert(
       '''
-        INSERT INTO $tableName (name, address, contact, customerId, picture) VALUES (?,?,?,?,?)
+        INSERT INTO $tableName (name, address, contact, customerId, picture,gst) VALUES (?,?,?,?,?,?)
       ''',
-      [name, address, contact, customerId, picture],
+      [name, address, contact, customerId, picture, gst],
     );
   }
 
@@ -59,6 +61,7 @@ class ProfileDB {
   Future<int> update({
     required int id,
     String? name,
+    String? gst,
     String? address,
     String? contact,
     String? customerId,
@@ -69,6 +72,7 @@ class ProfileDB {
       tableName,
       {
         if (name != null) 'name': name,
+        if (gst != null) 'gst': gst,
         if (address != null) 'address': address,
         if (contact != null) 'contact': contact,
         if (customerId != null) 'customerId': customerId,

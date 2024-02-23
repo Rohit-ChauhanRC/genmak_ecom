@@ -49,7 +49,9 @@ class AdminController extends GetxController {
     },
     {
       "icon": Icons.list,
-      "title": "Customer Billing List",
+      "title": MediaQuery.of(Get.context!).size.width > 650
+          ? "Customer Billing List"
+          : "Customer \nBilling List",
       "onTap": () {
         Get.toNamed(Routes.CUTOMER_BILLING_LIST);
       },

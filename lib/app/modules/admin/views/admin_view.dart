@@ -15,13 +15,13 @@ class AdminView extends GetView<AdminController> {
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(
-          color: AppColors.blackColor,
+          color: AppColors.whiteColor,
           size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
         ),
         title: Text(
           'Admin',
           style: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: MediaQuery.of(Get.context!).size.width > 650
                 ? AppDimens.font30
                 : AppDimens.font18,
@@ -35,7 +35,7 @@ class AdminView extends GetView<AdminController> {
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: MediaQuery.of(context).size.width > 650 ? 4 : 2,
               mainAxisExtent:
-                  MediaQuery.of(Get.context!).size.width > 650 ? 200 : 150,
+                  MediaQuery.of(Get.context!).size.width > 650 ? 200 : 120,
             ),
             itemCount: controller.gridList.length,
             itemBuilder: (_, i) {
@@ -61,7 +61,7 @@ class AdminView extends GetView<AdminController> {
         width: 0.3.sw,
         margin: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: AppColors.bgColor,
+          color: AppColors.whiteColor,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
             color: Colors.black,
@@ -73,7 +73,7 @@ class AdminView extends GetView<AdminController> {
           children: [
             Icon(
               icon,
-              size: 20.sp,
+              size: 30.sp,
               color: AppColors.blackColor,
             ),
             const SizedBox(

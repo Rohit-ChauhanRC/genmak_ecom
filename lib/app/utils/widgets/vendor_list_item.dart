@@ -20,6 +20,7 @@ class VendorListItem extends StatelessWidget {
         width: MediaQuery.of(context).size.width > 650 ? 200 : 150,
         margin: const EdgeInsets.all(10),
         decoration: BoxDecoration(
+          color: AppColors.whiteColor,
           border: Border.all(
             color: AppColors.blackColor,
           ),
@@ -41,6 +42,7 @@ class VendorListItem extends StatelessWidget {
                           ? AppDimens.font22
                           : AppDimens.font16,
                       color: AppColors.blackColor,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(
@@ -52,7 +54,7 @@ class VendorListItem extends StatelessWidget {
                       fontSize: MediaQuery.of(context).size.width > 650
                           ? AppDimens.font22
                           : AppDimens.font16,
-                      color: AppColors.whiteColor,
+                      color: AppColors.blackColor,
                     ),
                   ),
                 ],
@@ -70,6 +72,7 @@ class VendorListItem extends StatelessWidget {
                           ? AppDimens.font22
                           : AppDimens.font16,
                       color: AppColors.blackColor,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(
@@ -81,7 +84,7 @@ class VendorListItem extends StatelessWidget {
                       fontSize: MediaQuery.of(context).size.width > 650
                           ? AppDimens.font22
                           : AppDimens.font16,
-                      color: AppColors.whiteColor,
+                      color: AppColors.blackColor,
                     ),
                   ),
                 ],
@@ -99,6 +102,7 @@ class VendorListItem extends StatelessWidget {
                           ? AppDimens.font22
                           : AppDimens.font16,
                       color: AppColors.blackColor,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(
@@ -107,8 +111,10 @@ class VendorListItem extends StatelessWidget {
                   Text(
                     "${vendorModel.gst}" ?? "",
                     style: TextStyle(
-                      fontSize: AppDimens.font22,
-                      color: AppColors.whiteColor,
+                      fontSize: MediaQuery.of(context).size.width > 650
+                          ? AppDimens.font22
+                          : AppDimens.font16,
+                      color: AppColors.blackColor,
                     ),
                   ),
                 ],
@@ -126,6 +132,7 @@ class VendorListItem extends StatelessWidget {
                           ? AppDimens.font22
                           : AppDimens.font16,
                       color: AppColors.blackColor,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(
@@ -137,7 +144,7 @@ class VendorListItem extends StatelessWidget {
                       fontSize: MediaQuery.of(context).size.width > 650
                           ? AppDimens.font22
                           : AppDimens.font16,
-                      color: AppColors.whiteColor,
+                      color: AppColors.blackColor,
                     ),
                   ),
                 ],

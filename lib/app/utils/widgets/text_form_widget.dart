@@ -12,12 +12,14 @@ class TextFormWidget extends StatelessWidget {
     this.initialValue,
     this.validator,
     this.textController,
+    this.suffix = false,
   });
 
   final void Function(String)? onChanged;
   final String? label;
   final TextInputType? keyboardType;
   final bool readOnly;
+  final bool suffix;
   final String? initialValue;
   final String? Function(String?)? validator;
   final TextEditingController? textController;
@@ -40,6 +42,8 @@ class TextFormWidget extends StatelessWidget {
         readOnly: readOnly,
         keyboardType: keyboardType ?? TextInputType.text,
         decoration: InputDecoration(
+            hintText: suffix ? "Search..." : "",
+            contentPadding: const EdgeInsets.only(top: 5, left: 10)
             // label: Text(label!),
             ),
       ),

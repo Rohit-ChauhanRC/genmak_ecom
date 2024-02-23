@@ -14,13 +14,13 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(
-          color: AppColors.blackColor,
+          color: AppColors.whiteColor,
           size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
         ),
         title: Text(
           'Order Details',
           style: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: MediaQuery.of(Get.context!).size.width > 650
                 ? AppDimens.font30
                 : AppDimens.font18,
@@ -37,7 +37,7 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
               color: AppColors.blackColor,
             ),
             borderRadius: BorderRadius.circular(20),
-            color: AppColors.bgColor,
+            color: AppColors.whiteColor,
           ),
           width: Get.width / 1.3,
           height: Get.height / 1.3,
@@ -58,6 +58,7 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                           ? AppDimens.font22
                           : AppDimens.font16,
                       color: AppColors.blackColor,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
@@ -66,7 +67,7 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                       fontSize: MediaQuery.of(Get.context!).size.width > 650
                           ? AppDimens.font22
                           : AppDimens.font16,
-                      color: AppColors.whiteColor,
+                      color: AppColors.blackColor,
                     ),
                   ),
                 ],
@@ -85,6 +86,7 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                           ? AppDimens.font22
                           : AppDimens.font16,
                       color: AppColors.blackColor,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
@@ -95,7 +97,7 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                       fontSize: MediaQuery.of(Get.context!).size.width > 650
                           ? AppDimens.font22
                           : AppDimens.font16,
-                      color: AppColors.whiteColor,
+                      color: AppColors.blackColor,
                     ),
                   ),
                 ],
@@ -114,6 +116,7 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                           ? AppDimens.font22
                           : AppDimens.font16,
                       color: AppColors.blackColor,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
@@ -122,7 +125,7 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                       fontSize: MediaQuery.of(Get.context!).size.width > 650
                           ? AppDimens.font22
                           : AppDimens.font16,
-                      color: AppColors.whiteColor,
+                      color: AppColors.blackColor,
                     ),
                   ),
                 ],
@@ -141,6 +144,7 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                           ? AppDimens.font22
                           : AppDimens.font16,
                       color: AppColors.blackColor,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
@@ -149,7 +153,7 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                       fontSize: MediaQuery.of(Get.context!).size.width > 650
                           ? AppDimens.font22
                           : AppDimens.font16,
-                      color: AppColors.whiteColor,
+                      color: AppColors.blackColor,
                     ),
                   ),
                 ],
@@ -167,13 +171,14 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                   decoration: TextDecoration.underline,
                   decorationColor: AppColors.blackColor,
                   decorationStyle: TextDecorationStyle.solid,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(
                 height: 20,
               ),
               Container(
-                // color: Colors.white,
+                // color: Colors.red,
                 height: MediaQuery.of(Get.context!).size.width > 650
                     ? Get.height * 0.5
                     : Get.height * 0.4,
@@ -194,7 +199,7 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                                 color: AppColors.blackColor,
                               ),
                               borderRadius: BorderRadius.circular(20),
-                              color: AppColors.bgColor1,
+                              // color: AppColors.bgColor1,
                             ),
                             padding: const EdgeInsets.all(10),
                             margin: const EdgeInsets.all(10),
@@ -217,6 +222,7 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                                             ? AppDimens.font16
                                             : AppDimens.font14,
                                         color: AppColors.blackColor,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                     Text(
@@ -228,13 +234,17 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                                                 650
                                             ? AppDimens.font18
                                             : AppDimens.font14,
-                                        color: AppColors.whiteColor,
+                                        color: AppColors.blackColor,
                                       ),
                                     ),
                                   ],
                                 ),
                                 const SizedBox(
                                   height: 10,
+                                ),
+                                const Divider(
+                                  color: Colors.black,
+                                  thickness: 2,
                                 ),
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -251,6 +261,7 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                                             ? AppDimens.font18
                                             : AppDimens.font14,
                                         color: AppColors.blackColor,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                     Text(
@@ -262,7 +273,7 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                                                 650
                                             ? AppDimens.font18
                                             : AppDimens.font14,
-                                        color: AppColors.whiteColor,
+                                        color: AppColors.blackColor,
                                       ),
                                     ),
                                   ],

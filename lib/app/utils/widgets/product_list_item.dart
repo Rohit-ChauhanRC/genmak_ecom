@@ -24,20 +24,35 @@ class ProductListItem extends StatelessWidget {
               color: AppColors.blackColor,
             ),
             borderRadius: BorderRadius.circular(10),
-            color: AppColors.bgColor),
+            color: AppColors.whiteColor),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    bottomLeft: Radius.circular(10)),
+              ),
               child: product.picture != null
-                  ? Image.memory(
-                      product.picture!,
-                      fit: BoxFit.contain,
+                  ? ClipRRect(
+                      borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          bottomLeft: Radius.circular(10)),
+                      child: Image.memory(
+                        product.picture!,
+                        fit: BoxFit.cover,
+                      ),
                     )
-                  : Image.asset(
-                      "assets/images/images.png",
-                      fit: BoxFit.contain,
+                  : ClipRRect(
+                      borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          bottomLeft: Radius.circular(10)),
+                      child: Image.asset(
+                        "assets/images/images.png",
+                        fit: BoxFit.contain,
+                      ),
                     ),
             ),
             Container(
@@ -56,6 +71,7 @@ class ProductListItem extends StatelessWidget {
                               ? AppDimens.font22
                               : AppDimens.font16,
                           color: AppColors.blackColor,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                       const SizedBox(
@@ -72,7 +88,7 @@ class ProductListItem extends StatelessWidget {
                                 MediaQuery.of(Get.context!).size.width > 650
                                     ? AppDimens.font22
                                     : AppDimens.font16,
-                            color: AppColors.whiteColor,
+                            color: AppColors.blackColor,
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
@@ -93,6 +109,7 @@ class ProductListItem extends StatelessWidget {
                               ? AppDimens.font22
                               : AppDimens.font16,
                           color: AppColors.blackColor,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                       const SizedBox(
@@ -104,7 +121,7 @@ class ProductListItem extends StatelessWidget {
                           fontSize: MediaQuery.of(Get.context!).size.width > 650
                               ? AppDimens.font22
                               : AppDimens.font16,
-                          color: AppColors.whiteColor,
+                          color: AppColors.blackColor,
                         ),
                       ),
                     ],
@@ -123,6 +140,7 @@ class ProductListItem extends StatelessWidget {
                               ? AppDimens.font22
                               : AppDimens.font16,
                           color: AppColors.blackColor,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                       const SizedBox(
@@ -134,7 +152,7 @@ class ProductListItem extends StatelessWidget {
                           fontSize: MediaQuery.of(Get.context!).size.width > 650
                               ? AppDimens.font22
                               : AppDimens.font16,
-                          color: AppColors.whiteColor,
+                          color: AppColors.blackColor,
                         ),
                       ),
                     ],
@@ -147,12 +165,13 @@ class ProductListItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Quntity",
+                        "Quantity",
                         style: TextStyle(
                           fontSize: MediaQuery.of(Get.context!).size.width > 650
                               ? AppDimens.font22
                               : AppDimens.font16,
                           color: AppColors.blackColor,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                       const SizedBox(
@@ -164,7 +183,7 @@ class ProductListItem extends StatelessWidget {
                           fontSize: MediaQuery.of(Get.context!).size.width > 650
                               ? AppDimens.font22
                               : AppDimens.font16,
-                          color: AppColors.whiteColor,
+                          color: AppColors.blackColor,
                         ),
                       ),
                     ],

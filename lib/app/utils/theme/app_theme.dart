@@ -24,16 +24,16 @@ class AppTheme {
           background: AppColors.bgColor1,
         ),
         appBarTheme: AppBarTheme(
-          backgroundColor: AppColors.bgColor1,
+          backgroundColor: AppColors.buttonColor,
           titleTextStyle: TextStyle(
-            color: AppColors.blackColor,
+            color: AppColors.whiteColor,
             fontFamily: "Kalnia_Expanded-Bold",
 
             fontWeight: FontWeight.bold,
             // overflow: TextOverflow.visible,
           ),
           actionsIconTheme: IconThemeData(
-            color: AppColors.blackColor,
+            color: AppColors.whiteColor,
           ),
         ),
         // buttonTheme: ButtonThemeData(
@@ -45,9 +45,9 @@ class AppTheme {
         // ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.whiteColor,
-            textStyle: TextStyle(
-              color: Colors.black,
+            backgroundColor: AppColors.buttonColor,
+            textStyle: const TextStyle(
+              color: Colors.white,
               // fontSize: MediaQuery.of(Get.context!).size.width > 650
               //     ? AppDimens.font22
               //     : AppDimens.font16,
@@ -56,6 +56,7 @@ class AppTheme {
           ),
         ),
         inputDecorationTheme: InputDecorationTheme(
+          errorStyle: TextStyle(color: AppColors.buttonColor),
           fillColor: AppColors.whiteColor,
           filled: true,
           isDense: true,
@@ -75,7 +76,7 @@ class AppTheme {
           errorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30),
             borderSide: BorderSide(
-              color: AppColors.redColor,
+              color: AppColors.buttonColor,
             ),
           ),
         ),

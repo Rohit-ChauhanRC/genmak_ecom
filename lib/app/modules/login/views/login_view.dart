@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:genmak_ecom/app/routes/app_pages.dart';
+import 'package:genmak_ecom/app/utils/app_colors/app_colors.dart';
+import 'package:genmak_ecom/app/utils/app_dimens/app_dimens.dart';
 
 import 'package:get/get.dart';
 
@@ -11,16 +14,24 @@ class LoginView extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Login'),
-        centerTitle: true,
-      ),
       body: Container(
         height: Get.height,
         width: Get.width,
         child: ListView(
           physics: const BouncingScrollPhysics(),
           children: [
+            Container(
+              margin: EdgeInsets.only(top: 20.h),
+              alignment: Alignment.center,
+              child: Text(
+                'Login',
+                style: TextStyle(
+                  color: AppColors.blackColor,
+                  fontSize: AppDimens.font24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
             Container(
               margin: const EdgeInsets.only(
                 top: 50,
@@ -71,45 +82,46 @@ class LoginView extends GetView<LoginController> {
                         ),
                       ),
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(
-                        top: 30,
-                      ),
-                      child: TextFormField(
-                        validator: (value) => value!.isNotEmpty
-                            ? "Please enter valid password!"
-                            : null,
-                        keyboardType: TextInputType.text,
-                        // inputFormatters: [
-                        //   FilteringTextInputFormatter.digitsOnly,
-                        // ],
-                        autovalidateMode: AutovalidateMode.always,
-                        onChanged: (val) {
-                          // controller.mobileNumber = val;
-                        },
-                        decoration: InputDecoration(
-                          label: const Text("Please enter password"),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: const BorderSide(
-                              color: Colors.black,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: const BorderSide(
-                              color: Colors.black,
-                            ),
-                          ),
-                          errorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: const BorderSide(
-                              color: Colors.red,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                    // Container(
+                    //   margin: const EdgeInsets.only(
+                    //     top: 30,
+                    //   ),
+                    //   child: TextFormField(
+                    //     validator: (value) => value!.isNotEmpty
+                    //         ? "Please enter valid password!"
+                    //         : null,
+                    //     keyboardType: TextInputType.text,
+                    //     // inputFormatters: [
+                    //     //   FilteringTextInputFormatter.digitsOnly,
+                    //     // ],
+                    //     autovalidateMode: AutovalidateMode.always,
+                    //     onChanged: (val) {
+                    //       // controller.mobileNumber = val;
+                    //     },
+                    //     decoration: InputDecoration(
+                    //       label: const Text("Please enter password"),
+                    //       border: OutlineInputBorder(
+                    //         borderRadius: BorderRadius.circular(10),
+                    //         borderSide: const BorderSide(
+                    //           color: Colors.black,
+                    //         ),
+                    //       ),
+                    //       focusedBorder: OutlineInputBorder(
+                    //         borderRadius: BorderRadius.circular(10),
+                    //         borderSide: const BorderSide(
+                    //           color: Colors.black,
+                    //         ),
+                    //       ),
+                    //       errorBorder: OutlineInputBorder(
+                    //         borderRadius: BorderRadius.circular(10),
+                    //         borderSide: const BorderSide(
+                    //           color: Colors.red,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+
                     Container(
                       margin: const EdgeInsets.only(
                         top: 30,
@@ -190,11 +202,10 @@ class LoginView extends GetView<LoginController> {
                                   await controller.login();
                                 }
                               },
-                              child: const Text(
+                              child: Text(
                                 "Login",
                                 style: TextStyle(
-                                  fontSize: 18,
-                                ),
+                                    fontSize: 18, color: AppColors.whiteColor),
                               ),
                             ),
                           )

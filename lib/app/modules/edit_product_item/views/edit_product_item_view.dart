@@ -15,13 +15,13 @@ class EditProductItemView extends GetView<EditProductItemController> {
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(
-          color: AppColors.blackColor,
+          color: AppColors.whiteColor,
           size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
         ),
         title: Text(
           'Edit Product',
           style: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: MediaQuery.of(Get.context!).size.width > 650
                 ? AppDimens.font30
                 : AppDimens.font18,
@@ -39,12 +39,23 @@ class EditProductItemView extends GetView<EditProductItemController> {
                     const SizedBox(
                       height: 20,
                     ),
-                    Obx(() => UploadImageWidget(
-                          imageFile: controller.personPic,
-                          onTap: controller.getImage1,
-                          bytes: controller.imageLocal,
-                          imageDb: controller.imgeDb,
-                        )),
+                    Container(
+                      // decoration: BoxDecoration(
+                      //     borderRadius: BorderRadius.circular(
+                      //         MediaQuery.of(Get.context!).size.width > 650
+                      //             ? 100
+                      //             : 50),
+                      //     border: Border.all(
+                      //       color: AppColors.buttonColor,
+                      //       width: 2,
+                      //     )),
+                      child: Obx(() => UploadImageWidget(
+                            imageFile: controller.personPic,
+                            onTap: controller.getImage1,
+                            bytes: controller.imageLocal,
+                            imageDb: controller.imgeDb,
+                          )),
+                    ),
                     const SizedBox(
                       height: 20,
                     ),
@@ -57,6 +68,7 @@ class EditProductItemView extends GetView<EditProductItemController> {
                               ? AppDimens.font22
                               : AppDimens.font16,
                           color: AppColors.blackColor,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
@@ -79,6 +91,7 @@ class EditProductItemView extends GetView<EditProductItemController> {
                               ? AppDimens.font22
                               : AppDimens.font16,
                           color: AppColors.blackColor,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
@@ -99,6 +112,7 @@ class EditProductItemView extends GetView<EditProductItemController> {
                               ? AppDimens.font22
                               : AppDimens.font16,
                           color: AppColors.blackColor,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
@@ -121,6 +135,7 @@ class EditProductItemView extends GetView<EditProductItemController> {
                               ? AppDimens.font22
                               : AppDimens.font16,
                           color: AppColors.blackColor,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
@@ -143,6 +158,7 @@ class EditProductItemView extends GetView<EditProductItemController> {
                               ? AppDimens.font22
                               : AppDimens.font16,
                           color: AppColors.blackColor,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
@@ -167,6 +183,7 @@ class EditProductItemView extends GetView<EditProductItemController> {
                               ? AppDimens.font22
                               : AppDimens.font16,
                           color: AppColors.blackColor,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
@@ -190,6 +207,7 @@ class EditProductItemView extends GetView<EditProductItemController> {
                               ? AppDimens.font22
                               : AppDimens.font16,
                           color: AppColors.blackColor,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
@@ -213,6 +231,7 @@ class EditProductItemView extends GetView<EditProductItemController> {
                               ? AppDimens.font22
                               : AppDimens.font16,
                           color: AppColors.blackColor,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
@@ -258,9 +277,10 @@ class EditProductItemView extends GetView<EditProductItemController> {
                                                     .width >
                                                 650
                                             ? AppDimens.font18
-                                            : AppDimens.font12),
+                                            : AppDimens.font14),
                                   ),
                                   leading: Radio(
+                                    activeColor: AppColors.buttonColor,
                                     value: 0,
                                     groupValue: controller.check,
                                     onChanged: (value) {
@@ -286,9 +306,10 @@ class EditProductItemView extends GetView<EditProductItemController> {
                                                       .width >
                                                   650
                                               ? AppDimens.font18
-                                              : AppDimens.font12),
+                                              : AppDimens.font14),
                                     ),
                                     leading: Radio(
+                                      activeColor: AppColors.buttonColor,
                                       value: 1,
                                       groupValue: controller.check,
                                       onChanged: (value) {
@@ -329,10 +350,10 @@ class EditProductItemView extends GetView<EditProductItemController> {
                               .style!
                               .copyWith(
                                   backgroundColor: MaterialStatePropertyAll(
-                                      AppColors.whiteColor)),
+                                      AppColors.buttonColor)),
                           child: Text(
                             "Update",
-                            style: TextStyle(color: AppColors.blackColor),
+                            style: TextStyle(color: AppColors.whiteColor),
                           ),
                         ),
                         const SizedBox(
@@ -349,7 +370,7 @@ class EditProductItemView extends GetView<EditProductItemController> {
                                   backgroundColor: MaterialStatePropertyAll(
                                       AppColors.whiteColor)),
                           child: const Text("Delete",
-                              style: TextStyle(color: Colors.red)),
+                              style: TextStyle(color: Colors.black)),
                         ),
                       ],
                     )

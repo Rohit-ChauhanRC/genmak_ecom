@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:genmak_ecom/app/data/models/vendor_model.dart';
 import 'package:genmak_ecom/app/utils/app_colors/app_colors.dart';
 import 'package:genmak_ecom/app/utils/app_dimens/app_dimens.dart';
@@ -16,13 +17,13 @@ class VendorListView extends GetView<VendorListController> {
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(
-          color: AppColors.blackColor,
+          color: AppColors.whiteColor,
           size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
         ),
         title: Text(
           'Vendor List',
           style: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: MediaQuery.of(Get.context!).size.width > 650
                 ? AppDimens.font30
                 : AppDimens.font18,
@@ -40,15 +41,24 @@ class VendorListView extends GetView<VendorListController> {
                 // scrollDirection: Axis.horizontal,
                 children: [
                   Container(
-                    height: MediaQuery.of(context).size.width > 650 ? 70 : 50,
-                    margin: const EdgeInsets.only(left: 10, right: 10),
+                    color: AppColors.buttonColor,
+                    height: 35.h,
+                    margin: const EdgeInsets.only(top: 20),
+                    padding: EdgeInsets.only(
+                      left:
+                          MediaQuery.of(Get.context!).size.width > 650 ? 10 : 3,
+                      right:
+                          MediaQuery.of(Get.context!).size.width > 650 ? 10 : 3,
+                    ),
                     child: ListView(
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
                       // mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(
-                          width: Get.width / 3,
+                        Container(
+                          padding: const EdgeInsets.all(4),
+                          // height: 30.h,
+                          width: Get.width / 2.4,
                           child: TextFormWidget(
                             textController: controller.textController,
                             label: "Search...",
@@ -57,38 +67,43 @@ class VendorListView extends GetView<VendorListController> {
                           ),
                         ),
                         const SizedBox(
-                          width: 10,
+                          width: 3,
                         ),
-                        ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.whiteColor),
-                            onPressed: () async {
-                              if (controller.textController!.text
-                                  .toString()
-                                  .isNotEmpty) {
-                                controller.searchProduct(
-                                    controller.textController!.text);
-                              }
-                            },
-                            child: Text(
-                              "Search",
-                              style: TextStyle(color: AppColors.blackColor),
-                            )),
+                        Container(
+                          padding: const EdgeInsets.all(6),
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.bgColor1),
+                              onPressed: () async {
+                                if (controller.textController!.text
+                                    .toString()
+                                    .isNotEmpty) {
+                                  controller.searchProduct(
+                                      controller.textController!.text);
+                                }
+                              },
+                              child: Text(
+                                "Search",
+                                style: TextStyle(color: AppColors.blackColor),
+                              )),
+                        ),
                         const SizedBox(
                           width: 10,
                         ),
-                        ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.whiteColor),
-                            onPressed: () async {
-                              // controller.textController!.clear();
-                              // controller.searchP = false;
-                              await controller.all();
-                            },
-                            child: Text(
-                              "All",
-                              style: TextStyle(color: AppColors.blackColor),
-                            ))
+                        Container(
+                            padding: const EdgeInsets.all(6),
+                            child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: AppColors.whiteColor),
+                                onPressed: () async {
+                                  // controller.textController!.clear();
+                                  // controller.searchP = false;
+                                  await controller.all();
+                                },
+                                child: Text(
+                                  "All",
+                                  style: TextStyle(color: AppColors.blackColor),
+                                )))
                       ],
                     ),
                   ),
@@ -114,7 +129,9 @@ class VendorListView extends GetView<VendorListController> {
                   "No data found...",
                   style: TextStyle(
                     color: AppColors.blackColor,
-                    fontSize: AppDimens.font30,
+                    fontSize: MediaQuery.of(Get.context!).size.width > 650
+                        ? AppDimens.font30
+                        : AppDimens.font18,
                     fontWeight: FontWeight.bold,
                   ),
                 )),

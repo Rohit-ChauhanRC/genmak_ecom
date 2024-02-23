@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:genmak_ecom/app/routes/app_pages.dart';
+import 'package:genmak_ecom/app/utils/app_colors/app_colors.dart';
+import 'package:genmak_ecom/app/utils/app_dimens/app_dimens.dart';
 
 import 'package:get/get.dart';
 
@@ -11,16 +14,24 @@ class OtpView extends GetView<OtpController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Otp Verify'),
-        centerTitle: true,
-      ),
       body: Container(
         height: Get.height,
         width: Get.width,
         child: ListView(
           physics: const BouncingScrollPhysics(),
           children: [
+            Container(
+              margin: EdgeInsets.only(top: 20.h),
+              alignment: Alignment.center,
+              child: Text(
+                'Verify OTP',
+                style: TextStyle(
+                  color: AppColors.blackColor,
+                  fontSize: AppDimens.font24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
             Container(
               margin: const EdgeInsets.only(
                 top: 50,
@@ -139,23 +150,14 @@ class OtpView extends GetView<OtpController> {
                       ),
                       // width: Get.width / 2,
                       child: ElevatedButton(
-                        // style: ElevatedButton.styleFrom(
-                        //   backgroundColor: Colors.purple[900],
-                        //   foregroundColor: Colors.white,
-                        //   shape: RoundedRectangleBorder(
-                        //     borderRadius: BorderRadius.circular(30),
-                        //   ),
-                        //   // fixedSize: const Size(120, 30),
-                        // ),
                         onPressed: () async {
                           // await controller.otpVerify();
                           Get.toNamed(Routes.HOME);
                         },
-                        child: const Text(
+                        child: Text(
                           "Verify",
                           style: TextStyle(
-                            fontSize: 18,
-                          ),
+                              fontSize: 18, color: AppColors.whiteColor),
                         ),
                       ),
                     ),

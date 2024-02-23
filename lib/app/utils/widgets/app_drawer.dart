@@ -5,6 +5,7 @@ import 'package:genmak_ecom/app/modules/home/controllers/home_controller.dart';
 import 'package:genmak_ecom/app/routes/app_pages.dart';
 import 'package:genmak_ecom/app/utils/app_colors/app_colors.dart';
 import 'package:genmak_ecom/app/utils/app_dimens/app_dimens.dart';
+import 'package:genmak_ecom/app/utils/widgets/upload_image_widget.dart';
 import 'package:get/get.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -15,7 +16,7 @@ class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: AppColors.blackColor,
+      backgroundColor: AppColors.whiteColor,
       // backgroundColor: Theme.of(context).drawerTheme.backgroundColor,
       elevation: 10,
       width: Get.width * 0.7,
@@ -23,25 +24,57 @@ class AppDrawer extends StatelessWidget {
         children: [
           Column(
             children: [
-              Obx(() => CircleAvatar(
-                    radius:
-                        MediaQuery.of(Get.context!).size.width > 650 ? 70 : 45,
-                    backgroundColor: AppColors.greenColor,
-                    // color: Colors.white,
-                    backgroundImage: controller.personPic != null &&
-                            controller.personPic.path != null &&
-                            controller.personPic.path != ""
-                        ? Image.file(
-                            File(controller.personPic.path),
-                            fit: BoxFit.contain,
-                          ).image
-                        : Image.asset("assets/images/images.png").image,
+              // Obx(() => CircleAvatar(
+              //       radius:
+              //           MediaQuery.of(Get.context!).size.width > 650 ? 70 : 45,
+              //       backgroundColor: AppColors.greenColor,
+              //       // color: Colors.white,
+              //       backgroundImage: controller.personPic != null &&
+              //               controller.personPic.path != null &&
+              //               controller.personPic.path != ""
+              //           ? Image.file(
+              //               File(controller.personPic.path),
+              //               fit: BoxFit.contain,
+              //             ).image
+              //           : Image.asset("assets/images/images.png").image,
+              //     )),
+              Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(
+                        MediaQuery.of(Get.context!).size.width > 650
+                            ? 100
+                            : 50),
+                    border: Border.all(
+                      color: AppColors.buttonColor,
+                      width: 2,
+                    )),
+                child: Obx(() => UploadImageWidget(
+                      imageFile: controller.personPic,
+                      onTap: controller.getImage1,
+                      bytes: controller.personPicM,
+                      imageDb: controller.memoryImg,
+                    )),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Obx(() => Text(
+                    controller.appTitle ?? 'Genmak Info India Limited',
+                    // overflow: TextOverflow.visible,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: MediaQuery.of(Get.context!).size.width > 650
+                          ? AppDimens.font30
+                          : AppDimens.font18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   )),
               const SizedBox(
                 height: 20,
               ),
-              const Divider(
-                color: Colors.white,
+              Divider(
+                color: AppColors.buttonColor,
+                thickness: 20,
               ),
               const SizedBox(
                 height: 20,
@@ -53,7 +86,7 @@ class AppDrawer extends StatelessWidget {
                 title: Text(
                   "Profile",
                   style: TextStyle(
-                    color: AppColors.whiteColor,
+                    color: AppColors.blackColor,
                     fontSize: MediaQuery.of(Get.context!).size.width > 650
                         ? AppDimens.font26
                         : AppDimens.font18,
@@ -61,7 +94,7 @@ class AppDrawer extends StatelessWidget {
                 ),
                 leading: Icon(
                   Icons.person,
-                  color: AppColors.whiteColor,
+                  color: AppColors.blackColor,
                   size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
                 ),
               ),
@@ -69,7 +102,7 @@ class AppDrawer extends StatelessWidget {
                 title: Text(
                   "Admin",
                   style: TextStyle(
-                    color: AppColors.whiteColor,
+                    color: AppColors.blackColor,
                     fontSize: MediaQuery.of(Get.context!).size.width > 650
                         ? AppDimens.font26
                         : AppDimens.font18,
@@ -77,7 +110,7 @@ class AppDrawer extends StatelessWidget {
                 ),
                 leading: Icon(
                   Icons.admin_panel_settings,
-                  color: AppColors.whiteColor,
+                  color: AppColors.blackColor,
                   size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
                 ),
                 onTap: () {
@@ -91,7 +124,7 @@ class AppDrawer extends StatelessWidget {
             title: Text(
               "Billing",
               style: TextStyle(
-                color: AppColors.whiteColor,
+                color: AppColors.blackColor,
                 fontSize: MediaQuery.of(Get.context!).size.width > 650
                     ? AppDimens.font26
                     : AppDimens.font18,
@@ -99,7 +132,7 @@ class AppDrawer extends StatelessWidget {
             ),
             leading: Icon(
               Icons.home,
-              color: AppColors.whiteColor,
+              color: AppColors.blackColor,
               size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
             ),
             onTap: () {

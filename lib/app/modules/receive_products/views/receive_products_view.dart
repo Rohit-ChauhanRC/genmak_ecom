@@ -19,13 +19,13 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(
-          color: AppColors.blackColor,
+          color: AppColors.whiteColor,
           size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
         ),
         title: Text(
           'Receive Products',
           style: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: MediaQuery.of(Get.context!).size.width > 650
                 ? AppDimens.font30
                 : AppDimens.font18,
@@ -49,6 +49,7 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                         ? AppDimens.font22
                         : AppDimens.font16,
                     color: AppColors.blackColor,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -69,6 +70,7 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                         ? AppDimens.font22
                         : AppDimens.font16,
                     color: AppColors.blackColor,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -94,6 +96,7 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                               ? AppDimens.font22
                               : AppDimens.font16,
                           color: AppColors.blackColor,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     )
@@ -172,6 +175,7 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                         ? AppDimens.font22
                         : AppDimens.font16,
                     color: AppColors.blackColor,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -215,6 +219,7 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                                           ? AppDimens.font22
                                           : AppDimens.font16,
                                   color: AppColors.blackColor,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
@@ -329,6 +334,7 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                                           ? AppDimens.font22
                                           : AppDimens.font16,
                                   color: AppColors.blackColor,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
@@ -357,7 +363,11 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                                           onPressed: () {
                                             controller.addProductList(index);
                                           },
-                                          child: const Text("ADD")),
+                                          child: Text(
+                                            "ADD",
+                                            style: TextStyle(
+                                                color: AppColors.whiteColor),
+                                          )),
                                       const SizedBox(
                                         width: 30,
                                       ),
@@ -367,13 +377,17 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                                         ElevatedButton(
                                             style: ElevatedButton.styleFrom(
                                               backgroundColor:
-                                                  AppColors.reddishColor,
+                                                  AppColors.whiteColor,
                                             ),
                                             onPressed: () {
                                               controller.removeProductList(
                                                   index, _product);
                                             },
-                                            child: const Text("REMOVE")),
+                                            child: Text(
+                                              "REMOVE",
+                                              style: TextStyle(
+                                                  color: AppColors.blackColor),
+                                            )),
                                     ],
                                   )
                                 : const SizedBox()),
@@ -395,10 +409,10 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                 },
                 style: Theme.of(context).elevatedButtonTheme.style!.copyWith(
                     backgroundColor:
-                        MaterialStatePropertyAll(AppColors.whiteColor)),
+                        MaterialStatePropertyAll(AppColors.buttonColor)),
                 child: Text(
                   "Submit",
-                  style: TextStyle(color: AppColors.blackColor),
+                  style: TextStyle(color: AppColors.whiteColor),
                 ),
               ),
             ],

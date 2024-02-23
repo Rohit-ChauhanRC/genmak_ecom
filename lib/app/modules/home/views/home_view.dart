@@ -7,6 +7,7 @@ import 'package:genmak_ecom/app/utils/app_dimens/app_dimens.dart';
 import 'package:genmak_ecom/app/utils/widgets/app_drawer.dart';
 import 'package:genmak_ecom/app/utils/widgets/grid_widget.dart';
 import 'package:genmak_ecom/app/utils/widgets/text_form_widget.dart';
+import 'package:genmak_ecom/app/utils/widgets/upload_image_widget.dart';
 
 import 'package:get/get.dart';
 
@@ -20,37 +21,52 @@ class HomeView extends GetView<HomeController> {
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(
-          color: AppColors.blackColor,
+          color: AppColors.whiteColor,
           size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
         ),
         title: SizedBox(
           width: Get.width * 0.6,
-          child: Text(
-            'Genmak Info India Limited',
-            // overflow: TextOverflow.visible,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: MediaQuery.of(Get.context!).size.width > 650
-                  ? AppDimens.font30
-                  : AppDimens.font18,
-            ),
-          ),
+          child: Obx(() => Text(
+                controller.appTitle ?? 'Genmak Info India Limited',
+                // overflow: TextOverflow.visible,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: MediaQuery.of(Get.context!).size.width > 650
+                      ? AppDimens.font30
+                      : AppDimens.font18,
+                ),
+              )),
         ),
         centerTitle: true,
         actions: [
-          Obx(() => CircleAvatar(
-                radius: MediaQuery.of(Get.context!).size.width > 650 ? 50 : 20,
-                backgroundColor: AppColors.greenColor,
-                // color: Colors.white,
-                backgroundImage: controller.personPic != null &&
-                        controller.personPic.path != null &&
-                        controller.personPic.path != ""
-                    ? Image.file(
-                        File(controller.personPic.path),
-                        fit: BoxFit.contain,
-                      ).image
-                    : Image.asset("assets/images/images.png").image,
-              )),
+          // Obx(() => CircleAvatar(
+          //       radius: MediaQuery.of(Get.context!).size.width > 650 ? 50 : 20,
+          //       backgroundColor: AppColors.greenColor,
+          //       // color: Colors.white,
+          //       backgroundImage: controller.personPic != null &&
+          //               controller.personPic.path != null &&
+          //               controller.personPic.path != ""
+          //           ? Image.file(
+          //               File(controller.personPic.path),
+          //               fit: BoxFit.contain,
+          //             ).image
+          //           : Image.asset("assets/images/images.png").image,
+          //     )),
+          Container(
+            // decoration: BoxDecoration(
+            //     borderRadius: BorderRadius.circular(
+            //         MediaQuery.of(Get.context!).size.width > 650 ? 100 : 20),
+            //     border: Border.all(
+            //       color: AppColors.bgColor1,
+            //       width: 2,
+            //     )),
+            child: Obx(() => UploadImageWidget(
+                  imageFile: controller.personPic,
+                  onTap: controller.getImage1,
+                  bytes: controller.personPicM,
+                  imageDb: controller.memoryImg,
+                )),
+          ),
           const SizedBox(
             width: 10,
           ),
@@ -59,16 +75,24 @@ class HomeView extends GetView<HomeController> {
       drawer: AppDrawer(),
       body: ListView(shrinkWrap: true, children: [
         Container(
-          height: 30.h,
-          margin: const EdgeInsets.only(left: 10, right: 10),
+          color: AppColors.buttonColor,
+          height: 35.h,
+          margin: const EdgeInsets.only(top: 20),
+          padding: EdgeInsets.only(
+            left: MediaQuery.of(Get.context!).size.width > 650 ? 10 : 3,
+            right: MediaQuery.of(Get.context!).size.width > 650 ? 10 : 3,
+          ),
           child: ListView(
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
             // mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                width: Get.width / 2,
+              Container(
+                padding: const EdgeInsets.all(3),
+                // height: 30.h,
+                width: Get.width / 2.4,
                 child: TextFormWidget(
+                  suffix: true,
                   textController: controller.textController,
                   label: "Search...",
                   onChanged: (v) =>
@@ -76,9 +100,14 @@ class HomeView extends GetView<HomeController> {
                 ),
               ),
               const SizedBox(
-                width: 10,
+                width: 3,
               ),
-              ElevatedButton(
+              Container(
+                padding: const EdgeInsets.all(6),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.bgColor1,
+                  ),
                   onPressed: () async {
                     if (controller.textController!.text.toString().isNotEmpty) {
                       controller.searchProduct(controller.textController!.text);
@@ -89,23 +118,30 @@ class HomeView extends GetView<HomeController> {
                     style: TextStyle(
                       color: Colors.black,
                     ),
-                  )),
-              const SizedBox(
-                width: 10,
+                  ),
+                ),
               ),
-              ElevatedButton(
-                  style: Theme.of(context).elevatedButtonTheme.style,
-                  onPressed: () async {
-                    // controller.textController!.clear();
-                    // controller.searchP = false;
-                    await controller.all();
-                  },
-                  child: const Text(
-                    "All",
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
-                  )),
+              const SizedBox(
+                width: 3,
+              ),
+              Container(
+                padding: const EdgeInsets.all(6),
+                child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.bgColor1,
+                        padding: const EdgeInsets.all(0)),
+                    onPressed: () async {
+                      // controller.textController!.clear();
+                      // controller.searchP = false;
+                      await controller.all();
+                    },
+                    child: const Text(
+                      "All",
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    )),
+              ),
             ],
           ),
         ),
@@ -131,7 +167,9 @@ class HomeView extends GetView<HomeController> {
                     "No data found!...",
                     style: TextStyle(
                       color: AppColors.blackColor,
-                      fontSize: AppDimens.font24,
+                      fontSize: MediaQuery.of(Get.context!).size.width > 650
+                          ? AppDimens.font30
+                          : AppDimens.font18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -142,7 +180,7 @@ class HomeView extends GetView<HomeController> {
           // color: Colors.black,
           margin: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-            color: AppColors.bgColor,
+            color: AppColors.buttonColor,
             border: Border.all(
               color: AppColors.blackColor,
             ),
@@ -160,7 +198,7 @@ class HomeView extends GetView<HomeController> {
                     fontSize: MediaQuery.of(Get.context!).size.width > 650
                         ? AppDimens.font24
                         : AppDimens.font18,
-                    color: AppColors.blackColor,
+                    color: AppColors.whiteColor,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -221,8 +259,8 @@ class HomeView extends GetView<HomeController> {
                                                     child: Icon(
                                                       Icons
                                                           .remove_circle_outline,
-                                                      color: AppColors
-                                                          .reddishColor,
+                                                      color:
+                                                          AppColors.buttonColor,
                                                       size: 20,
                                                     ),
                                                   ),
@@ -247,7 +285,7 @@ class HomeView extends GetView<HomeController> {
                                                               : AppDimens
                                                                   .font16,
                                                       color:
-                                                          AppColors.brownColor,
+                                                          AppColors.blackColor,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                     ),
@@ -267,8 +305,7 @@ class HomeView extends GetView<HomeController> {
                                                     },
                                                     child: Icon(
                                                       Icons.add_circle_outlined,
-                                                      color:
-                                                          AppColors.brownColor,
+                                                      color: AppColors.bgColor1,
                                                       size: 20,
                                                     ),
                                                   ),
@@ -293,7 +330,7 @@ class HomeView extends GetView<HomeController> {
                                                               650
                                                           ? AppDimens.font24
                                                           : AppDimens.font16,
-                                                  color: AppColors.brownColor,
+                                                  color: AppColors.blackColor,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
@@ -315,7 +352,7 @@ class HomeView extends GetView<HomeController> {
                                                               650
                                                           ? AppDimens.font24
                                                           : AppDimens.font16,
-                                                  color: AppColors.brownColor,
+                                                  color: AppColors.blackColor,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
@@ -402,11 +439,11 @@ class HomeView extends GetView<HomeController> {
                 if (controller.orders.isNotEmpty) await controller.onSave();
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.whiteColor,
+                backgroundColor: AppColors.buttonColor,
               ),
               child: Text(
                 "Save",
-                style: TextStyle(color: AppColors.blackColor),
+                style: TextStyle(color: AppColors.whiteColor),
               ),
             ),
             // const SizedBox(

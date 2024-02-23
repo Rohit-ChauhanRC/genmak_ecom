@@ -14,12 +14,12 @@ class AddVendorView extends GetView<AddVendorController> {
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(
-          color: AppColors.blackColor,
+          color: AppColors.whiteColor,
           size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
         ),
         title: Text('Add Vendor',
             style: TextStyle(
-              color: Colors.black,
+              color: Colors.white,
               fontSize: MediaQuery.of(Get.context!).size.width > 650
                   ? AppDimens.font30
                   : AppDimens.font18,
@@ -41,6 +41,7 @@ class AddVendorView extends GetView<AddVendorController> {
                         ? AppDimens.font22
                         : AppDimens.font16,
                     color: AppColors.blackColor,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -61,6 +62,7 @@ class AddVendorView extends GetView<AddVendorController> {
                         ? AppDimens.font22
                         : AppDimens.font16,
                     color: AppColors.blackColor,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -81,6 +83,7 @@ class AddVendorView extends GetView<AddVendorController> {
                         ? AppDimens.font22
                         : AppDimens.font16,
                     color: AppColors.blackColor,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -101,6 +104,7 @@ class AddVendorView extends GetView<AddVendorController> {
                         ? AppDimens.font22
                         : AppDimens.font16,
                     color: AppColors.blackColor,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -117,10 +121,10 @@ class AddVendorView extends GetView<AddVendorController> {
                   controller.checkValidate();
                 },
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.whiteColor),
+                    backgroundColor: AppColors.buttonColor),
                 child: Text(
                   "Add",
-                  style: TextStyle(color: AppColors.blackColor),
+                  style: TextStyle(color: AppColors.whiteColor),
                 ),
               )
             ],

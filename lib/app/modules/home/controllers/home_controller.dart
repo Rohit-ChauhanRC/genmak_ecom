@@ -130,6 +130,10 @@ class HomeController extends GetxController {
 
   // late final Socket sock;
 
+  final RxString _appTitle = "".obs;
+  String get appTitle => _appTitle.value;
+  set appTitle(String str) => _appTitle.value = str;
+
   @override
   void onInit() async {
     super.onInit();
@@ -138,7 +142,7 @@ class HomeController extends GetxController {
     await sellDB.fetchAll();
     fetchInvoiceNo();
     // await checkIp();
-    // await fetchProfile();
+    await fetchProfile();
 
     // await checkConnectivity();
     // connectLn();
@@ -542,9 +546,11 @@ class HomeController extends GetxController {
   Future<void> fetchProfile() async {
     await profileDB.fetchAll().then((v) {
       if (v.isNotEmpty) {
-        profile = v[1];
-        personPicM = v[1].picture!;
+        profile = v[0];
+        personPicM = v[0].picture!;
         memoryImg = true;
+        appTitle = v[0].name!;
+        print("v: ${v[0].name}");
       }
     });
   }
@@ -722,10 +728,10 @@ class HomeController extends GetxController {
     try {
       var res = await http.post(Uri.parse("http://$ip.$i/status"), body: {
         "print": """
-  GENAMK INFO INDIA PVT LTD
-  SOHNA ROAD, GURUGRAM
-  GSTIN:29AAMFN3642F123
-  PH:080-23232323
+  $appTitle
+  ${profile.address}
+  GSTIN:${profile.gst}
+  PH:${profile.contact}
   DATE: ${DateFormat("dd/MM/yyyy").add_Hms().format(DateTime.now())}
   BILL NO.: 10""",
       });
@@ -789,21 +795,23 @@ class HomeController extends GetxController {
             int.parse(previousValue.toString()) + element!);
     List<Map<double, double>> gstList = calulateGST();
     late int count1 = 0;
-    final li = orders.toSet().map((e) {
-      count1 = count1 + 1;
-      return """$count1.  ${e.name!} \n     Rs.${e.price}/-   ${e.count}   Rs.${int.parse(e.price!) * e.count!}/-\n"""
-          .toString()
-          .replaceAll("(", "")
-          .replaceAll(",", "")
-          .replaceAll(")", "");
-    });
+
+    // orders.toSet().map((e) => count1 += 1);
+    final li = orders
+        .toSet()
+        .map((e) =>
+            """${count1 = count1 + 1}.  ${e.name!} \n     Rs.${e.price}/-   ${e.count}   Rs.${int.parse(e.price!) * e.count!}/-\n""")
+        .toString()
+        .replaceAll("(", "")
+        .replaceAll(",", "")
+        .replaceAll(")", "");
 
     late double az = 0.0;
     final gstli = gstList
         .toSet()
         .map((e) {
           az = az + e.values.first;
-          return """${e.keys.first}   ${e.values.first}   ${e.values.first}/-\n   """;
+          return """${e.keys.first}   ${e.values.first}/-   ${e.values.first}/-\n   """;
         })
         .toString()
         .replaceAll("(", "")
@@ -824,7 +832,7 @@ class HomeController extends GetxController {
   - - - - - - - - - - - - - - -
   Rs.$az/-   Rs.$az/-
   - - - - - - - - - - - - - - -
-  Total   Rs.$subtotalPrice/-
+  Total   Rs.${subtotalPrice + 2 * az}/-
   - - - - - - - - - - - - - - -
       Thank You
     
