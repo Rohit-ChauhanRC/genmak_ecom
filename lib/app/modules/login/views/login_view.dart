@@ -36,7 +36,7 @@ class LoginView extends GetView<LoginController> {
               // height: ScreenUtil().screenHeight / 8,
               // width: ScreenUtil().screenWidth / 1.5,
               child: Image.asset(
-                "assets/images/makdairy.png",
+                "assets/images/logo2.png",
                 height: 200,
                 width: 200,
                 // color: AppColor.kLogoColor,

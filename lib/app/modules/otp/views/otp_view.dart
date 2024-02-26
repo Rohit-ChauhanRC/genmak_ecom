@@ -31,7 +31,7 @@ class OtpView extends GetView<OtpController> {
                 top: 100,
               ),
               child: Image.asset(
-                "assets/images/makdairy.png",
+                "assets/images/logo2.png",
                 height: 200,
                 width: 200,
               ),
