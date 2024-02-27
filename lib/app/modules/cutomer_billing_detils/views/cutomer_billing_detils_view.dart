@@ -13,13 +13,13 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(
-          color: AppColors.blackColor,
+          color: AppColors.whiteColor,
           size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
         ),
         title: Text(
           'Cutomer Billing Detials',
           style: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: MediaQuery.of(Get.context!).size.width > 650
                 ? AppDimens.font30
                 : AppDimens.font18,
@@ -66,7 +66,7 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
                       fontSize: MediaQuery.of(Get.context!).size.width > 650
                           ? AppDimens.font22
                           : AppDimens.font16,
-                      color: AppColors.brownColor,
+                      color: AppColors.blackColor,
                     ),
                   ),
                 ],
@@ -92,7 +92,7 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
                     controller.receive.receivingDate ?? "",
                     style: TextStyle(
                       fontSize: AppDimens.font22,
-                      color: AppColors.brownColor,
+                      color: AppColors.blackColor,
                     ),
                   ),
                 ],
@@ -120,7 +120,7 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
                       fontSize: MediaQuery.of(Get.context!).size.width > 650
                           ? AppDimens.font22
                           : AppDimens.font16,
-                      color: AppColors.brownColor,
+                      color: AppColors.blackColor,
                     ),
                   ),
                 ],
@@ -148,7 +148,7 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
                           fontSize: MediaQuery.of(Get.context!).size.width > 650
                               ? AppDimens.font22
                               : AppDimens.font16,
-                          color: AppColors.brownColor,
+                          color: AppColors.blackColor,
                         ),
                       )),
                 ],
@@ -183,7 +183,10 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
                               MediaQuery.of(Get.context!).size.width > 650
                                   ? 3
                                   : 1,
-                          mainAxisExtent: 150,
+                          mainAxisExtent:
+                              MediaQuery.of(Get.context!).size.width > 650
+                                  ? 200
+                                  : 180,
                         ),
                         itemCount: controller.receiveProduct.length,
                         itemBuilder: (ctx, index) {
@@ -196,7 +199,7 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
                                 color: AppColors.blackColor,
                               ),
                               borderRadius: BorderRadius.circular(20),
-                              color: AppColors.bgColor,
+                              color: AppColors.whiteColor,
                             ),
                             padding: const EdgeInsets.all(10),
                             margin: const EdgeInsets.all(10),
@@ -231,13 +234,17 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
                                                 650
                                             ? AppDimens.font16
                                             : AppDimens.font14,
-                                        color: AppColors.redColor,
+                                        color: AppColors.blackColor,
                                       ),
                                     ),
                                   ],
                                 ),
                                 const SizedBox(
                                   height: 10,
+                                ),
+                                const Divider(
+                                  color: Colors.black,
+                                  thickness: 2,
                                 ),
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -266,13 +273,17 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
                                                 650
                                             ? AppDimens.font16
                                             : AppDimens.font14,
-                                        color: AppColors.redColor,
+                                        color: AppColors.blackColor,
                                       ),
                                     ),
                                   ],
                                 ),
                                 const SizedBox(
                                   height: 10,
+                                ),
+                                const Divider(
+                                  color: Colors.black,
+                                  thickness: 2,
                                 ),
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -301,7 +312,7 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
                                                 650
                                             ? AppDimens.font16
                                             : AppDimens.font14,
-                                        color: AppColors.redColor,
+                                        color: AppColors.blackColor,
                                       ),
                                     ),
                                   ],

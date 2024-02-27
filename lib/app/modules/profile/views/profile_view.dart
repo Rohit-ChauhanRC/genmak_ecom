@@ -101,6 +101,13 @@ class ProfileView extends GetView<ProfileController> {
                           ? 20
                           : 10,
                     ),
+                    _textContainer("Contact No.:", controller.contact),
+
+                    SizedBox(
+                      height: MediaQuery.of(Get.context!).size.width > 650
+                          ? 20
+                          : 10,
+                    ),
 
                     _textContainer("Shop Address:", controller.address),
 
@@ -109,14 +116,21 @@ class ProfileView extends GetView<ProfileController> {
                           ? 20
                           : 10,
                     ),
-
-                    _textContainer("Contact No.:", controller.contact),
+                    _textContainer("State:", controller.address),
 
                     SizedBox(
                       height: MediaQuery.of(Get.context!).size.width > 650
                           ? 20
                           : 10,
                     ),
+                    _textContainer("Pincode:", controller.address),
+
+                    SizedBox(
+                      height: MediaQuery.of(Get.context!).size.width > 650
+                          ? 20
+                          : 10,
+                    ),
+
                     SizedBox(
                         // width: Get.width / 8,
                         child: ElevatedButton(
@@ -127,7 +141,7 @@ class ProfileView extends GetView<ProfileController> {
                               // } else {
                               //   print("id not exist");
 
-                              await controller.createProfile();
+                              await controller.updateProfile();
                               // }
                             },
                             child: Text(
@@ -167,6 +181,7 @@ class ProfileView extends GetView<ProfileController> {
             width: Get.width * 0.4,
             child: Text(
               value,
+              // textAlign: TextAlign.center,
               overflow: TextOverflow.visible,
               style: TextStyle(
                 fontSize: MediaQuery.of(Get.context!).size.width > 650

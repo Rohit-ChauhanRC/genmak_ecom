@@ -39,16 +39,15 @@ class EditProductItemView extends GetView<EditProductItemController> {
                     const SizedBox(
                       height: 20,
                     ),
-                    Container(
-                      // decoration: BoxDecoration(
-                      //     borderRadius: BorderRadius.circular(
-                      //         MediaQuery.of(Get.context!).size.width > 650
-                      //             ? 100
-                      //             : 50),
-                      //     border: Border.all(
-                      //       color: AppColors.buttonColor,
-                      //       width: 2,
-                      //     )),
+                    CircleAvatar(
+                      //
+                      maxRadius: MediaQuery.of(Get.context!).size.width > 650
+                          ? 102
+                          : 52,
+                      minRadius: MediaQuery.of(Get.context!).size.width > 650
+                          ? 100
+                          : 50,
+                      backgroundColor: AppColors.buttonColor,
                       child: Obx(() => UploadImageWidget(
                             imageFile: controller.personPic,
                             onTap: controller.getImage1,

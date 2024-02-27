@@ -60,22 +60,22 @@ class ProfileDB {
 
   Future<int> update({
     required int id,
-    String? name,
-    String? gst,
-    String? address,
-    String? contact,
-    String? customerId,
+    // String? name,
+    // String? gst,
+    // String? address,
+    // String? contact,
+    // String? customerId,
     Uint8List? picture,
   }) async {
     final database = await DataBaseService().database;
     return await database.update(
       tableName,
       {
-        if (name != null) 'name': name,
-        if (gst != null) 'gst': gst,
-        if (address != null) 'address': address,
-        if (contact != null) 'contact': contact,
-        if (customerId != null) 'customerId': customerId,
+        // if (name != null) 'name': name,
+        // if (gst != null) 'gst': gst,
+        // if (address != null) 'address': address,
+        // if (contact != null) 'contact': contact,
+        // if (customerId != null) 'customerId': customerId,
         if (picture != null) 'picture': picture,
       },
       where: 'id = ?',

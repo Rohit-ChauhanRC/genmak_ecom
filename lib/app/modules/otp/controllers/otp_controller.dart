@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:genmak_ecom/app/routes/app_pages.dart';
 import 'package:genmak_ecom/app/utils/utils.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:http/http.dart' as http;
 
 class OtpController extends GetxController {
   //
@@ -36,7 +38,7 @@ class OtpController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    mobileNumber = Get.arguments.toString();
+    mobileNumber = Get.arguments[1].toString();
     await counter();
   }
 
@@ -70,18 +72,38 @@ class OtpController extends GetxController {
 
   Future<dynamic> resendOtp() async {
     Utils.closeKeyboard();
-    // if (!loginFormKey!.currentState!.validate()) {
-    //   return null;
-    // }
-    // SendOtpModel? sendOtpModel = SendOtpModel(status: "", message: "");
+    try {
+      var res = await http.post(
+        Uri.parse("http://182.78.13.18:8090/api/user"),
+        body: {
+          "MobileNo": Get.arguments[1].trim(),
+          "ClientId": Get.arguments[0].trim()
+        },
+      );
+      if (res.statusCode == 200) {
+        print(res.statusCode);
+        print(res.body);
+        // Future.delayed(Duration(seconds: 2), () {
+        // showModalBottomSheet<void>(
+        //     context: Get.context!,
+        //     builder: (_) {
+        //       return Container(
+        //           padding: const EdgeInsets.all(20), child: Text(res.body));
+        //     });
+        // });
+        // Get.toNamed(Routes.OTP, arguments: [Get.arguments[0], mobileNumber]);
+      }
+      circularProgress = true;
+    } catch (e) {
+      // apiLopp(i);
+      circularProgress = true;
 
-    // await client.postApi(endPointApi: Constants.sendOtp, data: {
-    //   "MobileNo": mobileNumber,
-    // }).then((value) => sendOtpModel = value!);
-    // count = 0;
-    // resend = false;
-    // circularProgress = true;
-    // await counter();
+      showModalBottomSheet<void>(
+          context: Get.context!,
+          builder: (_) {
+            return Text(e.toString());
+          });
+    }
   }
 
   Future<dynamic> otpVerify() async {
@@ -89,25 +111,55 @@ class OtpController extends GetxController {
     if (!loginFormKey!.currentState!.validate()) {
       return null;
     }
-    // SendOtpModel? sendOtpModel = SendOtpModel(status: "", message: "");
-    // circularProgress = false;
+    try {
+      var res = await http.post(
+        Uri.parse("http://182.78.13.18:8090/api/OTPValidation"),
+        body: {"MobileNo": Get.arguments[1].trim(), "OTP": otp.trim()},
+      );
+      if (res.statusCode == 200) {
+        print(res.statusCode);
+        print(res.body);
+        // if () {
+        await fetchUserData();
+        // }
+      }
+      circularProgress = true;
+    } catch (e) {
+      // apiLopp(i);
+      circularProgress = true;
 
-    // await client.postApi(endPointApi: Constants.verifyOtp, data: {
-    //   "MobileNo": mobileNumber,
-    //   "OtpNo": otp
-    // }).then((value) => sendOtpModel = value!);
+      showModalBottomSheet<void>(
+          context: Get.context!,
+          builder: (_) {
+            return Text(e.toString());
+          });
+    }
+  }
 
-    // debugPrint(sendOtpModel!.status.toString());
-    // if (sendOtpModel!.status == "200") {
-    //   circularProgress = true;
-    //   box.write(Constants.cred, mobileNumber);
-    //   Get.offAllNamed(
-    //     Routes.HOME,
-    //     arguments: mobileNumber,
-    //   );
-    // } else {
-    //   circularProgress = true;
-    //   Utils.showDialog(Constants.error);
-    // }
+  Future<void> fetchUserData() async {
+    try {
+      var res = await http.get(
+        Uri.parse(
+            "http://182.78.13.18:8090/api/ClientDetail?ClientId=${Get.arguments[0]}"),
+
+        // body: {"MobileNo": Get.arguments[1].trim(), "OTP": otp.trim()},
+      );
+      if (res.statusCode == 200) {
+        print(res.statusCode);
+        print(res.body);
+
+        Get.offAllNamed(Routes.HOME, arguments: res.body);
+      }
+      circularProgress = true;
+    } catch (e) {
+      // apiLopp(i);
+      circularProgress = true;
+
+      showModalBottomSheet<void>(
+          context: Get.context!,
+          builder: (_) {
+            return Text(e.toString());
+          });
+    }
   }
 }

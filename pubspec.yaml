@@ -20,7 +20,7 @@ dependencies:
   datetime_picker_formfield_new: ^2.1.0
   path: ^1.8.3
   get_storage: ^2.1.1
-  upgrader: ^8.4.0
+  # upgrader: ^8.4.0
   esc_pos_printer_plus: ^0.0.3
   esc_pos_utils_plus: ^2.0.3
   image: ^4.1.4
@@ -35,6 +35,7 @@ dependencies:
   web_socket_channel:
   pdf: ^3.10.7
   path_provider: ^2.1.2
+  upgrader: ^9.0.0
 
   flutter:
     sdk: flutter

@@ -184,8 +184,18 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                     : Get.height * 0.4,
                 // color: AppColors.whiteColor,
                 child: Obx(() => controller.receiveProduct.isNotEmpty
-                    ? ListView.builder(
+                    ? GridView.builder(
                         shrinkWrap: true,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount:
+                              MediaQuery.of(Get.context!).size.width > 650
+                                  ? 3
+                                  : 1,
+                          mainAxisExtent:
+                              MediaQuery.of(Get.context!).size.width > 650
+                                  ? 200
+                                  : 130,
+                        ),
                         itemCount: controller.receiveProduct.length,
                         itemBuilder: (ctx, index) {
                           final data = controller.receiveProduct[index];

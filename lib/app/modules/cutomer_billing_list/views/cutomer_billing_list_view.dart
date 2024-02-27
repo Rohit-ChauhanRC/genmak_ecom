@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:genmak_ecom/app/data/models/sell_model.dart';
 import 'package:genmak_ecom/app/routes/app_pages.dart';
 import 'package:genmak_ecom/app/utils/app_colors/app_colors.dart';
@@ -17,13 +18,13 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(
-          color: AppColors.blackColor,
+          color: AppColors.whiteColor,
           size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
         ),
         title: Text(
           'Cutomer Billing List',
           style: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: MediaQuery.of(Get.context!).size.width > 650
                 ? AppDimens.font30
                 : AppDimens.font18,
@@ -38,17 +39,24 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
                 shrinkWrap: true,
                 children: [
                   Container(
-                    height: MediaQuery.of(context).size.width > 650 ? 70 : 50,
-                    margin: const EdgeInsets.only(left: 10, right: 10),
-
-                    // margin: const EdgeInsets.only(left: 10, right: 10),
+                    color: AppColors.buttonColor,
+                    height: 35.h,
+                    margin: const EdgeInsets.only(top: 20),
+                    padding: EdgeInsets.only(
+                      left:
+                          MediaQuery.of(Get.context!).size.width > 650 ? 10 : 3,
+                      right:
+                          MediaQuery.of(Get.context!).size.width > 650 ? 10 : 3,
+                    ),
                     child: ListView(
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
                       // mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(
-                          width: Get.width / 2,
+                        Container(
+                          padding: const EdgeInsets.all(3),
+                          // height: 30.h,
+                          width: Get.width / 2.4,
                           child: TextFormWidget(
                             textController: controller.textController,
                             label: "Search...",
@@ -57,38 +65,44 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
                           ),
                         ),
                         const SizedBox(
-                          width: 10,
+                          width: 3,
                         ),
-                        ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.whiteColor),
-                            onPressed: () async {
-                              if (controller.textController!.text
-                                  .toString()
-                                  .isNotEmpty) {
-                                controller.searchProduct(
-                                    controller.textController!.text);
-                              }
-                            },
-                            child: Text(
-                              "Search",
-                              style: TextStyle(color: AppColors.blackColor),
-                            )),
+                        Container(
+                            padding: const EdgeInsets.all(6),
+                            child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.bgColor1,
+                                ),
+                                onPressed: () async {
+                                  if (controller.textController!.text
+                                      .toString()
+                                      .isNotEmpty) {
+                                    controller.searchProduct(
+                                        controller.textController!.text);
+                                  }
+                                },
+                                child: Text(
+                                  "Search",
+                                  style: TextStyle(color: AppColors.blackColor),
+                                ))),
                         const SizedBox(
-                          width: 10,
+                          width: 3,
                         ),
-                        ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.whiteColor),
-                            onPressed: () async {
-                              // controller.textController!.clear();
-                              // controller.searchP = false;
-                              await controller.all();
-                            },
-                            child: Text(
-                              "All",
-                              style: TextStyle(color: AppColors.blackColor),
-                            ))
+                        Container(
+                            padding: const EdgeInsets.all(6),
+                            child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.bgColor1,
+                                ),
+                                onPressed: () async {
+                                  // controller.textController!.clear();
+                                  // controller.searchP = false;
+                                  await controller.all();
+                                },
+                                child: Text(
+                                  "All",
+                                  style: TextStyle(color: AppColors.blackColor),
+                                )))
                       ],
                     ),
                   ),
@@ -123,7 +137,7 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
                                 color: AppColors.blackColor,
                               ),
                               borderRadius: BorderRadius.circular(20),
-                              color: AppColors.bgColor,
+                              color: AppColors.whiteColor,
                             ),
                             padding: const EdgeInsets.all(10),
                             margin: const EdgeInsets.all(10),
@@ -146,6 +160,7 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
                                             ? AppDimens.font22
                                             : AppDimens.font16,
                                         color: AppColors.blackColor,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                     Text(
@@ -157,7 +172,7 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
                                                 650
                                             ? AppDimens.font22
                                             : AppDimens.font16,
-                                        color: AppColors.redColor,
+                                        color: AppColors.blackColor,
                                       ),
                                     ),
                                   ],
@@ -184,6 +199,7 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
                                             ? AppDimens.font18
                                             : AppDimens.font16,
                                         color: AppColors.blackColor,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                     Text(
@@ -200,7 +216,7 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
                                                 650
                                             ? AppDimens.font18
                                             : AppDimens.font16,
-                                        color: AppColors.redColor,
+                                        color: AppColors.blackColor,
                                       ),
                                     ),
                                   ],

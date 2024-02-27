@@ -9,6 +9,7 @@ import 'package:genmak_ecom/app/data/database/product_db.dart';
 import 'package:genmak_ecom/app/data/database/profile_db.dart';
 import 'package:genmak_ecom/app/data/database/sell_db.dart';
 import 'package:genmak_ecom/app/data/database/vendor_db.dart';
+import 'package:genmak_ecom/app/data/models/client_model.dart';
 import 'package:genmak_ecom/app/data/models/product_model.dart';
 import 'package:genmak_ecom/app/data/models/profile_model.dart';
 import 'package:genmak_ecom/app/utils/utils.dart';
@@ -98,6 +99,10 @@ class HomeController extends GetxController {
   final Rx<ProfileModel> _profile = Rx(ProfileModel());
   ProfileModel get profile => _profile.value;
   set profile(ProfileModel v) => _profile.value = v;
+
+  // final Rx<ClientModel> _clientModel = Rx(ProfileModel());
+  // ProfileModel get profile => _profile.value;
+  // set profile(ProfileModel v) => _profile.value = v;
 
   final RxString _search = "".obs;
   String get search => _search.value;
@@ -471,7 +476,9 @@ class HomeController extends GetxController {
     await fetchProduct();
 
     // setStatus();
-    await checkIp();
+    await checkIp(
+      "I${box.read("invoiceNo")}",
+    );
   }
 
   handleProductQuantity(int i) {
@@ -710,21 +717,21 @@ class HomeController extends GetxController {
     }
   }
 
-  Future<void> checkIp() async {
+  Future<void> checkIp(String invoice) async {
     for (var interface in await NetworkInterface.list()) {
       for (var addr in interface.addresses) {
         if (addr.type == InternetAddressType.IPv4 &&
             addr.address.startsWith('192')) {
           ip = addr.address.split(".").getRange(0, 3).join(".");
           for (var i = 0; i < 255; i++) {
-            apiLopp(i);
+            apiLopp(i, invoice);
           }
         }
       }
     }
   }
 
-  apiLopp(int i) async {
+  apiLopp(int i, String invoice) async {
     try {
       var res = await http.post(Uri.parse("http://$ip.$i/status"), body: {
         "print": """
@@ -733,7 +740,7 @@ class HomeController extends GetxController {
   GSTIN:${profile.gst}
   PH:${profile.contact}
   DATE: ${DateFormat("dd/MM/yyyy").add_Hms().format(DateTime.now())}
-  BILL NO.: 10""",
+  BILL NO.: $invoice""",
       });
       if (res.statusCode == 200) {
         // apiUrl = "http://$ip.$i/status";
@@ -800,7 +807,7 @@ class HomeController extends GetxController {
     final li = orders
         .toSet()
         .map((e) =>
-            """${count1 = count1 + 1}.  ${e.name!} \n     Rs.${e.price}/-   ${e.count}   Rs.${int.parse(e.price!) * e.count!}/-\n""")
+            """${count1 = count1 + 1}.  ${e.name!} \n     Rs.${e.price}/-   ${e.count}   Rs.${(int.parse(e.price!) * e.count!).toStringAsFixed(2)}/-\n""")
         .toString()
         .replaceAll("(", "")
         .replaceAll(",", "")
@@ -825,14 +832,14 @@ class HomeController extends GetxController {
   SR. RATE    QTY   AMOUNT
   $li
   - - - - - - - - - - - - - - -
-  Subtotal   $count   Rs.$subtotalPrice/-
+  Subtotal   $count   Rs.${subtotalPrice.toStringAsFixed(2)}/-
   - - - - - - - - - - - - - - -
-    %    CGST   SGST
+    %    CGST     SGST
     $gstli
   - - - - - - - - - - - - - - -
-  Rs.$az/-   Rs.$az/-
+  Rs.${az.toStringAsFixed(2)}/-   Rs.${az.toStringAsFixed(2)}/-
   - - - - - - - - - - - - - - -
-  Total   Rs.${subtotalPrice + 2 * az}/-
+  Total   Rs.${double.parse(subtotalPrice.toStringAsFixed(2)) + 2 * double.parse(az.toStringAsFixed(2))}/-
   - - - - - - - - - - - - - - -
       Thank You
     
@@ -846,100 +853,5 @@ class HomeController extends GetxController {
     } catch (e) {
       // apiLopp(i);
     }
-  }
-
-  void createPrintPage() {
-    pdf.addPage(pw.Page(
-        pageFormat: PdfPageFormat.standard
-            .copyWith(marginBottom: 1.5 * PdfPageFormat.cm),
-        build: (pw.Context context) {
-          return pw.ListView(
-            children: [
-              pw.Align(
-                alignment: pw.Alignment.center,
-                child: pw.Text("Mak Life Dairy Store"),
-              ),
-              pw.Align(
-                alignment: pw.Alignment.center,
-                child: pw.Text("Barnala"),
-              ),
-              pw.Align(
-                alignment: pw.Alignment.centerLeft,
-                child: pw.Text("GSTIN: aqs221"),
-              ),
-              pw.Align(
-                alignment: pw.Alignment.centerLeft,
-                child: pw.Row(
-                  mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                  children: [
-                    pw.Text("Bill No.: 10"),
-                    pw.Column(
-                      children: [
-                        pw.Text("Date: 10/02/24"),
-                        pw.Text("Time: 10:56:57"),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-              pw.Table(
-                children: [
-                  pw.TableRow(
-                      decoration: pw.BoxDecoration(
-                        border: pw.Border.all(),
-                      ),
-                      children: [
-                        pw.Text("Sr."),
-                        pw.Text("Item Name"),
-                        pw.Text("Rate"),
-                        pw.Text("Qty"),
-                        pw.Text("Value"),
-                      ]),
-                  for (int i = 0; i < orders.toSet().length; i++)
-                    pw.TableRow(children: [
-                      pw.Text("${i + 1}"),
-                      pw.Text("${orders[i].name}"),
-                      pw.Text("${orders[i].price}"),
-                      pw.Text("${orders[i].count}"),
-                      pw.Text("${orders[i].price}"),
-                    ]),
-                ],
-              ),
-              pw.Row(
-                  mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                  children: [
-                    pw.Text("Item: ${orders.toSet().length}"),
-                    pw.Text("Amount: ${500}/-"),
-                  ]),
-              pw.Align(
-                alignment: pw.Alignment.center,
-                child: pw.Text("INCLUSIVE OF ALL TAXES"),
-              ),
-              pw.Table(
-                children: [
-                  pw.TableRow(
-                      decoration: pw.BoxDecoration(
-                        border: pw.Border.all(),
-                      ),
-                      children: [
-                        pw.Text("Tax%"),
-                        pw.Text("B.Amt"),
-                        pw.Text("SGST"),
-                        pw.Text("CGST"),
-                        pw.Text("Total"),
-                      ]),
-                  for (int i = 0; i < orders.toSet().length; i++)
-                    pw.TableRow(children: [
-                      pw.Text("${10}"),
-                      pw.Text("${orders[i].price}"),
-                      pw.Text("${10}"),
-                      pw.Text("${10}"),
-                      pw.Text("${500}"),
-                    ]),
-                ],
-              ),
-            ],
-          ); // Center
-        })); // Page
   }
 }

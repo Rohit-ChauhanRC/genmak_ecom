@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:genmak_ecom/app/routes/app_pages.dart';
 import 'package:genmak_ecom/app/utils/app_colors/app_colors.dart';
 import 'package:genmak_ecom/app/utils/app_dimens/app_dimens.dart';
+import 'package:genmak_ecom/app/utils/widgets/text_form_widget.dart';
 
 import 'package:get/get.dart';
 
@@ -83,67 +84,34 @@ class OtpView extends GetView<OtpController> {
                                 ]),
                           ),
                         )),
-
-                    Container(
-                      margin: const EdgeInsets.only(
-                        top: 30,
-                      ),
-                      child: TextFormField(
-                        validator: (value) =>
-                            value!.length < 4 || value!.length > 5
-                                ? "Please enter valid otp"
-                                : null,
-                        keyboardType: TextInputType.text,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly,
-                        ],
-                        autovalidateMode: AutovalidateMode.always,
-                        onChanged: (val) {
-                          controller.otp = val;
-                        },
-                        decoration: InputDecoration(
-                          label: const Text("Please enter OTP..."),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: const BorderSide(
-                              color: Colors.black,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: const BorderSide(
-                              color: Colors.black,
-                            ),
-                          ),
-                          errorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: const BorderSide(
-                              color: Colors.red,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
                     const SizedBox(
                       height: 20,
                     ),
-                    // Obx(() => controller.resend
-                    //     ? InkWell(
-                    //         onTap: () {
-                    //           controller.resendOtp();
-                    //         },
-                    //         child: Text(
-                    //           Constants.dontReceive,
-                    //           style: TextStyle(
-                    //             fontSize: 16,
-                    //             fontWeight: FontWeight.bold,
-                    //             color: Colors.purple[900],
-                    //           ),
-                    //         ),
-                    //       )
-                    //     : const SizedBox()),
-                    // controller.circularProgress
-                    //     ?
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Please enter OTP:",
+                        style: TextStyle(
+                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                              ? AppDimens.font22
+                              : AppDimens.font16,
+                          color: AppColors.blackColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    TextFormWidget(
+                      label: "Please enter OTP...",
+                      onChanged: (val) => controller.otp = val,
+                      validator: (value) =>
+                          value!.length < 4 || value!.length > 5
+                              ? "Please enter valid otp"
+                              : null,
+                    ),
+
+                    const SizedBox(
+                      height: 20,
+                    ),
                     Container(
                       margin: const EdgeInsets.only(
                         top: 30,
@@ -151,8 +119,8 @@ class OtpView extends GetView<OtpController> {
                       // width: Get.width / 2,
                       child: ElevatedButton(
                         onPressed: () async {
-                          // await controller.otpVerify();
-                          Get.toNamed(Routes.HOME);
+                          await controller.otpVerify();
+                          // Get.toNamed(Routes.HOME);
                         },
                         child: Text(
                           "Verify",
