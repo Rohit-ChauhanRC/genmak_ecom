@@ -18,7 +18,7 @@ dependencies:
   flutter_downloader: ^1.11.6
   path_provider: ^2.1.1
   flutter_download_manager: ^0.5.5
-  upgrader: ^8.4.0
+  upgrader: ^9.0.0
 
   flutter:
     sdk: flutter

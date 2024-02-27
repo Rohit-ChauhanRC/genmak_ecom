@@ -30,21 +30,12 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return UpgradeAlert(
-      upgrader: Upgrader(
-        canDismissDialog: false,
-        showLater: false,
-        showIgnore: false,
-        showReleaseNotes: false,
-      ),
-      child: GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: Constants.appbarTitle,
-        initialRoute: box.read(Constants.cred) != null
-            ? AppPages.CHECK
-            : AppPages.INITIAL,
-        getPages: AppPages.routes,
-      ),
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: Constants.appbarTitle,
+      initialRoute:
+          box.read(Constants.cred) != null ? AppPages.CHECK : AppPages.INITIAL,
+      getPages: AppPages.routes,
     );
   }
 }

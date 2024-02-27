@@ -44,7 +44,7 @@ class HomeController extends GetxController {
     isInspectable: kDebugMode,
     mediaPlaybackRequiresUserGesture: false,
     allowsInlineMediaPlayback: true,
-    iframeAllow: "camera; microphone;storage",
+    iframeAllow: "camera; microphone;storage;mediaLibrary;photosAddOnly;Photos",
     iframeAllowFullscreen: true,
     allowFileAccessFromFileURLs: true,
     allowContentAccess: true,
@@ -52,6 +52,7 @@ class HomeController extends GetxController {
     allowsBackForwardNavigationGestures: true,
     useOnDownloadStart: true,
     allowUniversalAccessFromFileURLs: true,
+    javaScriptEnabled: true,
   );
 
   PullToRefreshController? pullToRefreshController;
