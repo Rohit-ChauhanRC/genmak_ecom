@@ -99,8 +99,57 @@ class EditProductItemView extends GetView<EditProductItemController> {
                           onChanged: (val) => controller.weight = val,
                           initialValue: controller.weight,
                         )),
-                    const SizedBox(
-                      height: 20,
+                    SizedBox(
+                      height: MediaQuery.of(Get.context!).size.width > 650
+                          ? 20
+                          : 10,
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Units of Measurement:",
+                        style: TextStyle(
+                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                              ? AppDimens.font22
+                              : AppDimens.font16,
+                          color: AppColors.blackColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Obx(() => SizedBox(
+                          width: Get.width,
+                          child: InputDecorator(
+                            decoration: const InputDecoration(
+                              hintText: "Units of Measurement",
+                            ),
+                            child: DropdownButtonHideUnderline(
+                                child: DropdownButton<String>(
+                              items: controller.listOfMea
+                                  .map((String dropDownStringItem) {
+                                return DropdownMenuItem<String>(
+                                  value: dropDownStringItem,
+                                  child: SizedBox(
+                                    width: Get.width * 0.6,
+                                    child: Text(
+                                      dropDownStringItem.toString(),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                              onChanged: (String? val) {
+                                controller.unit = val!;
+                              },
+                              value: controller.unit,
+                              isDense: true,
+                            )),
+                          ),
+                        )),
+                    SizedBox(
+                      height: MediaQuery.of(Get.context!).size.width > 650
+                          ? 20
+                          : 10,
                     ),
                     Align(
                       alignment: Alignment.centerLeft,

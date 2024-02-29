@@ -60,8 +60,9 @@ class VendorListView extends GetView<VendorListController> {
                           // height: 30.h,
                           width: Get.width / 2.4,
                           child: TextFormWidget(
+                            suffix: true,
                             textController: controller.textController,
-                            label: "Search...",
+                            label: "Search by vendor name...",
                             onChanged: (v) =>
                                 controller.textController!.text = v.toString(),
                           ),
@@ -109,7 +110,10 @@ class VendorListView extends GetView<VendorListController> {
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: 20),
-                    height: Get.height / 1.2,
+                    // color: Colors.blueAccent,
+                    // height: Get.height / 1.2,
+                    height: Get.height * 0.75,
+
                     child: ListView.builder(
                         itemCount: controller.searchV
                             ? controller.vendorsSearch.length

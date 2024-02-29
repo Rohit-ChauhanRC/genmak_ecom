@@ -13,6 +13,7 @@ class TextFormWidget extends StatelessWidget {
     this.validator,
     this.textController,
     this.suffix = false,
+    this.maxLength,
   });
 
   final void Function(String)? onChanged;
@@ -23,12 +24,14 @@ class TextFormWidget extends StatelessWidget {
   final String? initialValue;
   final String? Function(String?)? validator;
   final TextEditingController? textController;
+  final int? maxLength;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       // height: 80,
       child: TextFormField(
+        maxLength: maxLength,
         controller: textController,
         validator: validator,
         initialValue: initialValue,
@@ -42,10 +45,10 @@ class TextFormWidget extends StatelessWidget {
         readOnly: readOnly,
         keyboardType: keyboardType ?? TextInputType.text,
         decoration: InputDecoration(
-            hintText: suffix ? "Search..." : "",
-            contentPadding: const EdgeInsets.only(top: 5, left: 10)
-            // label: Text(label!),
-            ),
+          hintText: suffix ? "Search..." : "",
+          // contentPadding: const EdgeInsets.only(top: 5, left: 10)
+          // label: Text(label!),
+        ),
       ),
     );
   }

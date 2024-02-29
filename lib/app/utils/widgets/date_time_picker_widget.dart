@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 
 class DateTimePickerWidget extends StatelessWidget {
   final Color? iconColor;
-  final TextEditingController? controller;
+  // final TextEditingController? controller;
   final void Function(DateTime?)? onSaved;
   final void Function(DateTime?)? onChanged;
   final String? hintText;
@@ -15,8 +15,8 @@ class DateTimePickerWidget extends StatelessWidget {
   DateTimePickerWidget({
     Key? key,
     this.iconColor,
-    this.controller,
-    required this.onChanged,
+    // this.controller,
+    this.onChanged,
     this.hintText,
     this.style,
     this.validate,
@@ -28,10 +28,10 @@ class DateTimePickerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DateTimeField(
-      key: UniqueKey(),
+      // key: UniqueKey(),
       style: style,
       textAlign: TextAlign.start,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
+      // autovalidateMode: AutovalidateMode.onUserInteraction,
       onSaved: onSaved,
       validator: validate,
       decoration: InputDecoration(
@@ -47,27 +47,9 @@ class DateTimePickerWidget extends StatelessWidget {
             color: Colors.green,
           ),
         ),
-        // border: OutlineInputBorder(
-        //   borderRadius: BorderRadius.circular(10),
-        //   borderSide: const BorderSide(
-        //     color: Colors.black,
-        //   ),
-        // ),
-        // focusedBorder: OutlineInputBorder(
-        //   borderRadius: BorderRadius.circular(10),
-        //   borderSide: const BorderSide(
-        //     color: Colors.black,
-        //   ),
-        // ),
-        // errorBorder: OutlineInputBorder(
-        //   borderRadius: BorderRadius.circular(10),
-        //   borderSide: const BorderSide(
-        //     color: Colors.red,
-        //   ),
-        // ),
       ),
       format: format,
-      controller: controller,
+      // controller: controller,
       onChanged: onChanged,
       onShowPicker: (context, currentValue) {
         return showDatePicker(

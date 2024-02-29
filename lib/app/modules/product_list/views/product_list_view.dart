@@ -60,9 +60,10 @@ class ProductListView extends GetView<ProductListController> {
                           alignment: Alignment.center,
                           width: Get.width / 2.3,
                           child: TextFormWidget(
+                            suffix: true,
                             textController:
                                 controller.homeController.textController,
-                            label: "Search...",
+                            label: "Searchby product name...",
                             onChanged: (v) => controller.homeController
                                 .textController!.text = v.toString(),
                           ),
@@ -115,7 +116,7 @@ class ProductListView extends GetView<ProductListController> {
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: 20),
-                    height: Get.height / 1.3,
+                    height: Get.height * 0.75,
                     // color: Colors.green,
                     child: ListView.builder(
                         shrinkWrap: true,

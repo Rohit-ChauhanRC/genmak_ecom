@@ -97,6 +97,51 @@ class AddProductView extends GetView<AddProductController> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
+                  "Units of Measurement:",
+                  style: TextStyle(
+                    fontSize: MediaQuery.of(Get.context!).size.width > 650
+                        ? AppDimens.font22
+                        : AppDimens.font16,
+                    color: AppColors.blackColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Obx(() => SizedBox(
+                    width: Get.width,
+                    child: InputDecorator(
+                      decoration: const InputDecoration(
+                        hintText: "Units of Measurement",
+                      ),
+                      child: DropdownButtonHideUnderline(
+                          child: DropdownButton<String>(
+                        items: controller.listOfMea
+                            .map((String dropDownStringItem) {
+                          return DropdownMenuItem<String>(
+                            value: dropDownStringItem,
+                            child: SizedBox(
+                              width: Get.width * 0.6,
+                              child: Text(
+                                dropDownStringItem.toString(),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: (String? val) {
+                          controller.unit = val!;
+                        },
+                        value: controller.unit,
+                        isDense: true,
+                      )),
+                    ),
+                  )),
+              SizedBox(
+                height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
                   "Price :",
                   style: TextStyle(
                     fontSize: MediaQuery.of(Get.context!).size.width > 650
@@ -111,6 +156,7 @@ class AddProductView extends GetView<AddProductController> {
                 label: "Please enter Price...",
                 onChanged: (val) => controller.price = val,
                 validator: (v) => v!.isEmpty ? "Field is required!" : null,
+                keyboardType: TextInputType.number,
               ),
               SizedBox(
                 height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
@@ -132,6 +178,7 @@ class AddProductView extends GetView<AddProductController> {
                 label: "Please enter GST...",
                 onChanged: (val) => controller.gst = val,
                 validator: (v) => v!.isEmpty ? "Field is required!" : null,
+                keyboardType: TextInputType.number,
               ),
               SizedBox(
                 height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
@@ -152,6 +199,8 @@ class AddProductView extends GetView<AddProductController> {
               TextFormWidget(
                 label: "Please enter Discount...",
                 onChanged: (val) => controller.discount = val,
+                keyboardType: TextInputType.number,
+
                 // validator: (v) => v!.isEmpty ? "Field is required!" : null,
               ),
               SizedBox(
@@ -218,7 +267,7 @@ class AddProductView extends GetView<AddProductController> {
                     children: [
                       Obx(
                         () => SizedBox(
-                          width: 130,
+                          width: Get.width * 0.4,
                           child: ListTile(
                             title: Text(
                               'Yes',
@@ -247,7 +296,7 @@ class AddProductView extends GetView<AddProductController> {
                         ),
                       ),
                       Obx(() => SizedBox(
-                            width: 130,
+                            width: Get.width * 0.4,
                             child: ListTile(
                               title: Text(
                                 'No',

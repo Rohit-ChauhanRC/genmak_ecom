@@ -53,13 +53,15 @@ class AddProductController extends GetxController {
   String get hsnCode => _hsnCode.value;
   set hsnCode(String str) => _hsnCode.value = str;
 
-  // final RxBool _active = false.obs;
-  // bool get active => _active.value;
-  // set active(bool b) => _active.value = b;
-
   final RxInt _check = 0.obs;
   int get check => _check.value;
   set check(int i) => _check.value = i;
+
+  final RxString _unit = 'NOS'.obs;
+  String get unit => _unit.value;
+  set unit(String str) => _unit.value = str;
+
+  final listOfMea = ["KG", "GM", "ML", "NOS"];
 
   @override
   void onInit() {
@@ -93,8 +95,10 @@ class AddProductController extends GetxController {
     if (!productsFormKey!.currentState!.validate()) {
       return null;
     }
-    if (personPic.path.isNotEmpty) {
+    if (personPic.path.isNotEmpty && unit.isNotEmpty) {
       await createproductTable();
+    } else {
+      Utils.showDialog("Please upload product image!");
     }
   }
 
@@ -109,6 +113,7 @@ class AddProductController extends GetxController {
       gst: gst,
       discount: discount,
       hsnCode: hsnCode,
+      unit: unit,
       picture: File(personPic.path.toString()).readAsBytesSync(),
     )
         .then((value) async {

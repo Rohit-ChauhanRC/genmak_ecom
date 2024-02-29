@@ -9,6 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() async {
   await GetStorage.init();
+  final box = GetStorage();
 
   runApp(
     ScreenUtilInit(
@@ -18,7 +19,9 @@ void main() async {
         builder: (_, child) {
           return GetMaterialApp(
             title: "Ecommerce",
-            initialRoute: AppPages.INITIAL,
+            initialRoute: (box.read("login") != null)
+                ? AppPages.INITIAL1
+                : AppPages.INITIAL,
             getPages: AppPages.routes,
             theme: AppTheme.theme,
             debugShowCheckedModeBanner: false,

@@ -35,7 +35,7 @@ class AdminView extends GetView<AdminController> {
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: MediaQuery.of(context).size.width > 650 ? 4 : 2,
               mainAxisExtent:
-                  MediaQuery.of(Get.context!).size.width > 650 ? 200 : 120,
+                  MediaQuery.of(Get.context!).size.width > 650 ? 200.h : 120.h,
             ),
             itemCount: controller.gridList.length,
             itemBuilder: (_, i) {

@@ -74,6 +74,12 @@ class EditProductItemController extends GetxController {
   String get decription => _decription.value;
   set decription(String mobileNumber) => _decription.value = decription;
 
+  final RxString _unit = 'NOS'.obs;
+  String get unit => _unit.value;
+  set unit(String str) => _unit.value = str;
+
+  final listOfMea = ["KG", "GM", "ML", "NOS"];
+
   @override
   void onInit() async {
     super.onInit();
@@ -129,6 +135,7 @@ class EditProductItemController extends GetxController {
       active: check,
       discount: discount,
       hsnCode: hsnCode,
+      unit: unit,
     )
         .then((value) async {
       await _homeController.fetchProduct();
@@ -159,7 +166,8 @@ class EditProductItemController extends GetxController {
       discount = value.discount!;
       decription = value.description!;
       hsnCode = value.hsnCode!;
-      print(value.gst);
+      unit = value.unit != "" ? value.unit! : "NOS";
+      print(value.unit);
     }).then((value) {
       progressBar = false;
     });

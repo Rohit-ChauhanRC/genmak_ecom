@@ -12,31 +12,68 @@ class ProfileDB {
     await database.execute("""
   CREATE TABLE IF NOT EXISTS $tableName (
     "id" INTEGER NOT NULL,
-    "name" TEXT NOT NULL,
+    "name" TEXT,
     "address" TEXT,
     "contact" TEXT,
     "gst" TEXT,
     "customerId" TEXT,
     "picture" BLOB,
+    "city" TEXT,
+    "state" TEXT,
+    "panNo" TEXT,
+    "email" TEXT,
+    "pin" TEXT,
     PRIMARY KEY("id" AUTOINCREMENT)
   );
 """);
   }
 
+/*
+ "ClientId": "C000001",
+    "Name": "MakLife",
+    "Address": "Spaze ITech Park ",
+    "City": "Gurgaon",
+    "State": "HARYANA",
+    "Gstno": "03AAMCML1364IZ8",
+    "PanNo": "XXXXXXXXXX",
+    "PhoneNo": "9312001515",
+    "Email": "ABC@gmail.com",
+    "Pin": "122018"
+ */
   Future<int> create({
     String? name,
     String? address,
     String? contact,
+    String? city,
+    String? state,
     String? gst,
+    String? panNo,
+    String? email,
+    String? pin,
     String? customerId,
     Uint8List? picture,
   }) async {
     final database = await DataBaseService().database;
     return await database.rawInsert(
       '''
-        INSERT INTO $tableName (name, address, contact, customerId, picture,gst) VALUES (?,?,?,?,?,?)
+        INSERT INTO $tableName (name, address, contact, customerId, picture,gst,city,
+        state,
+        panNo,
+        email,pin) VALUES (?,?,?,?,?,?,?,?,?,?,?)
       ''',
-      [name, address, contact, customerId, picture, gst],
+      [
+        name,
+        address,
+        contact,
+        customerId,
+        picture,
+        gst,
+        city,
+        state,
+        panNo,
+        email,
+        pin
+      ],
     );
   }
 

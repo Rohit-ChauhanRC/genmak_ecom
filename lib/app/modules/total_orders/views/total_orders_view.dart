@@ -22,7 +22,7 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
           size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
         ),
         title: Text(
-          'Total Orders',
+          'Received products history',
           style: TextStyle(
             color: Colors.white,
             fontSize: MediaQuery.of(Get.context!).size.width > 650
@@ -60,7 +60,7 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                           child: TextFormWidget(
                             suffix: true,
                             textController: controller.textController,
-                            label: "Search...",
+                            label: "Search by invoice id...",
                             onChanged: (v) =>
                                 controller.textController!.text = v.toString(),
                           ),
@@ -111,24 +111,30 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: 20),
-                    height: Get.height / 1.2,
+                    // height: Get.height / 1.2,
+                    height: Get.height * 0.75,
+                    // color: Colors.blue,
                     child: ListView.builder(
                       shrinkWrap: true,
-                      itemCount: controller.receiveList.length,
+                      itemCount: controller.searchV
+                          ? controller.receiveListSearch.length
+                          : controller.receiveList.length,
                       itemBuilder: (context, index) {
-                        ReceivingModel data = controller.receiveList[index];
-
+                        ReceivingModel data = controller.searchV
+                            ? controller.receiveListSearch[index]
+                            : controller.receiveList[index];
+                        print(data.receivingDate);
                         return InkWell(
                           onTap: () {
                             Get.toNamed(Routes.ORDER_DETAILS, arguments: data);
                           },
                           child: Container(
                             height: MediaQuery.of(Get.context!).size.width > 650
-                                ? 250
-                                : 150,
+                                ? 250.h
+                                : 150.h,
                             width: MediaQuery.of(Get.context!).size.width > 650
-                                ? 200
-                                : 150,
+                                ? 200.w
+                                : 150.w,
                             // margin: const EdgeInsets.all(10),
 
                             decoration: BoxDecoration(

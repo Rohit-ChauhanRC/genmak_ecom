@@ -36,6 +36,7 @@ dependencies:
   pdf: ^3.10.7
   path_provider: ^2.1.2
   upgrader: ^9.0.0
+  connectivity_plus: ^5.0.2
 
   flutter:
     sdk: flutter

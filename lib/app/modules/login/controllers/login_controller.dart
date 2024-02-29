@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:genmak_ecom/app/routes/app_pages.dart';
 import 'package:genmak_ecom/app/utils/constants/constant.dart';
@@ -34,7 +36,7 @@ class LoginController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    await checkLoginOrNot();
+    // await checkLoginOrNot();
   }
 
   @override
@@ -50,9 +52,9 @@ class LoginController extends GetxController {
   }
 
   checkLoginOrNot() async {
-    // if (await box.read(Constants.cred) != null {
-    //   Get.toNamed(Routes.HOME, arguments: box.read(Constants.cred));
-    // }
+    if (await box.read("login") != null) {
+      Get.toNamed(Routes.HOME, arguments: box.read("login"));
+    }
     // debugPrint("${box.read(Constants.cred)}");
   }
 
@@ -72,7 +74,9 @@ class LoginController extends GetxController {
           "ClientId": customerNumber.trim()
         },
       );
-      if (res.statusCode == 200) {
+      final a = jsonDecode(res.body);
+      print(a);
+      if (res.statusCode == 200 && jsonDecode(res.body) == "OTP Sent !") {
         print(res.statusCode);
         print(res.body);
 

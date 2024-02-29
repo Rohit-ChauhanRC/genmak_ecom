@@ -1,5 +1,9 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 
+import 'package:flutter/services.dart';
+import 'package:genmak_ecom/app/data/database/profile_db.dart';
 import 'package:genmak_ecom/app/routes/app_pages.dart';
 import 'package:genmak_ecom/app/utils/utils.dart';
 import 'package:get/get.dart';
@@ -14,6 +18,8 @@ class OtpController extends GetxController {
   // final DioClient client = DioClient();
 
   final box = GetStorage();
+
+  final ProfileDB profileDB = ProfileDB();
 
   final RxString _otp = ''.obs;
   String get otp => _otp.value;
@@ -119,20 +125,16 @@ class OtpController extends GetxController {
       if (res.statusCode == 200) {
         print(res.statusCode);
         print(res.body);
-        // if () {
-        await fetchUserData();
-        // }
+        if (jsonDecode(res.body) == "Success") {
+          await fetchUserData();
+        } else {
+          print('res.body');
+        }
       }
       circularProgress = true;
     } catch (e) {
       // apiLopp(i);
       circularProgress = true;
-
-      showModalBottomSheet<void>(
-          context: Get.context!,
-          builder: (_) {
-            return Text(e.toString());
-          });
     }
   }
 
@@ -148,18 +150,52 @@ class OtpController extends GetxController {
         print(res.statusCode);
         print(res.body);
 
-        Get.offAllNamed(Routes.HOME, arguments: res.body);
+        await createProfile(res.body);
       }
       circularProgress = true;
     } catch (e) {
       // apiLopp(i);
       circularProgress = true;
-
-      showModalBottomSheet<void>(
-          context: Get.context!,
-          builder: (_) {
-            return Text(e.toString());
-          });
     }
+  }
+
+  Future<void> createProfile(String body) async {
+    /*
+        [
+  {
+    "ClientId": "C000001",
+    "Name": "MakLife",
+    "Address": "Spaze ITech Park ",
+    "City": "Gurgaon",
+    "State": "HARYANA",
+    "Gstno": "03AAMCML1364IZ8",
+    "PanNo": "XXXXXXXXXX",
+    "PhoneNo": "9312001515",
+    "Email": "ABC@gmail.com",
+    "Pin": "122018"
+  }
+]
+         */
+    final ByteData bytes = await rootBundle.load('assets/images/store.png');
+
+    final res = json.decode(body);
+
+    box.write("login", res[0]["ClientId"]);
+    await profileDB
+        .create(
+            name: res[0]["Name"],
+            address: res[0]["Address"],
+            contact: res[0]["PhoneNo"],
+            customerId: res[0]["ClientId"],
+            gst: res[0]["Gstno"],
+            city: res[0]["City"],
+            email: res[0]["Email"],
+            panNo: res[0]["PanNo"],
+            state: res[0]["State"],
+            pin: res[0]["Pin"],
+            picture: bytes.buffer.asUint8List())
+        .then((value) async {
+      Get.offAllNamed(Routes.HOME);
+    });
   }
 }

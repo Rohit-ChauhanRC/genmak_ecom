@@ -108,7 +108,9 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: 20),
-                    height: Get.height / 1.2,
+                    // height: Get.height / 1.2,
+                    height: Get.height * 0.75,
+                    // color: Colors.blue,
                     child: GridView.builder(
                       shrinkWrap: true,
                       // reverse: true,
@@ -119,12 +121,16 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
                                 : 1,
                         mainAxisExtent:
                             MediaQuery.of(Get.context!).size.width > 650
-                                ? 150
-                                : 100,
+                                ? 150.h
+                                : 100.h,
                       ),
-                      itemCount: controller.receiveList.length,
+                      itemCount: controller.searchV
+                          ? controller.receiveListSearch.length
+                          : controller.receiveList.length,
                       itemBuilder: (context, index) {
-                        SellModel data = controller.receiveList[index];
+                        SellModel data = controller.searchV
+                            ? controller.receiveListSearch[index]
+                            : controller.receiveList[index];
 
                         return InkWell(
                           onTap: () {

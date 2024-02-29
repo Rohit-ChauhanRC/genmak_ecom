@@ -120,25 +120,25 @@ class AppDrawer extends StatelessWidget {
             ],
           ),
 
-          ListTile(
-            title: Text(
-              "Billing",
-              style: TextStyle(
-                color: AppColors.blackColor,
-                fontSize: MediaQuery.of(Get.context!).size.width > 650
-                    ? AppDimens.font26
-                    : AppDimens.font18,
-              ),
-            ),
-            leading: Icon(
-              Icons.home,
-              color: AppColors.blackColor,
-              size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
-            ),
-            onTap: () {
-              Get.toNamed(Routes.HOME);
-            },
-          ),
+          // ListTile(
+          //   title: Text(
+          //     "Billing",
+          //     style: TextStyle(
+          //       color: AppColors.blackColor,
+          //       fontSize: MediaQuery.of(Get.context!).size.width > 650
+          //           ? AppDimens.font26
+          //           : AppDimens.font18,
+          //     ),
+          //   ),
+          //   leading: Icon(
+          //     Icons.home,
+          //     color: AppColors.blackColor,
+          //     size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
+          //   ),
+          //   onTap: () {
+          //     Get.toNamed(Routes.HOME);
+          //   },
+          // ),
 
           // Expanded(
           //     child: Container(

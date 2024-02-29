@@ -48,11 +48,11 @@ class TotalOrdersController extends GetxController {
     for (var i = 0; i < receiveList.length; i++) {
       searchV = true;
 
-      if (receiveList[i].vendorName.toString().toLowerCase().contains(name)) {
+      if (receiveList[i].invoiceId.toString().toLowerCase().contains(name)) {
         receiveListSearch.add(receiveList[i]);
 
         update();
-        print(receiveList[i].vendorName);
+        print(name);
       }
     }
     FocusScope.of(Get.context!).unfocus();

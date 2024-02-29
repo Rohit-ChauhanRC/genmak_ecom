@@ -63,7 +63,7 @@ class ProfileView extends GetView<ProfileController> {
                     ),
                     SizedBox(
                       child: Text(
-                        "Customer ID: 223234",
+                        "Customer ID: ${controller.customerId}",
                         style: TextStyle(
                           fontSize: MediaQuery.of(Get.context!).size.width > 650
                               ? AppDimens.font22
@@ -108,6 +108,13 @@ class ProfileView extends GetView<ProfileController> {
                           ? 20
                           : 10,
                     ),
+                    _textContainer("Pan No.:", controller.panNo),
+
+                    SizedBox(
+                      height: MediaQuery.of(Get.context!).size.width > 650
+                          ? 20
+                          : 10,
+                    ),
 
                     _textContainer("Shop Address:", controller.address),
 
@@ -116,14 +123,14 @@ class ProfileView extends GetView<ProfileController> {
                           ? 20
                           : 10,
                     ),
-                    _textContainer("State:", controller.address),
+                    _textContainer("State:", controller.state),
 
                     SizedBox(
                       height: MediaQuery.of(Get.context!).size.width > 650
                           ? 20
                           : 10,
                     ),
-                    _textContainer("Pincode:", controller.address),
+                    _textContainer("Pincode:", controller.pin),
 
                     SizedBox(
                       height: MediaQuery.of(Get.context!).size.width > 650

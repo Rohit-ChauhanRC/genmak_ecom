@@ -13,17 +13,17 @@ class AdminController extends GetxController {
       },
     },
     {
-      "icon": Icons.local_shipping_rounded,
-      "title": "Add Vendor",
-      "onTap": () {
-        Get.toNamed(Routes.ADD_VENDOR);
-      },
-    },
-    {
       "icon": Icons.list,
       "title": "Product List",
       "onTap": () {
         Get.toNamed(Routes.PRODUCT_LIST);
+      },
+    },
+    {
+      "icon": Icons.local_shipping_rounded,
+      "title": "Add Vendor",
+      "onTap": () {
+        Get.toNamed(Routes.ADD_VENDOR);
       },
     },
     {
@@ -42,7 +42,9 @@ class AdminController extends GetxController {
     },
     {
       "icon": Icons.shopping_cart_rounded,
-      "title": "Total Order",
+      "title": MediaQuery.of(Get.context!).size.width > 650
+          ? "Received products history"
+          : "Received \nproducts history",
       "onTap": () {
         Get.toNamed(Routes.TOTAL_ORDERS);
       },
@@ -50,8 +52,8 @@ class AdminController extends GetxController {
     {
       "icon": Icons.list,
       "title": MediaQuery.of(Get.context!).size.width > 650
-          ? "Customer Billing List"
-          : "Customer \nBilling List",
+          ? "Customer billing history"
+          : "Customer \nbilling history",
       "onTap": () {
         Get.toNamed(Routes.CUTOMER_BILLING_LIST);
       },

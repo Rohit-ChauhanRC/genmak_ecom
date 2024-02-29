@@ -164,4 +164,40 @@ class Utils {
       Get.back();
     }
   }
+
+  static void showDialog(String message) => Get.defaultDialog(
+        barrierDismissible: false,
+        backgroundColor: AppColors.whiteColor,
+        onWillPop: () async {
+          Get.back();
+
+          return true;
+        },
+        titleStyle: TextStyle(color: AppColors.buttonColor),
+        // title: success ? Strings.success : title,
+        content: Text(
+          message,
+          textAlign: TextAlign.center,
+          maxLines: 6,
+          style: TextStyle(
+            color: AppColors.buttonColor,
+            fontSize: AppDimens.font16,
+          ),
+        ),
+        confirm: Align(
+          alignment: Alignment.centerRight,
+          child: InkWell(
+            onTap: () {
+              Get.back();
+            },
+            child: Text(
+              "OK",
+              style: TextStyle(
+                color: AppColors.blackColor,
+                fontSize: AppDimens.font16,
+              ),
+            ),
+          ),
+        ),
+      );
 }

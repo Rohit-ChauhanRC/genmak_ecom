@@ -23,6 +23,7 @@ class ProductDB {
     "gst" TEXT,
     "hsnCode" TEXT,
     "discount" TEXT,
+    "unit" TEXT,
     PRIMARY KEY("id" AUTOINCREMENT)
   );
 """);
@@ -40,11 +41,12 @@ class ProductDB {
     String? gst,
     String? discount,
     String? hsnCode,
+    String? unit,
   }) async {
     final database = await DataBaseService().database;
     return await database.rawInsert(
       '''
-        INSERT INTO $tableName (name,weight,price,quantity,description, picture,count,active,gst,discount,hsnCode) VALUES (?,?,?,?,?,?,?,?,?,?,?)
+        INSERT INTO $tableName (name,weight,price,quantity,description, picture,count,active,gst,discount,hsnCode,unit) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)
       ''',
       [
         name,
@@ -57,7 +59,8 @@ class ProductDB {
         active,
         gst,
         discount,
-        hsnCode
+        hsnCode,
+        unit
       ],
     );
   }
@@ -102,6 +105,7 @@ class ProductDB {
     String? gst,
     String? discount,
     String? hsnCode,
+    String? unit,
   }) async {
     final database = await DataBaseService().database;
     return await database.update(
@@ -118,6 +122,7 @@ class ProductDB {
         if (gst != null) 'gst': gst,
         if (discount != null) 'discount': discount,
         if (hsnCode != null) 'hsnCode': hsnCode,
+        if (unit != null) 'unit': unit,
       },
       where: 'id = ?',
       conflictAlgorithm: ConflictAlgorithm.rollback,

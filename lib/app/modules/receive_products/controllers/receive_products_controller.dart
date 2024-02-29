@@ -125,6 +125,7 @@ class ReceiveProductsController extends GetxController {
   }
 
   void addProductList(index) {
+    // print(receivingDate);
     productListModel.insert(
         index + 1,
         ReceivingModel(

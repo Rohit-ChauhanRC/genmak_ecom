@@ -49,7 +49,7 @@ class OtpView extends GetView<OtpController> {
                           child: RichText(
                             overflow: TextOverflow.visible,
                             text: TextSpan(
-                                text: "Constants.plsOtp",
+                                text: "Mobile Number",
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -65,12 +65,6 @@ class OtpView extends GetView<OtpController> {
                                       fontWeight: FontWeight.bold,
                                       color: Colors.red[900],
                                     ),
-                                  ),
-                                  const TextSpan(
-                                    text: "\n${"Constants.regenerate"}",
-                                  ),
-                                  const TextSpan(
-                                    text: "\n${"Constants.yourOtp"}",
                                   ),
                                   TextSpan(
                                     text:
@@ -102,11 +96,10 @@ class OtpView extends GetView<OtpController> {
                     ),
                     TextFormWidget(
                       label: "Please enter OTP...",
+                      maxLength: 4,
                       onChanged: (val) => controller.otp = val,
                       validator: (value) =>
-                          value!.length < 4 || value!.length > 5
-                              ? "Please enter valid otp"
-                              : null,
+                          value!.length < 4 ? "Please enter valid otp" : null,
                     ),
 
                     const SizedBox(

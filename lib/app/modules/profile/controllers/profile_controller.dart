@@ -40,6 +40,22 @@ class ProfileController extends GetxController {
   String get customerId => _customerId.value;
   set customerId(String str) => _customerId.value = str;
 
+  final RxString _state = ''.obs;
+  String get state => _state.value;
+  set state(String str) => _state.value = str;
+
+  final RxString _city = ''.obs;
+  String get city => _city.value;
+  set city(String str) => _city.value = str;
+
+  final RxString _panNo = ''.obs;
+  String get panNo => _panNo.value;
+  set panNo(String str) => _panNo.value = str;
+
+  final RxString _pin = ''.obs;
+  String get pin => _pin.value;
+  set pin(String str) => _pin.value = str;
+
   final RxBool _progresBar = RxBool(true);
   bool get progressBar => _progresBar.value;
   set progressBar(bool b) => _progresBar.value = b;
@@ -93,31 +109,30 @@ class ProfileController extends GetxController {
       homeController.memoryImg = true;
       id = homeController.profile.id!;
       gst = homeController.profile.gst!;
-      print(homeController.profile.picture);
-      print(homeController.profile.id);
-      print(homeController.profile.contact);
-      print(homeController.profile.address);
+      pin = homeController.profile.pin!;
+      state = homeController.profile.state!;
+      panNo = homeController.profile.panNo!;
       // update();
     }
     progressBar = false;
   }
 
-  Future<void> createProfile() async {
-    if (homeController.personPic != null && homeController.personPic != "") {
-      await homeController.profileDB
-          .create(
-              // name: name,
-              // address: address,
-              // contact: contact,
-              // customerId: customerId,
-              // gst: gst,
-              picture: File(homeController.personPic.path.toString())
-                  .readAsBytesSync())
-          .then((value) async {
-        await homeController.fetchProfile().then((value) => {Get.back()});
-      });
-    }
-  }
+  // Future<void> createProfile() async {
+  //   if (homeController.personPic != null && homeController.personPic != "") {
+  //     await homeController.profileDB
+  //         .create(
+  //             // name: name,
+  //             // address: address,
+  //             // contact: contact,
+  //             // customerId: customerId,
+  //             // gst: gst,
+  //             picture: File(homeController.personPic.path.toString())
+  //                 .readAsBytesSync())
+  //         .then((value) async {
+  //       await homeController.fetchProfile().then((value) => {Get.back()});
+  //     });
+  //   }
+  // }
 
   Future<void> updateProfile() async {
     await homeController.profileDB

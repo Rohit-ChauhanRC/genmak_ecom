@@ -181,7 +181,10 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
               ),
               DateTimePickerWidget(
                 hintText: "Receiving Date",
-                onChanged: (val) => controller.receivingDate = val.toString(),
+                onChanged: (val) {
+                  controller.receivingDate = val.toString();
+                  print(val);
+                },
               ),
               SizedBox(
                 height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
@@ -224,52 +227,62 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                               ),
                             ),
                             Obx(() => controller.products.isNotEmpty
-                                ? InputDecorator(
-                                    decoration: const InputDecoration(
-                                      hintText: "Select Product",
-                                    ),
-                                    child: DropdownButtonHideUnderline(
-                                        child: DropdownButton<ProductModel>(
-                                      items: controller.products.map(
-                                          (ProductModel dropDownStringItem) {
-                                        return DropdownMenuItem<ProductModel>(
-                                          value: dropDownStringItem,
-                                          child: Text(dropDownStringItem.name
-                                              .toString()),
-                                        );
-                                      }).toList(),
-                                      onChanged: (ProductModel? val) {
-                                        controller.productListModel[index]
-                                            .productName = val!.name;
-                                        controller.productListModel[index]
-                                            .productModel = val;
-                                        controller.productListModel[index]
-                                            .productId = val.id.toString();
-                                        // controller.pmodel = val;
-                                        // _product.productModel = val;
-                                        controller.productListModel.update(
-                                            index,
-                                            ReceivingModel(
-                                              invoiceId: controller.invoiceId,
-                                              productId: val.id.toString(),
-                                              productName: val.name,
-                                              productModel: val,
-                                              totalAmount:
-                                                  controller.totalAmount,
-                                              vendorId: controller.vendorId,
-                                              receivingDate:
-                                                  controller.receivingDate,
-                                              vendorName:
-                                                  controller.vendorModel.name,
-                                            ));
+                                ? SizedBox(
+                                    width: Get.width,
+                                    child: InputDecorator(
+                                      decoration: const InputDecoration(
+                                        hintText: "Select Product",
+                                      ),
+                                      child: DropdownButtonHideUnderline(
+                                          child: DropdownButton<ProductModel>(
+                                        items: controller.products.map(
+                                            (ProductModel dropDownStringItem) {
+                                          return DropdownMenuItem<ProductModel>(
+                                            value: dropDownStringItem,
+                                            child: SizedBox(
+                                              width: Get.width * 0.6,
+                                              child: Text(
+                                                dropDownStringItem.name
+                                                    .toString(),
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                          );
+                                        }).toList(),
+                                        onChanged: (ProductModel? val) {
+                                          controller.productListModel[index]
+                                              .productName = val!.name;
+                                          controller.productListModel[index]
+                                              .productModel = val;
+                                          controller.productListModel[index]
+                                              .productId = val.id.toString();
+                                          // controller.pmodel = val;
+                                          // _product.productModel = val;
+                                          controller.productListModel.update(
+                                              index,
+                                              ReceivingModel(
+                                                invoiceId: controller.invoiceId,
+                                                productId: val.id.toString(),
+                                                productName: val.name,
+                                                productModel: val,
+                                                totalAmount:
+                                                    controller.totalAmount,
+                                                vendorId: controller.vendorId,
+                                                receivingDate:
+                                                    controller.receivingDate,
+                                                vendorName:
+                                                    controller.vendorModel.name,
+                                              ));
 
-                                        controller.setSelectedProduct(
-                                            val.name.toString());
-                                      },
-                                      value: controller
-                                          .productListModel[index].productModel,
-                                      isDense: true,
-                                    )),
+                                          controller.setSelectedProduct(
+                                              val.name.toString());
+                                        },
+                                        value: controller
+                                            .productListModel[index]
+                                            .productModel,
+                                        isDense: true,
+                                      )),
+                                    ),
                                   )
                                 : const SizedBox()),
                             Container(

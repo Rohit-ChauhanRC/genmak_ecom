@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:genmak_ecom/app/data/models/product_model.dart';
 import 'package:genmak_ecom/app/routes/app_pages.dart';
 import 'package:genmak_ecom/app/utils/app_colors/app_colors.dart';
@@ -16,8 +17,8 @@ class ProductListItem extends StatelessWidget {
         Get.toNamed(Routes.EDIT_PRODUCT_ITEM, arguments: product.id);
       },
       child: Container(
-        height: MediaQuery.of(Get.context!).size.width > 650 ? 250 : 150,
-        width: MediaQuery.of(Get.context!).size.width > 650 ? 200 : 150,
+        height: MediaQuery.of(Get.context!).size.width > 650 ? 250.h : 150.h,
+        width: MediaQuery.of(Get.context!).size.width > 650 ? 200.w : 150.w,
         margin: const EdgeInsets.all(10),
         decoration: BoxDecoration(
             border: Border.all(

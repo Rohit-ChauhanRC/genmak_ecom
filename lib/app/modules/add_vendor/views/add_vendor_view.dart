@@ -67,6 +67,8 @@ class AddVendorView extends GetView<AddVendorController> {
                 ),
               ),
               TextFormWidget(
+                keyboardType: TextInputType.phone,
+                maxLength: 10,
                 label: "Please enter Vendor Mobile No...",
                 onChanged: (val) => controller.mobileNumber = val,
                 validator: (val) => val!.isEmpty ? "Field is required!" : null,

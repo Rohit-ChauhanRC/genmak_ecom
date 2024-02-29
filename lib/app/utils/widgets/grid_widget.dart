@@ -36,12 +36,24 @@ class GridWidget extends StatelessWidget {
           var grid = product[i];
           return InkWell(
             onTap: () {
-              handleProductQuantity(i);
+              if (grid.active == 0) {
+                handleProductQuantity(i);
+              }
             },
             child: Container(
               height: MediaQuery.of(context).size.width > 650 ? 200 : 120,
               width: 120,
               margin: const EdgeInsets.all(10),
+              foregroundDecoration: int.parse(grid.quantity!) == 0
+                  ? BoxDecoration(
+                      color: Colors.grey,
+                      backgroundBlendMode: BlendMode.color,
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: Colors.black,
+                      ),
+                    )
+                  : const BoxDecoration(),
               decoration: BoxDecoration(
                 color: AppColors.buttonColor,
                 borderRadius: BorderRadius.circular(20),
@@ -92,7 +104,7 @@ class GridWidget extends StatelessWidget {
                   SizedBox(
                     // width: 100.w,
                     child: Text(
-                      "${product[i].name!}-${product[i].price!}",
+                      "${product[i].name!}-${product[i].weight!}${product[i].unit ?? ""}",
                       maxLines: 2,
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -149,7 +161,7 @@ class GridWidget extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Text(
-                            "${product[i].weight}",
+                            "₹${product[i].price}/-",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: AppColors.brownColor,
@@ -162,55 +174,10 @@ class GridWidget extends StatelessWidget {
                       ],
                     ),
                   ),
-                  // Container(
-                  //   // margin: const EdgeInsets.only(top: 10),
-                  //   padding: const EdgeInsets.all(5),
-                  //   decoration: BoxDecoration(
-                  //       color: Colors.white,
-                  //       border: Border.all(
-                  //         color: Colors.black,
-                  //       ),
-                  //       borderRadius: BorderRadius.circular(10)),
-                  //   child: Text(
-                  //     "₹${product[i].price}",
-                  //     textAlign: TextAlign.center,
-                  //     style: TextStyle(
-                  //       color: AppColors.brownColor,
-                  //       fontSize: AppDimens.font12,
-                  //       overflow: TextOverflow.visible,
-                  //     ),
-                  //     overflow: TextOverflow.visible,
-                  //   ),
-                  // ),
                 ],
               ),
             ),
           );
-
-          // Obx(() =>
-          // int.tryParse(product[i].quantity!)! >= 1?
-          //     getCard(
-          //   picture: grid.picture,
-          //   title: grid.name.toString(),
-          //   onTap: () {
-          //     if (int.tryParse(product[i].quantity!)! >= 1) {
-          //       product[i].count = product[i].count! + 1;
-          //       product[i].quantity =
-          //           (int.tryParse(product[i].quantity.toString())! - 1)
-          //               .toString();
-          //       print(product[i].quantity);
-
-          //       orders.add(product[i]);
-          //       total();
-          //     }
-          //   },
-          //   quantity: product[i].quantity!,
-          //   volume: product[i].weight.toString(),
-          //   price: product[i].price.toString(),
-          //   model: product[i],
-          // );
-          // : const SizedBox()
-          // );
         });
   }
 }

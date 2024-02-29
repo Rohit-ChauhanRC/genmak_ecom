@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'package:collection/collection.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 import 'package:esc_pos_utils_plus/esc_pos_utils_plus.dart';
 import 'package:flutter/foundation.dart';
@@ -42,6 +44,10 @@ class HomeController extends GetxController {
   final SellDB sellDB = SellDB();
   final VendorDB vendorDB = VendorDB();
   final ProfileDB profileDB = ProfileDB();
+
+  ConnectivityResult _connectionStatus = ConnectivityResult.none;
+  final Connectivity _connectivity = Connectivity();
+  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
 
   final provisioner = Provisioner.espTouch();
   final v = Provisioner.espTouchV2();
@@ -146,15 +152,17 @@ class HomeController extends GetxController {
     await fetchProduct();
     await sellDB.fetchAll();
     fetchInvoiceNo();
-    // await checkIp();
     await fetchProfile();
 
-    // await checkConnectivity();
-    // connectLn();
-    // ip = (await info.getWifiIP()).toString();
-    // IOWebSocketChannel.connect('ws://100.120.187.127:8883');
-
-    // sock = await Socket.connect(ip, 8883);
+    _connectivitySubscription = _connectivity.onConnectivityChanged
+        .listen((ConnectivityResult result) async {
+      // Got a new connectivity status!
+      if (result == ConnectivityResult.wifi ||
+          result == ConnectivityResult.mobile ||
+          result == ConnectivityResult.vpn) {
+        await checkUserStatus();
+      }
+    });
   }
 
   @override
@@ -174,6 +182,41 @@ class HomeController extends GetxController {
     textController!.clear();
     productSearch.clear();
     searchP = false;
+    _connectivitySubscription.cancel();
+  }
+
+  Future<void> initConnectivity() async {
+    late ConnectivityResult result;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      result = await _connectivity.checkConnectivity();
+    } on PlatformException catch (e) {
+      return;
+    }
+
+    return _updateConnectionStatus(result);
+  }
+
+  Future<void> _updateConnectionStatus(ConnectivityResult result) async {
+    _connectionStatus = result;
+  }
+
+  Future<void> checkUserStatus() async {
+    try {
+      var res = await http.get(
+        Uri.parse(
+            "http://182.78.13.18:8090/api/ClientFlag?clientId=${box.read("login")}"),
+      );
+      if (res.statusCode == 200) {
+        print(res.statusCode);
+        print(res.body);
+        if (jsonDecode(res.body) == "A" || jsonDecode(res.body) == "Z") {
+          box.write("status", jsonDecode(res.body));
+        }
+      }
+    } catch (e) {
+      // apiLopp(i);
+    }
   }
 
   void connectionEst() async {
@@ -398,7 +441,7 @@ class HomeController extends GetxController {
     if (box.read("invoiceNo") != null && box.read("invoiceNo") != "") {
       invoiceNo = box.read("invoiceNo");
     } else {
-      box.write("invoiceNo", 10001);
+      box.write("invoiceNo", 1000001);
     }
   }
 
@@ -455,30 +498,33 @@ class HomeController extends GetxController {
   }
 
   Future<void> onSave() async {
-    for (var i = 0; i < orders.toSet().toList().length; i++) {
-      await sellDB.create(
-        invoiceId: "I${box.read("invoiceNo")}",
-        productName: orders[i].name!,
-        productWeight: orders[i].weight!,
-        price: (int.tryParse(orders[i].price!)! * orders[i].count!).toString(),
-        productId: orders[i].id.toString(),
-        productQuantity: orders[i].count.toString(),
-        receivingDate: DateTime.now().toIso8601String(),
+    if (box.read("status") == "A") {
+      for (var i = 0; i < orders.toSet().toList().length; i++) {
+        await sellDB.create(
+          invoiceId: "${box.read("invoiceNo")}",
+          productName: orders[i].name!,
+          productWeight: orders[i].weight!,
+          price:
+              (int.tryParse(orders[i].price!)! * orders[i].count!).toString(),
+          productId: orders[i].id.toString(),
+          productQuantity: orders[i].count.toString(),
+          receivingDate: DateTime.now().toIso8601String(),
+        );
+        final index = products.indexWhere(
+            (element) => element.id == orders.toSet().toList()[i].id);
+
+        await productDB.update(
+            id: products[index].id!,
+            quantity: "${int.tryParse(products[index].quantity!)!}");
+      }
+      box.write("invoiceNo", box.read("invoiceNo") + 1);
+      await fetchProduct();
+
+      // setStatus();
+      await checkIp(
+        "${box.read("invoiceNo")}",
       );
-      final index = products
-          .indexWhere((element) => element.id == orders.toSet().toList()[i].id);
-
-      await productDB.update(
-          id: products[index].id!,
-          quantity: "${int.tryParse(products[index].quantity!)!}");
     }
-    box.write("invoiceNo", box.read("invoiceNo") + 1);
-    await fetchProduct();
-
-    // setStatus();
-    await checkIp(
-      "I${box.read("invoiceNo")}",
-    );
   }
 
   handleProductQuantity(int i) {
@@ -719,6 +765,7 @@ class HomeController extends GetxController {
 
   Future<void> checkIp(String invoice) async {
     for (var interface in await NetworkInterface.list()) {
+      print(interface);
       for (var addr in interface.addresses) {
         if (addr.type == InternetAddressType.IPv4 &&
             addr.address.startsWith('192')) {
