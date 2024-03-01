@@ -43,6 +43,8 @@ class ProductListItem extends StatelessWidget {
                           bottomLeft: Radius.circular(10)),
                       child: Image.memory(
                         product.picture!,
+                        width: Get.width * 0.3,
+                        height: Get.height,
                         fit: BoxFit.cover,
                       ),
                     )
@@ -53,6 +55,8 @@ class ProductListItem extends StatelessWidget {
                       child: Image.asset(
                         "assets/images/images.png",
                         fit: BoxFit.contain,
+                        width: Get.width * 0.3,
+                        height: Get.height,
                       ),
                     ),
             ),

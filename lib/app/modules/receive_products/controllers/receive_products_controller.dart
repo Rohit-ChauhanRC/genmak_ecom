@@ -151,27 +151,33 @@ class ReceiveProductsController extends GetxController {
     //   return null;
     // }
     for (var i = 0; i < productListModel.length; i++) {
-      await receivingDB.create(
-          vendorName: productListModel[i].vendorName.toString(),
-          totalAmount: productListModel[i].totalAmount.toString(),
-          productName: productListModel[i].productName.toString(),
-          invoiceId: productListModel[i].invoiceId,
-          productId: productListModel[i].productId,
-          productQuantity: productListModel[i].productQuantity,
-          receivingDate: productListModel[i].receivingDate,
-          vendorId: productListModel[i].vendorId);
-
       final quantity = await homeController.productDB.fetchById(
         int.tryParse(productListModel[i].productId!)!,
       );
-      await homeController.productDB.update(
-          id: int.tryParse(productListModel[i].productId!)!,
-          quantity: (int.tryParse(quantity.quantity!)! +
-                  int.tryParse(productListModel[i].productQuantity!)!)
-              .toString());
+      await homeController.productDB
+          .update(
+              id: int.tryParse(productListModel[i].productId!)!,
+              quantity: (int.tryParse(quantity.quantity!)! +
+                      int.tryParse(productListModel[i].productQuantity!)!)
+                  .toString())
+          .then((value) async {
+        await receivingDB.create(
+            vendorName: productListModel[i].vendorName.toString(),
+            totalAmount: productListModel[i].totalAmount.toString(),
+            productName: productListModel[i].productName.toString(),
+            invoiceId: productListModel[i].invoiceId,
+            productId: productListModel[i].productId,
+            productQuantity: productListModel[i].productQuantity,
+            receivingDate: productListModel[i].receivingDate,
+            vendorId: productListModel[i].vendorId);
+      }).then((value) async {
+        //  homeController. products.assignAll(await homeController.productDB.fetchAll());
+        await homeController.productDB.fetchAll().then((value) {
+          homeController.products.assignAll(value);
+          Get.back();
+        });
+      });
     }
-
-    await homeController.productDB.fetchAll().then((value) => Get.back());
 
     // print(receivingDate);
   }

@@ -1,5 +1,5 @@
 name: genmak_ecom
-description: "A new Flutter project."
+description: "Genmak Sale Suit"
 publish_to: "none"
 version: 0.1.0
 
@@ -13,27 +13,14 @@ dependencies:
   image_cropper: ^5.0.1
   sqflite: ^2.3.0
   permission_handler: ^11.1.0
-  dio: ^5.4.0
-  printing: ^5.11.1
   intl:
   dropdown_textfield: ^1.0.8
   datetime_picker_formfield_new: ^2.1.0
   path: ^1.8.3
   get_storage: ^2.1.1
-  # upgrader: ^8.4.0
-  esc_pos_printer_plus: ^0.0.3
-  esc_pos_utils_plus: ^2.0.3
   image: ^4.1.4
-  ping_discover_network_plus: ^0.0.5
-  # another_brother: ^2.1.2
-  # plugin_wifi_connect: ^1.0.2
-  esp_smartconfig: ^1.1.11
   network_info_plus: ^4.1.0
   flutter_screenutil: ^5.9.0
-  lan_scanner: ^4.0.0+1
-  tcp_socket_connection: ^0.3.1
-  web_socket_channel:
-  pdf: ^3.10.7
   path_provider: ^2.1.2
   upgrader: ^9.0.0
   connectivity_plus: ^5.0.2
@@ -51,9 +38,9 @@ dev_dependencies:
     sdk: flutter
 
 flutter_native_splash:
-  # color: "#5f6496"
-  background_image: assets/images/background.jpeg
-  image: assets/images/makdairy1.png
+  # color: "#ffc410"
+  background_image: assets/images/background.jpg
+  image: assets/images/logo.png
   # color_dark: "#1a1a1a"
   # image_darK: assets/icons/logo.png
   android: true
@@ -64,8 +51,8 @@ flutter_native_splash:
   web_image_mode: center
 
   android_12:
-    background_image: assets/images/background.jpeg
-    image: assets/images/makdairy1.png
+    background_image: assets/images/background.jpg
+    image: assets/images/logo.png
 
 flutter_launcher_icons:
   android: "launcher_icon"

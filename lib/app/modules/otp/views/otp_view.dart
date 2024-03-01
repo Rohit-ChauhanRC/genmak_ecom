@@ -68,7 +68,7 @@ class OtpView extends GetView<OtpController> {
                                   ),
                                   TextSpan(
                                     text:
-                                        "\t\t${"Constants.remaining"}\t ${80 - controller.count}s",
+                                        "\t\t${"Resend OTP after:"}\t ${80 - controller.count}s",
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
@@ -96,6 +96,7 @@ class OtpView extends GetView<OtpController> {
                     ),
                     TextFormWidget(
                       label: "Please enter OTP...",
+                      keyboardType: TextInputType.number,
                       maxLength: 4,
                       onChanged: (val) => controller.otp = val,
                       validator: (value) =>

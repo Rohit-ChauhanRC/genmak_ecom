@@ -368,7 +368,7 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                                         .productQuantity,
                                   )
                                 : const SizedBox()),
-                            Obx(() => controller.products.length > 1
+                            Obx(() => controller.products.isNotEmpty
                                 ? Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [

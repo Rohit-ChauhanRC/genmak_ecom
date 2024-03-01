@@ -22,7 +22,7 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
           size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
         ),
         title: Text(
-          'Cutomer Billing List',
+          'Customer Billing List',
           style: TextStyle(
             color: Colors.white,
             fontSize: MediaQuery.of(Get.context!).size.width > 650

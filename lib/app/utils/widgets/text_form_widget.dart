@@ -31,6 +31,7 @@ class TextFormWidget extends StatelessWidget {
     return SizedBox(
       // height: 80,
       child: TextFormField(
+        // key: UniqueKey(),
         maxLength: maxLength,
         controller: textController,
         validator: validator,

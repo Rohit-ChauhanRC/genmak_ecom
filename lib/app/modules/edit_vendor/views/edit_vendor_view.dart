@@ -48,11 +48,11 @@ class EditVendorView extends GetView<EditVendorController> {
                         ),
                       ),
                     ),
-                    TextFormWidget(
-                      label: "Please enter Vendor Name...",
-                      onChanged: (val) => controller.name = val,
-                      initialValue: controller.name,
-                    ),
+                    Obx(() => TextFormWidget(
+                          label: "Please enter Vendor Name...",
+                          onChanged: (val) => controller.name = val,
+                          initialValue: controller.name,
+                        )),
                     SizedBox(
                       height: MediaQuery.of(Get.context!).size.width > 650
                           ? 20
@@ -71,11 +71,11 @@ class EditVendorView extends GetView<EditVendorController> {
                         ),
                       ),
                     ),
-                    TextFormWidget(
-                      label: "Please enter Vendor Mobile No...",
-                      onChanged: (val) => controller.mobileNumber = val,
-                      initialValue: controller.mobileNumber,
-                    ),
+                    Obx(() => TextFormWidget(
+                          label: "Please enter Vendor Mobile No...",
+                          onChanged: (val) => controller.mobileNumber = val,
+                          initialValue: controller.mobileNumber,
+                        )),
                     SizedBox(
                       height: MediaQuery.of(Get.context!).size.width > 650
                           ? 20
@@ -94,11 +94,11 @@ class EditVendorView extends GetView<EditVendorController> {
                         ),
                       ),
                     ),
-                    TextFormWidget(
-                      label: "Please enter Vendor GSTIN No...",
-                      onChanged: (val) => controller.gst = val,
-                      initialValue: controller.gst,
-                    ),
+                    Obx(() => TextFormWidget(
+                          label: "Please enter Vendor GSTIN No...",
+                          onChanged: (val) => controller.gst = val,
+                          initialValue: controller.gst,
+                        )),
                     SizedBox(
                       height: MediaQuery.of(Get.context!).size.width > 650
                           ? 20
@@ -117,11 +117,11 @@ class EditVendorView extends GetView<EditVendorController> {
                         ),
                       ),
                     ),
-                    TextFormWidget(
-                      label: "Please enter Vendor Address...",
-                      onChanged: (val) => controller.address = val,
-                      initialValue: controller.address,
-                    ),
+                    Obx(() => TextFormWidget(
+                          label: "Please enter Vendor Address...",
+                          onChanged: (val) => controller.address = val,
+                          initialValue: controller.address,
+                        )),
                     SizedBox(
                       height: MediaQuery.of(Get.context!).size.width > 650
                           ? 20

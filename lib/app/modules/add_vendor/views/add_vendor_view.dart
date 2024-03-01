@@ -35,7 +35,7 @@ class AddVendorView extends GetView<AddVendorController> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "Name :",
+                  "Name:",
                   style: TextStyle(
                     fontSize: MediaQuery.of(Get.context!).size.width > 650
                         ? AppDimens.font22
@@ -45,18 +45,20 @@ class AddVendorView extends GetView<AddVendorController> {
                   ),
                 ),
               ),
-              TextFormWidget(
-                label: "Please enter Vendor Name...",
-                onChanged: (val) => controller.name = val,
-                validator: (val) => val!.isEmpty ? "Field is required!" : null,
-              ),
+              Obx(() => TextFormWidget(
+                    initialValue: controller.name,
+                    label: "Please enter Vendor Name...",
+                    onChanged: (val) => controller.name = val,
+                    validator: (val) =>
+                        val!.isEmpty ? "Field is required!" : null,
+                  )),
               SizedBox(
                 height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
               ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "Mobile No :",
+                  "Mobile No:",
                   style: TextStyle(
                     fontSize: MediaQuery.of(Get.context!).size.width > 650
                         ? AppDimens.font22
@@ -66,20 +68,22 @@ class AddVendorView extends GetView<AddVendorController> {
                   ),
                 ),
               ),
-              TextFormWidget(
-                keyboardType: TextInputType.phone,
-                maxLength: 10,
-                label: "Please enter Vendor Mobile No...",
-                onChanged: (val) => controller.mobileNumber = val,
-                validator: (val) => val!.isEmpty ? "Field is required!" : null,
-              ),
+              Obx(() => TextFormWidget(
+                    initialValue: controller.mobileNumber,
+                    keyboardType: TextInputType.phone,
+                    maxLength: 10,
+                    label: "Please enter Vendor Mobile No...",
+                    onChanged: (val) => controller.mobileNumber = val,
+                    validator: (val) =>
+                        val!.isEmpty ? "Field is required!" : null,
+                  )),
               SizedBox(
                 height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
               ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "GSTIN No :",
+                  "GSTIN No:",
                   style: TextStyle(
                     fontSize: MediaQuery.of(Get.context!).size.width > 650
                         ? AppDimens.font22
@@ -89,18 +93,20 @@ class AddVendorView extends GetView<AddVendorController> {
                   ),
                 ),
               ),
-              TextFormWidget(
-                label: "Please enter Vendor GSTIN No...",
-                onChanged: (val) => controller.gst = val,
-                validator: (val) => val!.isEmpty ? "Field is required!" : null,
-              ),
+              Obx(() => TextFormWidget(
+                    initialValue: controller.gst,
+                    label: "Please enter Vendor GSTIN No...",
+                    onChanged: (val) => controller.gst = val,
+                    validator: (val) =>
+                        val!.isEmpty ? "Field is required!" : null,
+                  )),
               SizedBox(
                 height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
               ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "Vendor Address :",
+                  "Vendor Address:",
                   style: TextStyle(
                     fontSize: MediaQuery.of(Get.context!).size.width > 650
                         ? AppDimens.font22
@@ -110,11 +116,13 @@ class AddVendorView extends GetView<AddVendorController> {
                   ),
                 ),
               ),
-              TextFormWidget(
-                label: "Please enter Vendor Address...",
-                onChanged: (val) => controller.address = val,
-                validator: (val) => val!.isEmpty ? "Field is required!" : null,
-              ),
+              Obx(() => TextFormWidget(
+                    initialValue: controller.address,
+                    label: "Please enter Vendor Address...",
+                    onChanged: (val) => controller.address = val,
+                    validator: (val) =>
+                        val!.isEmpty ? "Field is required!" : null,
+                  )),
               SizedBox(
                 height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
               ),

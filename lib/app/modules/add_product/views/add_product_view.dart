@@ -5,7 +5,6 @@ import 'package:genmak_ecom/app/utils/widgets/text_form_widget.dart';
 import 'package:genmak_ecom/app/utils/widgets/upload_image_widget.dart';
 
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 import '../controllers/add_product_controller.dart';
 
@@ -55,7 +54,7 @@ class AddProductView extends GetView<AddProductController> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "Product Name :",
+                  "Product Name:",
                   style: TextStyle(
                     fontSize: MediaQuery.of(Get.context!).size.width > 650
                         ? AppDimens.font22
@@ -65,18 +64,19 @@ class AddProductView extends GetView<AddProductController> {
                   ),
                 ),
               ),
-              TextFormWidget(
-                label: "Please enter Name...",
-                onChanged: (val) => controller.name = val,
-                validator: (v) => v!.isEmpty ? "Field is required!" : null,
-              ),
+              Obx(() => TextFormWidget(
+                    initialValue: controller.name,
+                    label: "Please enter Name...",
+                    onChanged: (val) => controller.name = val,
+                    validator: (v) => v!.isEmpty ? "Field is required!" : null,
+                  )),
               SizedBox(
                 height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
               ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "Product Weight :",
+                  "Product Weight:",
                   style: TextStyle(
                     fontSize: MediaQuery.of(Get.context!).size.width > 650
                         ? AppDimens.font22
@@ -86,11 +86,12 @@ class AddProductView extends GetView<AddProductController> {
                   ),
                 ),
               ),
-              TextFormWidget(
-                label: "Please enter Product Weight...",
-                onChanged: (val) => controller.weight = val,
-                validator: (v) => v!.isEmpty ? "Field is required!" : null,
-              ),
+              Obx(() => TextFormWidget(
+                    initialValue: controller.weight,
+                    label: "Please enter Product Weight...",
+                    onChanged: (val) => controller.weight = val,
+                    validator: (v) => v!.isEmpty ? "Field is required!" : null,
+                  )),
               SizedBox(
                 height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
               ),
@@ -142,7 +143,7 @@ class AddProductView extends GetView<AddProductController> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "Price :",
+                  "Price:",
                   style: TextStyle(
                     fontSize: MediaQuery.of(Get.context!).size.width > 650
                         ? AppDimens.font22
@@ -152,19 +153,20 @@ class AddProductView extends GetView<AddProductController> {
                   ),
                 ),
               ),
-              TextFormWidget(
-                label: "Please enter Price...",
-                onChanged: (val) => controller.price = val,
-                validator: (v) => v!.isEmpty ? "Field is required!" : null,
-                keyboardType: TextInputType.number,
-              ),
+              Obx(() => TextFormWidget(
+                    initialValue: controller.price,
+                    label: "Please enter Price...",
+                    onChanged: (val) => controller.price = val,
+                    validator: (v) => v!.isEmpty ? "Field is required!" : null,
+                    keyboardType: TextInputType.number,
+                  )),
               SizedBox(
                 height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
               ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "GST :",
+                  "GST:",
                   style: TextStyle(
                     fontSize: MediaQuery.of(Get.context!).size.width > 650
                         ? AppDimens.font22
@@ -174,19 +176,20 @@ class AddProductView extends GetView<AddProductController> {
                   ),
                 ),
               ),
-              TextFormWidget(
-                label: "Please enter GST...",
-                onChanged: (val) => controller.gst = val,
-                validator: (v) => v!.isEmpty ? "Field is required!" : null,
-                keyboardType: TextInputType.number,
-              ),
+              Obx(() => TextFormWidget(
+                    initialValue: controller.gst,
+                    label: "Please enter GST...",
+                    onChanged: (val) => controller.gst = val,
+                    validator: (v) => v!.isEmpty ? "Field is required!" : null,
+                    keyboardType: TextInputType.number,
+                  )),
               SizedBox(
                 height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
               ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "Discount :",
+                  "Discount:",
                   style: TextStyle(
                     fontSize: MediaQuery.of(Get.context!).size.width > 650
                         ? AppDimens.font22
@@ -196,20 +199,22 @@ class AddProductView extends GetView<AddProductController> {
                   ),
                 ),
               ),
-              TextFormWidget(
-                label: "Please enter Discount...",
-                onChanged: (val) => controller.discount = val,
-                keyboardType: TextInputType.number,
-
-                // validator: (v) => v!.isEmpty ? "Field is required!" : null,
-              ),
+              Obx(() => TextFormWidget(
+                    initialValue: controller.discount,
+                    label: "Please enter Discount...",
+                    onChanged: (val) {
+                      controller.discount = val;
+                    },
+                    keyboardType: TextInputType.number,
+                    // validator: (v) => v!.isEmpty ? "Field is required!" : null,
+                  )),
               SizedBox(
                 height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
               ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "HSNCode :",
+                  "HSNCode:",
                   style: TextStyle(
                     fontSize: MediaQuery.of(Get.context!).size.width > 650
                         ? AppDimens.font22
@@ -219,18 +224,18 @@ class AddProductView extends GetView<AddProductController> {
                   ),
                 ),
               ),
-              TextFormWidget(
-                label: "Please enter HSNCode...",
-                onChanged: (val) => controller.hsnCode = val,
-                // validator: (v) => v!.isEmpty ? "Field is required!" : null,
-              ),
+              Obx(() => TextFormWidget(
+                    initialValue: controller.hsnCode,
+                    label: "Please enter HSNCode...",
+                    onChanged: (val) => controller.hsnCode = val,
+                  )),
               SizedBox(
                 height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
               ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "Description :",
+                  "Description:",
                   style: TextStyle(
                     fontSize: MediaQuery.of(Get.context!).size.width > 650
                         ? AppDimens.font22
@@ -240,10 +245,12 @@ class AddProductView extends GetView<AddProductController> {
                   ),
                 ),
               ),
-              TextFormWidget(
-                label: "Please enter description...",
-                onChanged: (val) => controller.decription = val,
-              ),
+              Obx(() => TextFormWidget(
+                    label: "Please enter Name...",
+                    onChanged: (val) => controller.decription = val,
+                    initialValue: controller.decription,
+                    // validator: (v) => v!.isEmpty ? "Field is required!" : null,
+                  )),
               SizedBox(
                 height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
               ),
@@ -267,7 +274,7 @@ class AddProductView extends GetView<AddProductController> {
                     children: [
                       Obx(
                         () => SizedBox(
-                          width: Get.width * 0.4,
+                          width: Get.width * 0.45,
                           child: ListTile(
                             title: Text(
                               'Yes',

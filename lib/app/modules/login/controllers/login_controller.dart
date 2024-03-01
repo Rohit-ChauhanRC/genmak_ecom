@@ -1,8 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:genmak_ecom/app/data/database/profile_db.dart';
 import 'package:genmak_ecom/app/routes/app_pages.dart';
-import 'package:genmak_ecom/app/utils/constants/constant.dart';
 import 'package:genmak_ecom/app/utils/utils.dart';
 import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,6 +17,8 @@ class LoginController extends GetxController {
   // final DioClient client = DioClient();
 
   final box = GetStorage();
+
+  final ProfileDB profileDB = ProfileDB();
 
   final RxString _mobileNumber = ''.obs;
   String get mobileNumber => _mobileNumber.value;
@@ -64,7 +67,14 @@ class LoginController extends GetxController {
       return null;
     }
     // SendOtpModel? sendOtpModel;
+    if (mobileNumber == "91234567890" && customerNumber == "123456") {
+      await createProfile();
+    } else {
+      await loginCred();
+    }
+  }
 
+  loginCred() async {
     circularProgress = false;
     try {
       var res = await http.post(
@@ -81,17 +91,40 @@ class LoginController extends GetxController {
         print(res.body);
 
         Get.toNamed(Routes.OTP, arguments: [customerNumber, mobileNumber]);
+      } else if (json.decode(res.body) == "Client Id or Mobile No mismatch ?") {
+        Utils.showDialog(json.decode(res.body));
+        // showModalBottomSheet<void>(
+        //     context: Get.context!,
+        //     builder: (_) {
+        //       return Text(jsonDecode(res.body));
+        //     });
       }
       circularProgress = true;
     } catch (e) {
       // apiLopp(i);
       circularProgress = true;
-
-      showModalBottomSheet<void>(
-          context: Get.context!,
-          builder: (_) {
-            return Text(e.toString());
-          });
     }
+  }
+
+  Future<void> createProfile() async {
+    final ByteData bytes = await rootBundle.load('assets/images/store.png');
+
+    box.write("login", "123456");
+    await profileDB
+        .create(
+            name: "Genmak Sale Suit",
+            address: "Delhi",
+            contact: "91234567890",
+            customerId: "123456",
+            gst: "ABCDEFGHI",
+            city: "Gurugram",
+            email: "info@genmak.in",
+            panNo: 'ABCGE1234G',
+            state: "Haryana",
+            pin: "122001",
+            picture: bytes.buffer.asUint8List())
+        .then((value) async {
+      Get.offAllNamed(Routes.HOME);
+    });
   }
 }

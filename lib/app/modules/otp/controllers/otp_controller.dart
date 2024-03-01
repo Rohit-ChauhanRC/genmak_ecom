@@ -127,8 +127,9 @@ class OtpController extends GetxController {
         print(res.body);
         if (jsonDecode(res.body) == "Success") {
           await fetchUserData();
-        } else {
-          print('res.body');
+        } else if (jsonDecode(res.body) == "Invalid OTP ?") {
+          // print('res.body');
+          Utils.showDialog(jsonDecode(res.body));
         }
       }
       circularProgress = true;

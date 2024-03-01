@@ -210,13 +210,13 @@ class EditProductItemView extends GetView<EditProductItemController> {
                         ),
                       ),
                     ),
-                    TextFormWidget(
-                      label: "Please enter GST...",
-                      initialValue: controller.gst,
-                      onChanged: (val) => controller.gst = val,
-                      // validator: (v) =>
-                      //     v!.isEmpty ? "Field is required!" : null,
-                    ),
+                    Obx(() => TextFormWidget(
+                          label: "Please enter GST...",
+                          initialValue: controller.gst,
+                          onChanged: (val) => controller.gst = val,
+                          // validator: (v) =>
+                          //     v!.isEmpty ? "Field is required!" : null,
+                        )),
                     SizedBox(
                       height: MediaQuery.of(Get.context!).size.width > 650
                           ? 20
@@ -235,12 +235,12 @@ class EditProductItemView extends GetView<EditProductItemController> {
                         ),
                       ),
                     ),
-                    TextFormWidget(
-                      label: "Please enter Discount...",
-                      initialValue: controller.discount,
-                      onChanged: (val) => controller.discount = val,
-                      // validator: (v) => v!.isEmpty ? "Field is required!" : null,
-                    ),
+                    Obx(() => TextFormWidget(
+                          label: "Please enter Discount...",
+                          initialValue: controller.discount,
+                          onChanged: (val) => controller.discount = val,
+                          // validator: (v) => v!.isEmpty ? "Field is required!" : null,
+                        )),
                     SizedBox(
                       height: MediaQuery.of(Get.context!).size.width > 650
                           ? 20
@@ -259,12 +259,12 @@ class EditProductItemView extends GetView<EditProductItemController> {
                         ),
                       ),
                     ),
-                    TextFormWidget(
-                      initialValue: controller.hsnCode,
-                      label: "Please enter HSNCode...",
-                      onChanged: (val) => controller.hsnCode = val,
-                      // validator: (v) => v!.isEmpty ? "Field is required!" : null,
-                    ),
+                    Obx(() => TextFormWidget(
+                          initialValue: controller.hsnCode,
+                          label: "Please enter HSNCode...",
+                          onChanged: (val) => controller.hsnCode = val,
+                          // validator: (v) => v!.isEmpty ? "Field is required!" : null,
+                        )),
                     SizedBox(
                       height: MediaQuery.of(Get.context!).size.width > 650
                           ? 20
@@ -283,11 +283,11 @@ class EditProductItemView extends GetView<EditProductItemController> {
                         ),
                       ),
                     ),
-                    TextFormWidget(
-                      initialValue: controller.decription,
-                      label: "Please enter description...",
-                      onChanged: (val) => controller.decription = val,
-                    ),
+                    Obx(() => TextFormWidget(
+                          initialValue: controller.decription,
+                          label: "Please enter description...",
+                          onChanged: (val) => controller.decription = val,
+                        )),
                     SizedBox(
                       height: MediaQuery.of(Get.context!).size.width > 650
                           ? 20
@@ -314,7 +314,9 @@ class EditProductItemView extends GetView<EditProductItemController> {
                           children: [
                             Obx(
                               () => SizedBox(
-                                width: 130,
+                                // width: 130,
+                                width: Get.width * 0.45,
+
                                 child: ListTile(
                                   title: Text(
                                     'Yes',
@@ -343,7 +345,7 @@ class EditProductItemView extends GetView<EditProductItemController> {
                               ),
                             ),
                             Obx(() => SizedBox(
-                                  width: 130,
+                                  width: Get.width * 0.4,
                                   child: ListTile(
                                     title: Text(
                                       'No',
