@@ -18,7 +18,7 @@ void main() async {
         splitScreenMode: true,
         builder: (_, child) {
           return GetMaterialApp(
-            title: "Genmak Sale Suit",
+            title: "Genmak Franchise App",
             initialRoute: (box.read("login") != null)
                 ? AppPages.INITIAL1
                 : AppPages.INITIAL,

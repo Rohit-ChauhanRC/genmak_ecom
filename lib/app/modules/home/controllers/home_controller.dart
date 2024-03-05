@@ -228,54 +228,51 @@ class HomeController extends GetxController {
     totalAmount = 0.0;
     if (orders.toSet().toList().isNotEmpty) {
       for (var i = 0; i < orders.toSet().toList().length; i++) {
-        totalAmount += (int.tryParse(orders.toSet().toList()[i].price!)! *
-                    orders.toSet().toList()[i].count!)
-                .toDouble() +
-            (int.tryParse(orders.toSet().toList()[i].price!)! *
-                        orders.toSet().toList()[i].count!)
-                    .toDouble() *
-                (int.tryParse(orders.toSet().toList()[i].gst!)!) /
-                100;
+        totalAmount += ((double.tryParse(orders.toSet().toList()[i].price!)! *
+                    100 /
+                    (100 + double.parse(orders.toSet().toList()[i].gst!))) *
+                orders.toSet().toList()[i].count!)
+            .toDouble()
+            .toPrecision(2);
       }
     }
     return totalAmount;
   }
 
   Future<void> onSave() async {
-    if (box.read("status") == "A") {
-      for (var i = 0; i < orders.toSet().toList().length; i++) {
-        final index = products.indexWhere(
-            (element) => element.id == orders.toSet().toList()[i].id);
+    // if (box.read("status") == "A") {
+    for (var i = 0; i < orders.toSet().toList().length; i++) {
+      final index = products
+          .indexWhere((element) => element.id == orders.toSet().toList()[i].id);
 
-        await productDB
-            .update(
-                id: products[index].id!,
-                quantity: "${int.tryParse(products[index].quantity!)!}")
+      await productDB
+          .update(
+              id: products[index].id!,
+              quantity: "${int.tryParse(products[index].quantity!)!}")
+          .then((value) async {
+        await sellDB
+            .create(
+          invoiceId: "${box.read("invoiceNo")}",
+          productName: orders[i].name!,
+          productWeight: orders[i].weight!,
+          price:
+              (int.tryParse(orders[i].price!)! * orders[i].count!).toString(),
+          productId: orders[i].id.toString(),
+          productQuantity: orders[i].count.toString(),
+          receivingDate: DateTime.now().toString(),
+        )
             .then((value) async {
-          await sellDB
-              .create(
-            invoiceId: "${box.read("invoiceNo")}",
-            productName: orders[i].name!,
-            productWeight: orders[i].weight!,
-            price:
-                (int.tryParse(orders[i].price!)! * orders[i].count!).toString(),
-            productId: orders[i].id.toString(),
-            productQuantity: orders[i].count.toString(),
-            receivingDate: DateTime.now().toIso8601String(),
-          )
-              .then((value) async {
-            box.write("invoiceNo", box.read("invoiceNo") + 1);
-            await fetchProduct().then((value) async {
-              await checkIp(
-                "${box.read("invoiceNo")}",
-              );
-            });
+          box.write("invoiceNo", box.read("invoiceNo") + 1);
+          await fetchProduct();
 
-            // setStatus();
-          });
+          // setStatus();
         });
-      }
+      });
     }
+    // }
+    await checkIp(
+      "${box.read("invoiceNo")}",
+    );
   }
 
   handleProductQuantity(int i) {
@@ -369,6 +366,12 @@ class HomeController extends GetxController {
           for (var i = 0; i < 255; i++) {
             apiLopp(i, invoice);
           }
+        } else if (addr.type == InternetAddressType.IPv4 &&
+            addr.address.startsWith('172')) {
+          ip = addr.address.split(".").getRange(0, 3).join(".");
+          for (var i = 0; i < 255; i++) {
+            apiLopp(i, invoice);
+          }
         }
       }
     }
@@ -398,8 +401,9 @@ class HomeController extends GetxController {
 
   List<Map<double, double>> calulateGST() {
     final gst = orders.toSet().map((e) => (
-          int.parse(e.gst!) / 2,
-          (int.parse(e.price!) * e.count! * int.parse(e.gst!) / 100) / 2
+          double.parse(e.gst!) / 2,
+          (double.parse(e.price!) -
+              (double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))))
         ));
 
     final lis1 = [];
@@ -418,10 +422,13 @@ class HomeController extends GetxController {
     final List<Map<double, double>> c1 = [];
     for (var e in mergedMap.entries) {
       c1.add(e.value.length > 1
-          ? {e.key: e.value.reduce((a, b) => a + b)}
+          ? {e.key: e.value.reduce((a, b) => a + b).toPrecision(2)}
           : {
-              e.key: double.parse(
-                  e.value.toString().replaceAll("[", "").replaceAll("]", ""))
+              e.key: double.parse(e.value
+                      .toString()
+                      .replaceAll("[", "")
+                      .replaceAll("]", ""))
+                  .toPrecision(2)
             });
     }
     if (kDebugMode) {
@@ -432,13 +439,16 @@ class HomeController extends GetxController {
   }
 
   void setStatus(String apiUrl) async {
+    // final basemrp =
     final subtotalPrice = orders
         .toSet()
-        .map((e) => int.parse(e.price!) * e.count!)
+        .map((e) =>
+            (double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))) *
+            e.count!)
         .fold(
-            0,
+            0.0,
             (previousValue, element) =>
-                int.parse(previousValue.toString()) + element);
+                double.parse(previousValue.toString()) + element);
     final count = orders.toSet().map((e) => e.count).fold(
         0,
         (previousValue, element) =>
@@ -450,7 +460,7 @@ class HomeController extends GetxController {
     final li = orders
         .toSet()
         .map((e) =>
-            """${count1 = count1 + 1}.  ${e.name!} \n     Rs.${e.price}/-   ${e.count}   Rs.${(int.parse(e.price!) * e.count!).toStringAsFixed(2)}/-\n""")
+            """${count1 = count1 + 1}.  ${e.name!} \n     Rs.${(double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))).toPrecision(2)}   ${e.count}   Rs.${((double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))) * e.count!).toPrecision(2)}\n\t""")
         .toString()
         .replaceAll("(", "")
         .replaceAll(",", "")
@@ -460,8 +470,8 @@ class HomeController extends GetxController {
     final gstli = gstList
         .toSet()
         .map((e) {
-          az = az + e.values.first;
-          return """${e.keys.first}   ${e.values.first}/-   ${e.values.first}/-\n   """;
+          az = (az + e.values.first / 2).toPrecision(2);
+          return """${e.keys.first}   ${((e.values.first) / 2).toPrecision(2)}   ${((e.values.first) / 2).toPrecision(2)}\n\t""";
         })
         .toString()
         .replaceAll("(", "")
@@ -472,17 +482,17 @@ class HomeController extends GetxController {
       var res = await http.post(Uri.parse(apiUrl), body: {
         "print": """
   - - - - - - - - - - - - - - -
-  SR. RATE    QTY   AMOUNT
+  SR. RATE       QTY   AMOUNT
   $li
   - - - - - - - - - - - - - - -
-  Subtotal   $count   Rs.${subtotalPrice.toStringAsFixed(2)}/-
+  Subtotal   $count   Rs.${subtotalPrice.toStringAsFixed(2)}
   - - - - - - - - - - - - - - -
     %    CGST     SGST
     $gstli
   - - - - - - - - - - - - - - -
-  Rs.${az.toStringAsFixed(2)}/-   Rs.${az.toStringAsFixed(2)}/-
+  Rs.${az.toStringAsFixed(2)}/-   Rs.${az.toStringAsFixed(2)}
   - - - - - - - - - - - - - - -
-  Total   Rs.${double.parse(subtotalPrice.toStringAsFixed(2)) + 2 * double.parse(az.toStringAsFixed(2))}/-
+  Total   Rs.${(double.parse(subtotalPrice.toStringAsFixed(2)) + 2 * double.parse(az.toStringAsFixed(2))).toPrecision(2)}/-
   - - - - - - - - - - - - - - -
       Thank You
     

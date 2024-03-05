@@ -370,7 +370,7 @@ class HomeView extends GetView<HomeController> {
                                                             ? Get.width / 6
                                                             : Get.width / 7,
                                                     child: Text(
-                                                      "₹${int.tryParse(data.price!)! * data.count! + (int.tryParse(data.price!)! * data.count!) * int.parse(data.gst!) / 100}",
+                                                      "₹${(double.tryParse(data.price!)! * 100 / (100 + double.parse(data.gst!))).toPrecision(2) * data.count!}",
                                                       style: TextStyle(
                                                         fontSize: MediaQuery.of(
                                                                         context)
@@ -429,7 +429,7 @@ class HomeView extends GetView<HomeController> {
                                 ),
                                 Obx(() => controller.totalAmount != 0.0
                                     ? Text(
-                                        "₹${controller.totalAmount.toString()}",
+                                        "₹${controller.totalAmount.toPrecision(2)}",
                                         style: TextStyle(
                                           fontSize: MediaQuery.of(Get.context!)
                                                       .size

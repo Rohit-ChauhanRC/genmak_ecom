@@ -35,7 +35,7 @@ class SellDB {
     final database = await DataBaseService().database;
     return await database.rawInsert(
       '''
-        INSERT INTO $tableName (productName,productId,productWeight,price,productQuantity, productQuantity,invoiceId) VALUES (?,?,?,?,?,?,?)
+        INSERT INTO $tableName (productName,productId,productWeight,price,productQuantity, receivingDate,invoiceId) VALUES (?,?,?,?,?,?,?)
       ''',
       [
         productName,
@@ -73,6 +73,16 @@ class SellDB {
         SELECT * from $tableName WHERE invoiceId = ? 
       
       ''', [id]);
+    return products.map((e) => SellModel.fromMap(e)).toList();
+  }
+
+  Future<Iterable<SellModel>> fetchByDate(String from) async {
+    print(from);
+    final database = await DataBaseService().database;
+    final products = await database.rawQuery('''
+        SELECT * from $tableName WHERE receivingDate = ? 
+      
+      ''', [from]);
     return products.map((e) => SellModel.fromMap(e)).toList();
   }
 

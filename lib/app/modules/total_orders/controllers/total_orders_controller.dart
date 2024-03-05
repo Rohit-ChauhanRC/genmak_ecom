@@ -26,6 +26,7 @@ class TotalOrdersController extends GetxController {
   void onInit() async {
     super.onInit();
     await fetchAll();
+    // await receivingDB.fetchByDate("01/01/2024", "05/03/2024");
   }
 
   @override

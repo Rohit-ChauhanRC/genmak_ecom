@@ -94,6 +94,7 @@ class ProfileController extends GetxController {
   Future<void> permissionCheck() async {
     await Permission.camera.request();
     await Permission.mediaLibrary.request();
+    await Permission.storage.request();
   }
 
   Future<void> fetchProfile() async {

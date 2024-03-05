@@ -1,4 +1,4 @@
-package com.example.genmak_ecom
+package com.genmak.salesuit
 
 import io.flutter.embedding.android.FlutterActivity
 

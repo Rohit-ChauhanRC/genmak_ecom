@@ -25,6 +25,7 @@ class CutomerBillingListController extends GetxController {
   void onInit() async {
     super.onInit();
     await fetchAll();
+    await filterDaateWise();
   }
 
   @override
@@ -39,6 +40,12 @@ class CutomerBillingListController extends GetxController {
     receiveListSearch.clear();
     searchV = false;
     textController!.clear();
+  }
+
+  filterDaateWise() async {
+    final aw = await homeController.sellDB
+        .fetchByDate(DateTime(2024, 3, 5).toString());
+    print(aw);
   }
 
   fetchAll() async {
