@@ -121,6 +121,10 @@ class HomeController extends GetxController {
   String get appTitle => _appTitle.value;
   set appTitle(String str) => _appTitle.value = str;
 
+  final RxString _customerId = ''.obs;
+  String get customerId => _customerId.value;
+  set customerId(String str) => _customerId.value = str;
+
   @override
   void onInit() async {
     super.onInit();
@@ -359,6 +363,7 @@ class HomeController extends GetxController {
         personPicM = v[0].picture!;
         memoryImg = true;
         appTitle = v[0].name!;
+        customerId = v[0].customerId!;
         print("v: ${v[0].name}");
       }
     });

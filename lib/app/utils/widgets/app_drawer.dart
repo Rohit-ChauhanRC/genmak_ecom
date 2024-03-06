@@ -59,8 +59,19 @@ class AppDrawer extends StatelessWidget {
                 height: 20,
               ),
               Obx(() => Text(
-                    controller.appTitle ?? 'Genmak Info India Limited',
+                    controller.customerId,
                     // overflow: TextOverflow.visible,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: MediaQuery.of(Get.context!).size.width > 650
+                          ? AppDimens.font30
+                          : AppDimens.font18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )),
+              Obx(() => Text(
+                    controller.appTitle,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: MediaQuery.of(Get.context!).size.width > 650
