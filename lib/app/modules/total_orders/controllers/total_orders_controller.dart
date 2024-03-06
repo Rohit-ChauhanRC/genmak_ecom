@@ -22,6 +22,14 @@ class TotalOrdersController extends GetxController {
 
   final TextEditingController? textController = TextEditingController();
 
+  final RxString _fromDate = "".obs;
+  String get fromDate => _fromDate.value;
+  set fromDate(String str) => _fromDate.value = str;
+
+  final RxString _toDate = "".obs;
+  String get toDate => _toDate.value;
+  set toDate(String str) => _toDate.value = str;
+
   @override
   void onInit() async {
     super.onInit();
@@ -41,6 +49,21 @@ class TotalOrdersController extends GetxController {
     receiveListSearch.clear();
     searchV = false;
     textController!.clear();
+  }
+
+  filterDaateWise() async {
+    // if (fromDate.isNotEmpty && toDate.isNotEmpty) {
+    searchV = true;
+    print(fromDate);
+    print(toDate);
+    receiveListSearch
+        .assignAll(await receivingDB.fetchByDate(fromDate, toDate));
+    print(receiveList.first.productName);
+    update();
+
+    // } else {
+    //   Utils.showDialog("Please select date!");
+    // }
   }
 
   Future<void> searchProduct(String name) async {
@@ -66,6 +89,7 @@ class TotalOrdersController extends GetxController {
   }
 
   fetchAll() async {
+    searchV = false;
     receiveList.assignAll(await receivingDB.fetchAll());
     final ids = receiveList.map((e) => e.invoiceId).toSet();
     receiveList.retainWhere((x) => ids.remove(x.invoiceId));

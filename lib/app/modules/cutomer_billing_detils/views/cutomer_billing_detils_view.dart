@@ -3,6 +3,7 @@ import 'package:genmak_ecom/app/utils/app_colors/app_colors.dart';
 import 'package:genmak_ecom/app/utils/app_dimens/app_dimens.dart';
 
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../controllers/cutomer_billing_detils_controller.dart';
 
@@ -89,9 +90,13 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
                     ),
                   ),
                   Text(
-                    controller.receive.receivingDate ?? "",
+                    DateFormat("dd/MM/yyyy").format(DateTime.parse(
+                            (controller.receive.receivingDate.toString()))) ??
+                        "",
                     style: TextStyle(
-                      fontSize: AppDimens.font22,
+                      fontSize: MediaQuery.of(Get.context!).size.width > 650
+                          ? AppDimens.font22
+                          : AppDimens.font16,
                       color: AppColors.blackColor,
                     ),
                   ),

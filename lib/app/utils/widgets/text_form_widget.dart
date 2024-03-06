@@ -46,7 +46,7 @@ class TextFormWidget extends StatelessWidget {
         readOnly: readOnly,
         keyboardType: keyboardType ?? TextInputType.text,
         decoration: InputDecoration(
-          hintText: suffix ? "Search..." : "",
+          hintText: suffix ? label : "",
           // contentPadding: const EdgeInsets.only(top: 5, left: 10)
           // label: Text(label!),
         ),

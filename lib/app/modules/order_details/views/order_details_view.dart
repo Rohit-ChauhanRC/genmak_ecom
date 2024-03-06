@@ -91,7 +91,7 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                   ),
                   Text(
                     DateFormat("dd/MM/yyyy").format(DateTime.parse(
-                            controller.receive.receivingDate!)) ??
+                            controller.receive.receivingDate!.toString())) ??
                         "",
                     style: TextStyle(
                       fontSize: MediaQuery.of(Get.context!).size.width > 650

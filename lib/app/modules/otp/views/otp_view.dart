@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -96,6 +98,7 @@ class OtpView extends GetView<OtpController> {
                     ),
                     TextFormWidget(
                       label: "Please enter OTP...",
+                      suffix: Platform.isIOS ? true : false,
                       keyboardType: TextInputType.number,
                       maxLength: 4,
                       onChanged: (val) => controller.otp = val,

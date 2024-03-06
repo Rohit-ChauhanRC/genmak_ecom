@@ -4,6 +4,7 @@ import 'package:genmak_ecom/app/data/models/receiving_model.dart';
 import 'package:genmak_ecom/app/routes/app_pages.dart';
 import 'package:genmak_ecom/app/utils/app_colors/app_colors.dart';
 import 'package:genmak_ecom/app/utils/app_dimens/app_dimens.dart';
+import 'package:genmak_ecom/app/utils/widgets/date_time_picker_widget.dart';
 import 'package:genmak_ecom/app/utils/widgets/text_form_widget.dart';
 
 import 'package:get/get.dart';
@@ -33,83 +34,134 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
         centerTitle: true,
       ),
       body: Container(
-        // margin: const EdgeInsets.all(20),
-        child: Obx(() => controller.receiveList.isNotEmpty
-            ? ListView(
-                shrinkWrap: true,
-                children: [
-                  Container(
-                    color: AppColors.buttonColor,
-                    height: 35.h,
-                    margin: const EdgeInsets.only(top: 20),
-                    padding: EdgeInsets.only(
-                      left:
-                          MediaQuery.of(Get.context!).size.width > 650 ? 10 : 3,
-                      right:
-                          MediaQuery.of(Get.context!).size.width > 650 ? 10 : 3,
+          // margin: const EdgeInsets.all(20),
+          child: ListView(
+        shrinkWrap: true,
+        children: [
+          Container(
+            color: AppColors.buttonColor,
+            // height: 35.h,
+            height: Get.height * 0.25,
+
+            margin: const EdgeInsets.only(top: 20),
+            padding: EdgeInsets.only(
+              left: MediaQuery.of(Get.context!).size.width > 650 ? 10 : 3,
+              right: MediaQuery.of(Get.context!).size.width > 650 ? 10 : 3,
+            ),
+            // margin: const EdgeInsets.only(left: 10, right: 10),
+            child: ListView(
+              shrinkWrap: true,
+              // scrollDirection: Axis.horizontal,
+              // mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(3),
+                      height: 50.h,
+                      width: Get.width / 2.2,
+                      child: DateTimePickerWidget(
+                        initialDate: DateTime.tryParse(controller.fromDate),
+                        hintText: "From Date",
+                        onChanged: (val) {
+                          controller.fromDate = val!
+                              .copyWith(
+                                  hour: 0,
+                                  microsecond: 0,
+                                  minute: 0,
+                                  second: 0,
+                                  millisecond: 0)
+                              .toIso8601String();
+                          print(val);
+                        },
+                      ),
+                      // TextFormWidget(
+                      //   textController: controller.textController,
+                      //   label: "Search...",
+                      //   onChanged: (v) =>
+                      //       controller.textController!.text = v.toString(),
+                      // ),
                     ),
-                    // margin: const EdgeInsets.only(left: 10, right: 10),
-                    child: ListView(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      // mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(4),
-                          width: Get.width / 2.4,
-                          child: TextFormWidget(
-                            suffix: true,
-                            textController: controller.textController,
-                            label: "Search by invoice id...",
-                            onChanged: (v) =>
-                                controller.textController!.text = v.toString(),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(6),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.bgColor1,
-                            ),
-                            onPressed: () async {
-                              if (controller.textController!.text
-                                  .toString()
-                                  .isNotEmpty) {
-                                controller.searchProduct(
-                                    controller.textController!.text);
-                              }
-                            },
-                            child: Text(
-                              "Search",
-                              style: TextStyle(color: AppColors.blackColor),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Container(
-                            padding: const EdgeInsets.all(6),
-                            child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColors.bgColor1,
-                                ),
-                                onPressed: () async {
-                                  // controller.textController!.clear();
-                                  // controller.searchP = false;
-                                  await controller.all();
-                                },
-                                child: Text(
-                                  "All",
-                                  style: TextStyle(color: AppColors.blackColor),
-                                )))
-                      ],
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(3),
+                      height: 50.h,
+                      width: Get.width / 2.2,
+                      child: DateTimePickerWidget(
+                        initialDate: DateTime.tryParse(controller.toDate),
+                        hintText: "To Date",
+                        onChanged: (val) {
+                          controller.toDate = val!
+                              .copyWith(
+                                  hour: 0,
+                                  microsecond: 0,
+                                  minute: 0,
+                                  second: 0,
+                                  millisecond: 0)
+                              .toIso8601String();
+                          print(val);
+                        },
+                      ),
+                      // TextFormWidget(
+                      //   textController: controller.textController,
+                      //   label: "Search...",
+                      //   onChanged: (v) =>
+                      //       controller.textController!.text = v.toString(),
+                      // ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  width: 3,
+                ),
+                Container(
+                  padding: const EdgeInsets.all(6),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.bgColor1,
+                    ),
+                    onPressed: () async {
+                      // if (controller.textController!.text
+                      //     .toString()
+                      //     .isNotEmpty) {
+                      //   controller.searchProduct(
+                      //       controller.textController!.text);
+                      // }
+                      controller.filterDaateWise();
+                    },
+                    child: Text(
+                      "Search",
+                      style: TextStyle(color: AppColors.blackColor),
                     ),
                   ),
-                  Container(
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Container(
+                    padding: const EdgeInsets.all(6),
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.bgColor1,
+                        ),
+                        onPressed: () async {
+                          // controller.textController!.clear();
+                          // controller.searchP = false;
+                          await controller.all();
+                        },
+                        child: Text(
+                          "All",
+                          style: TextStyle(color: AppColors.blackColor),
+                        )))
+              ],
+            ),
+          ),
+          Obx(
+            () => controller.receiveList.isNotEmpty ||
+                    controller.receiveListSearch.isNotEmpty
+                ? Container(
                     margin: const EdgeInsets.only(top: 20),
                     // height: Get.height / 1.2,
                     height: Get.height * 0.75,
@@ -205,8 +257,8 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                                     ),
                                     Text(
                                       DateFormat("dd/MM/yyyy").format(
-                                              DateTime.parse(
-                                                  data.receivingDate!)) ??
+                                              DateTime.parse(data.receivingDate!
+                                                  .toString())) ??
                                           "",
                                       style: TextStyle(
                                         fontSize: MediaQuery.of(Get.context!)
@@ -261,23 +313,23 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                         );
                       },
                     ),
-                  ),
-                ],
-              )
-            : SizedBox(
-                child: Center(
+                  )
+                : SizedBox(
+                    child: Center(
                     child: Text(
-                  "No data found...",
-                  style: TextStyle(
-                    color: AppColors.blackColor,
-                    fontSize: MediaQuery.of(Get.context!).size.width > 650
-                        ? AppDimens.font30
-                        : AppDimens.font18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                )),
-              )),
-      ),
+                      "No data found...",
+                      style: TextStyle(
+                        color: AppColors.blackColor,
+                        fontSize: MediaQuery.of(Get.context!).size.width > 650
+                            ? AppDimens.font30
+                            : AppDimens.font18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  )),
+          ),
+        ],
+      )),
     );
   }
 }

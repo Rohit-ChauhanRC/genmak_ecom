@@ -10,6 +10,7 @@ class ReceivingModel {
   String? productId;
   String? productQuantity;
   String? receivingDate;
+  DateTime? stampDate;
   ProductModel? productModel;
   ReceivingModel({
     this.id,
@@ -22,6 +23,7 @@ class ReceivingModel {
     this.receivingDate,
     this.productQuantity,
     this.productModel,
+    this.stampDate,
   });
 
   factory ReceivingModel.fromMap(Map<String, dynamic> json) => ReceivingModel(
@@ -34,6 +36,7 @@ class ReceivingModel {
         totalAmount: json["totalAmount"] ?? "",
         productQuantity: json["productQuantity"].toString() ?? "",
         receivingDate: json["receivingDate"] ?? "",
+        stampDate: json["stampDate"] ?? DateTime.now(),
         productModel: json["productModel"] ?? ProductModel(),
       );
 
@@ -48,5 +51,6 @@ class ReceivingModel {
         "productQuantity": productQuantity,
         "receivingDate": receivingDate,
         "productModel": productModel,
+        "stampDate": stampDate,
       };
 }

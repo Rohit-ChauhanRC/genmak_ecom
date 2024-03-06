@@ -370,7 +370,7 @@ class HomeView extends GetView<HomeController> {
                                                             ? Get.width / 6
                                                             : Get.width / 7,
                                                     child: Text(
-                                                      "₹${(double.tryParse(data.price!)! * 100 / (100 + double.parse(data.gst!))).toPrecision(2) * data.count!}",
+                                                      "₹${double.tryParse(data.price!)!.toPrecision(2) * data.count!}",
                                                       style: TextStyle(
                                                         fontSize: MediaQuery.of(
                                                                         context)

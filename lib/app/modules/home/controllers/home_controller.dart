@@ -13,6 +13,7 @@ import 'package:genmak_ecom/app/data/database/vendor_db.dart';
 import 'package:genmak_ecom/app/data/models/client_model.dart';
 import 'package:genmak_ecom/app/data/models/product_model.dart';
 import 'package:genmak_ecom/app/data/models/profile_model.dart';
+import 'package:genmak_ecom/app/data/models/vendor_model.dart';
 import 'package:genmak_ecom/app/utils/utils.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -48,6 +49,10 @@ class HomeController extends GetxController {
   // final PaperSize paper = PaperSize.mm80;
 // final profile = await CapabilityProfile.load();
 // final printer = NetworkPrinter(paper, profile);
+
+  final RxList<VendorModel> _vendors = RxList<VendorModel>();
+  List<VendorModel> get vendors => _vendors;
+  set vendors(List<VendorModel> lt) => _vendors.assignAll(lt);
 
   final RxList<ProductModel> _products = RxList<ProductModel>();
   List<ProductModel> get products => _products;
@@ -228,51 +233,54 @@ class HomeController extends GetxController {
     totalAmount = 0.0;
     if (orders.toSet().toList().isNotEmpty) {
       for (var i = 0; i < orders.toSet().toList().length; i++) {
-        totalAmount += ((double.tryParse(orders.toSet().toList()[i].price!)! *
-                    100 /
-                    (100 + double.parse(orders.toSet().toList()[i].gst!))) *
+        totalAmount += (int.tryParse(orders.toSet().toList()[i].price!)! *
                 orders.toSet().toList()[i].count!)
-            .toDouble()
-            .toPrecision(2);
+            .toDouble();
       }
     }
     return totalAmount;
   }
 
   Future<void> onSave() async {
-    // if (box.read("status") == "A") {
-    for (var i = 0; i < orders.toSet().toList().length; i++) {
-      final index = products
-          .indexWhere((element) => element.id == orders.toSet().toList()[i].id);
+    if (box.read("status") == "A") {
+      for (var i = 0; i < orders.toSet().toList().length; i++) {
+        final index = products.indexWhere(
+            (element) => element.id == orders.toSet().toList()[i].id);
 
-      await productDB
-          .update(
-              id: products[index].id!,
-              quantity: "${int.tryParse(products[index].quantity!)!}")
-          .then((value) async {
-        await sellDB
-            .create(
-          invoiceId: "${box.read("invoiceNo")}",
-          productName: orders[i].name!,
-          productWeight: orders[i].weight!,
-          price:
-              (int.tryParse(orders[i].price!)! * orders[i].count!).toString(),
-          productId: orders[i].id.toString(),
-          productQuantity: orders[i].count.toString(),
-          receivingDate: DateTime.now().toString(),
-        )
+        await productDB
+            .update(
+                id: products[index].id!,
+                quantity: "${int.tryParse(products[index].quantity!)!}")
             .then((value) async {
-          box.write("invoiceNo", box.read("invoiceNo") + 1);
-          await fetchProduct();
+          await sellDB
+              .create(
+            invoiceId: "${box.read("invoiceNo")}",
+            productName: orders[i].name!,
+            productWeight: orders[i].weight!,
+            price:
+                (int.tryParse(orders[i].price!)! * orders[i].count!).toString(),
+            productId: orders[i].id.toString(),
+            productQuantity: orders[i].count.toString(),
+            receivingDate: DateTime.now().toIso8601String(),
+          )
+              .then((value) async {
+            box.write("invoiceNo", box.read("invoiceNo") + 1);
+            await fetchProduct();
 
-          // setStatus();
+            // setStatus();
+          });
         });
-      });
+      }
+      // }
+      print(DateTime.now().toString());
+      orders.assignAll([]);
+      totalAmount = 0.0;
+      // await checkIp(
+      //   "${box.read("invoiceNo")}",
+      // );
+    } else if (box.read("status") == "Z") {
+      Utils.showDialog("Your subscription is expired!");
     }
-    // }
-    await checkIp(
-      "${box.read("invoiceNo")}",
-    );
   }
 
   handleProductQuantity(int i) {

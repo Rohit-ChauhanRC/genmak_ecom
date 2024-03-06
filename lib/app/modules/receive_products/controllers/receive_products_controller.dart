@@ -157,8 +157,10 @@ class ReceiveProductsController extends GetxController {
       await homeController.productDB
           .update(
               id: int.tryParse(productListModel[i].productId!)!,
-              quantity: (int.tryParse(quantity.quantity!)! +
-                      int.tryParse(productListModel[i].productQuantity!)!)
+              quantity: (int.tryParse(quantity.quantity!)!.toInt() +
+                          int.tryParse(
+                              productListModel[i].productQuantity ?? "0")! ??
+                      0)
                   .toString())
           .then((value) async {
         await receivingDB.create(

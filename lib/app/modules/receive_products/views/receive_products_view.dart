@@ -127,42 +127,39 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                       ),
                     )
                   : const SizedBox()),
-              controller.vendors.isNotEmpty
-                  ? Container(
-                      margin: const EdgeInsets.only(top: 20),
-                      child: Row(
-                        children: [
-                          Text(
-                            "if vendor not available in the above list please,",
-                            style: TextStyle(
-                              fontSize:
-                                  MediaQuery.of(Get.context!).size.width > 650
-                                      ? AppDimens.font18
-                                      : AppDimens.font10,
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              Get.toNamed(Routes.ADD_VENDOR);
-                            },
-                            child: Text(
-                              "\tclick here",
-                              style: TextStyle(
-                                fontSize:
-                                    MediaQuery.of(Get.context!).size.width > 650
-                                        ? AppDimens.font18
-                                        : AppDimens.font10,
-                                color: AppColors.reddishColor,
-                                decoration: TextDecoration.underline,
-                                decorationColor: AppColors.reddishColor,
-                                decorationStyle: TextDecorationStyle.solid,
-                              ),
-                            ),
-                          )
-                        ],
+              Container(
+                margin: const EdgeInsets.only(top: 20),
+                child: Row(
+                  children: [
+                    Text(
+                      "if vendor not available in the above list please,",
+                      style: TextStyle(
+                        fontSize: MediaQuery.of(Get.context!).size.width > 650
+                            ? AppDimens.font18
+                            : AppDimens.font10,
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Get.toNamed(Routes.ADD_VENDOR);
+                      },
+                      child: Text(
+                        "\tclick here",
+                        style: TextStyle(
+                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                              ? AppDimens.font18
+                              : AppDimens.font10,
+                          color: AppColors.reddishColor,
+                          decoration: TextDecoration.underline,
+                          decorationColor: AppColors.reddishColor,
+                          decorationStyle: TextDecorationStyle.solid,
+                        ),
                       ),
                     )
-                  : const SizedBox(),
+                  ],
+                ),
+              ),
+              // : const SizedBox(),
               SizedBox(
                 height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
               ),
@@ -182,7 +179,7 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
               DateTimePickerWidget(
                 hintText: "Receiving Date",
                 onChanged: (val) {
-                  controller.receivingDate = val.toString();
+                  controller.receivingDate = val!.toIso8601String();
                   print(val);
                 },
               ),

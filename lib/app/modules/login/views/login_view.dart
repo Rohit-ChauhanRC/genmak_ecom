@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -67,6 +69,7 @@ class LoginView extends GetView<LoginController> {
                         ),
                         TextFormWidget(
                           label: "Please enter Customer Id...",
+                          suffix: Platform.isIOS ? true : false,
                           onChanged: (val) => controller.customerNumber = val,
                           validator: (v) =>
                               v!.isEmpty ? "Field is required!" : null,
@@ -94,6 +97,7 @@ class LoginView extends GetView<LoginController> {
                         ),
                         TextFormWidget(
                           label: "Please enter Mobile No....",
+                          suffix: Platform.isIOS ? true : false,
                           onChanged: (val) => controller.mobileNumber = val,
                           validator: (v) =>
                               v!.isEmpty ? "Field is required!" : null,

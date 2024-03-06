@@ -1,4 +1,5 @@
 import 'package:genmak_ecom/app/data/models/sell_model.dart';
+import 'package:intl/intl.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'database_service.dart';
@@ -76,13 +77,15 @@ class SellDB {
     return products.map((e) => SellModel.fromMap(e)).toList();
   }
 
-  Future<Iterable<SellModel>> fetchByDate(String from) async {
-    print(from);
+  Future<Iterable<SellModel>> fetchByDate(String from, String to) async {
+    // WHERE dates BETWEEN (convert(datetime, '2012-12-12',110) AND (convert(datetime, '2012-12-12',110))
+
+    // print(from,to);
     final database = await DataBaseService().database;
     final products = await database.rawQuery('''
-        SELECT * from $tableName WHERE receivingDate = ? 
+        SELECT * from $tableName WHERE DATE(receivingDate) >= ? AND DATE(receivingDate) <= ?
       
-      ''', [from]);
+      ''', [from, to]);
     return products.map((e) => SellModel.fromMap(e)).toList();
   }
 
@@ -93,7 +96,7 @@ class SellDB {
     String? productWeight,
     String? price,
     String? productQuantity,
-    String? receivingDate,
+    DateTime? receivingDate,
     String? invoiceId,
   }) async {
     final database = await DataBaseService().database;
@@ -120,5 +123,15 @@ class SellDB {
     await database.rawDelete('''
   DELETE FROM $tableName WHERE id = ?
 ''', [id]);
+  }
+
+  Future<void> alterTble() async {
+    final database = await DataBaseService().database;
+
+    await database.execute(
+      '''
+  ALTER TABLE $tableName ALTER COLUMN receivingDate DATETIME
+''',
+    );
   }
 }

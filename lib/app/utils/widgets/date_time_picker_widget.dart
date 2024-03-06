@@ -11,6 +11,7 @@ class DateTimePickerWidget extends StatelessWidget {
   final String? hintText;
   final TextStyle? style;
   final String? Function(DateTime?)? validate;
+  final DateTime? initialDate;
 
   DateTimePickerWidget({
     Key? key,
@@ -21,6 +22,7 @@ class DateTimePickerWidget extends StatelessWidget {
     this.style,
     this.validate,
     this.onSaved,
+    this.initialDate,
   }) : super(key: key);
 
   final format = DateFormat("yyyy-MM-dd");
@@ -55,7 +57,7 @@ class DateTimePickerWidget extends StatelessWidget {
         return showDatePicker(
             context: context,
             firstDate: DateTime(1900),
-            initialDate: currentValue ?? DateTime.now(),
+            initialDate: initialDate ?? currentValue,
             lastDate: DateTime(2100));
       },
     );

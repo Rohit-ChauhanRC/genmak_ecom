@@ -1,5 +1,6 @@
 import 'package:genmak_ecom/app/data/models/sell_model.dart';
 import 'package:genmak_ecom/app/modules/home/controllers/home_controller.dart';
+import 'package:genmak_ecom/app/utils/utils.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
@@ -21,11 +22,19 @@ class CutomerBillingListController extends GetxController {
 
   final TextEditingController? textController = TextEditingController();
 
+  final RxString _fromDate = "".obs;
+  String get fromDate => _fromDate.value;
+  set fromDate(String str) => _fromDate.value = str;
+
+  final RxString _toDate = "".obs;
+  String get toDate => _toDate.value;
+  set toDate(String str) => _toDate.value = str;
+
   @override
   void onInit() async {
     super.onInit();
     await fetchAll();
-    await filterDaateWise();
+    // await filterDaateWise();
   }
 
   @override
@@ -43,16 +52,31 @@ class CutomerBillingListController extends GetxController {
   }
 
   filterDaateWise() async {
-    final aw = await homeController.sellDB
-        .fetchByDate(DateTime(2024, 3, 5).toString());
-    print(aw);
+    // if (fromDate.isNotEmpty && toDate.isNotEmpty) {
+    searchV = true;
+    print(fromDate);
+    print(toDate);
+    receiveListSearch
+        .assignAll(await homeController.sellDB.fetchByDate(fromDate, toDate));
+    print(receiveList.first.productName);
+    update();
+
+    // } else {
+    //   Utils.showDialog("Please select date!");
+    // }
   }
 
   fetchAll() async {
+    searchV = false;
+    // fromDate = "";
+    // toDate = "";
+    // if (fromDate.isNotEmpty && toDate.isNotEmpty) {
     receiveList.assignAll(await homeController.sellDB.fetchAll());
-    // final amounts = receiveList.map((e) => (int.tryParse(e.price!)! * int.tryParse(e.productQuantity!)!));
     final ids = receiveList.map((e) => e.invoiceId).toSet();
     receiveList.retainWhere((x) => ids.remove(x.invoiceId));
+
+    update();
+    FocusScope.of(Get.context!).unfocus();
   }
 
   Future<void> searchProduct(String name) async {
@@ -72,7 +96,9 @@ class CutomerBillingListController extends GetxController {
   }
 
   Future<void> all() async {
-    textController!.clear();
+    // textController!.clear();
+    fromDate = "";
+    toDate = "";
     searchV = false;
     update();
   }
