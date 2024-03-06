@@ -37,6 +37,8 @@
 		<key>NSAllowsArbitraryLoadsInWebContent</key>
 		<true/>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>We need to access your camera to allow you to upload photos</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Used to Location's Info always for Using Beacon.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
@@ -45,13 +47,10 @@
 	<string>Used to Location's Info for Using Beacon when In Use.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>App needs access to the microphone</string>
-	<key>NSCameraUsageDescription</key>
-	<string>We need to access your camera to allow you to upload photos</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We need to access your photo library to allow you to upload photos</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
-	
 	<key>UIFileSharingEnabled</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
@@ -64,16 +63,16 @@
 	<false/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
-		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
+		<string>UIInterfaceOrientationPortrait</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
 	<key>com.apple.security.network.client</key>
 	<true/>

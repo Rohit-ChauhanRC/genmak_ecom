@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:genmak_ecom/app/data/models/receiving_model.dart';
+import 'package:genmak_ecom/app/data/models/vendor_model.dart';
 import 'package:genmak_ecom/app/routes/app_pages.dart';
 import 'package:genmak_ecom/app/utils/app_colors/app_colors.dart';
 import 'package:genmak_ecom/app/utils/app_dimens/app_dimens.dart';
 import 'package:genmak_ecom/app/utils/widgets/date_time_picker_widget.dart';
-import 'package:genmak_ecom/app/utils/widgets/text_form_widget.dart';
 
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -116,6 +116,35 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                 const SizedBox(
                   width: 3,
                 ),
+                Obx(() => controller.vendors.isNotEmpty
+                    ? InputDecorator(
+                        decoration: const InputDecoration(
+                          hintText: "Select Vendor",
+                        ),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton<VendorModel>(
+                            items: controller.vendors
+                                .map((VendorModel dropDownStringItem) {
+                              return DropdownMenuItem<VendorModel>(
+                                value: dropDownStringItem,
+                                child: Text(dropDownStringItem.name!),
+                              );
+                            }).toList(),
+                            onChanged: (VendorModel? val) {
+                              print(val!.id);
+                              controller.setSelected(val.name!.toString());
+                              controller.vendorModel = val;
+                              // controller.vendorId = val.id.toString();
+                            },
+                            value: controller.vendorModel,
+                            isDense: true,
+                          ),
+                        ),
+                      )
+                    : const SizedBox()),
+                const SizedBox(
+                  width: 3,
+                ),
                 Container(
                   padding: const EdgeInsets.all(6),
                   child: ElevatedButton(
@@ -164,7 +193,7 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                 ? Container(
                     margin: const EdgeInsets.only(top: 20),
                     // height: Get.height / 1.2,
-                    height: Get.height * 0.75,
+                    height: Get.height * 0.50,
                     // color: Colors.blue,
                     child: ListView.builder(
                       shrinkWrap: true,
@@ -175,7 +204,6 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                         ReceivingModel data = controller.searchV
                             ? controller.receiveListSearch[index]
                             : controller.receiveList[index];
-                        print(data.receivingDate);
                         return InkWell(
                           onTap: () {
                             Get.toNamed(Routes.ORDER_DETAILS, arguments: data);

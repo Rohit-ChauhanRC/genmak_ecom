@@ -72,12 +72,13 @@ class ReceivingDB {
   }
   // WHERE dates BETWEEN (convert(datetime, '2012-12-12',110) AND (convert(datetime, '2012-12-12',110))
 
-  Future<Iterable<ReceivingModel>> fetchByDate(String from, String to) async {
+  Future<Iterable<ReceivingModel>> fetchByDate(
+      String from, String to, String vendorName) async {
     final database = await DataBaseService().database;
     final product = await database.rawQuery('''
-        SELECT * from $tableName WHERE DATE(receivingDate) >= ? AND DATE(receivingDate) <= ?
+        SELECT * from $tableName WHERE DATE(receivingDate) >= ? AND DATE(receivingDate) <= ? AND vendorName ==?
       
-      ''', [from, to]);
+      ''', [from, to, vendorName]);
     return product.map((e) => ReceivingModel.fromMap(e)).toList();
   }
 

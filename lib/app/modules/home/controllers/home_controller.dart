@@ -273,11 +273,11 @@ class HomeController extends GetxController {
       }
       // }
       print(DateTime.now().toString());
-      orders.assignAll([]);
-      totalAmount = 0.0;
-      // await checkIp(
-      //   "${box.read("invoiceNo")}",
-      // );
+      // orders.assignAll([]);
+      // totalAmount = 0.0;
+      await checkIp(
+        "${box.read("invoiceNo")}",
+      );
     } else if (box.read("status") == "Z") {
       Utils.showDialog("Your subscription is expired!");
     }
