@@ -41,7 +41,7 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
           Container(
             color: AppColors.buttonColor,
             // height: 35.h,
-            height: Get.height * 0.25,
+            height: Get.height * 0.30,
 
             margin: const EdgeInsets.only(top: 20),
             padding: EdgeInsets.only(
