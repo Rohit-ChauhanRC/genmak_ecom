@@ -251,30 +251,23 @@ class HomeController extends GetxController {
         final index = products.indexWhere(
             (element) => element.id == orders.toSet().toList()[i].id);
 
-        await productDB
-            .update(
-                id: products[index].id!,
-                quantity: "${int.tryParse(products[index].quantity!)!}")
-            .then((value) async {
-          await sellDB
-              .create(
-            invoiceId: "${box.read("invoiceNo")}",
-            productName: orders[i].name!,
-            productWeight: orders[i].weight!,
-            price:
-                (int.tryParse(orders[i].price!)! * orders[i].count!).toString(),
-            productId: orders[i].id.toString(),
-            productQuantity: orders[i].count.toString(),
-            receivingDate: DateTime.now().toIso8601String(),
-          )
-              .then((value) async {
-            box.write("invoiceNo", box.read("invoiceNo") + 1);
-            await fetchProduct();
-
-            // setStatus();
-          });
-        });
+        await productDB.update(
+            id: products[index].id!,
+            quantity: "${int.tryParse(products[index].quantity!)!}");
+        await sellDB.create(
+          invoiceId: "${box.read("invoiceNo")}",
+          productName: orders[i].name!,
+          productWeight: orders[i].weight!,
+          price:
+              (int.tryParse(orders[i].price!)! * orders[i].count!).toString(),
+          productId: orders[i].id.toString(),
+          productQuantity: orders[i].count.toString(),
+          receivingDate: DateTime.now().toIso8601String(),
+        );
       }
+      await fetchProduct();
+      box.write("invoiceNo", box.read("invoiceNo") + 1);
+
       // }
       print(DateTime.now().toString());
       // orders.assignAll([]);
@@ -285,6 +278,12 @@ class HomeController extends GetxController {
     } else if (box.read("status") == "Z") {
       Utils.showDialog("Your subscription is expired!");
     }
+  }
+
+  Future<void> printBtn() async {
+    await checkIp(
+      "${box.read("invoiceNo")}",
+    );
   }
 
   handleProductQuantity(int i) {
@@ -385,6 +384,13 @@ class HomeController extends GetxController {
           for (var i = 0; i < 255; i++) {
             apiLopp(i, invoice);
           }
+        } else if (addr.type == InternetAddressType.IPv4 &&
+            addr.address.startsWith('10')) {
+          print("addr.address: ${addr.address}");
+          ip = addr.address.split(".").getRange(0, 3).join(".");
+          for (var i = 0; i < 255; i++) {
+            apiLopp(i, invoice);
+          }
         }
       }
     }
@@ -414,7 +420,7 @@ class HomeController extends GetxController {
 
   List<Map<double, double>> calulateGST() {
     final gst = orders.toSet().map((e) => (
-          double.parse(e.gst!) / 2,
+          double.parse(e.gst!),
           (double.parse(e.price!) -
               (double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))))
         ));

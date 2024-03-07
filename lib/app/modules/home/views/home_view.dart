@@ -469,14 +469,33 @@ class HomeView extends GetView<HomeController> {
                   ElevatedButton(
                     onPressed: () async {
                       // controller.calulateGST();
-                      if (controller.orders.isNotEmpty)
+                      if (controller.orders.isNotEmpty) {
                         await controller.onSave();
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.buttonColor,
                     ),
                     child: Text(
                       "Save",
+                      style: TextStyle(color: AppColors.whiteColor),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 20.w,
+                  ),
+                  ElevatedButton(
+                    onPressed: () async {
+                      // controller.calulateGST();
+                      if (controller.orders.isNotEmpty) {
+                        await controller.printBtn();
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.buttonColor,
+                    ),
+                    child: Text(
+                      "Print",
                       style: TextStyle(color: AppColors.whiteColor),
                     ),
                   ),

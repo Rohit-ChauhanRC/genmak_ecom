@@ -67,6 +67,7 @@ class LoginController extends GetxController {
       return null;
     }
     // SendOtpModel? sendOtpModel;
+    print("mobileNumber: $mobileNumber");
     if (mobileNumber == "91234567890" && customerNumber == "123456") {
       await createProfile();
     } else {

@@ -198,8 +198,8 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
                                 : 1,
                         mainAxisExtent:
                             MediaQuery.of(Get.context!).size.width > 650
-                                ? 150.h
-                                : 100.h,
+                                ? 180.h
+                                : 130.h,
                       ),
                       itemCount: controller.searchV
                           ? controller.receiveListSearch.length
@@ -307,26 +307,27 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                // Row(
-                                //   crossAxisAlignment: CrossAxisAlignment.start,
-                                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                //   children: [
-                                //     Text(
-                                //       "Amount",
-                                //       style: TextStyle(
-                                //         fontSize: AppDimens.font18,
-                                //         color: AppColors.blackColor,
-                                //       ),
-                                //     ),
-                                //     Text(
-                                //       data.productQuantity ?? "",
-                                //       style: TextStyle(
-                                //         fontSize: AppDimens.font18,
-                                //         color: AppColors.brownColor,
-                                //       ),
-                                //     ),
-                                //   ],
-                                // ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        controller.printBtn(data);
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: AppColors.buttonColor,
+                                      ),
+                                      child: Text(
+                                        "print",
+                                        style: TextStyle(
+                                          fontSize: AppDimens.font18,
+                                          color: AppColors.whiteColor,
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ],
                             ),
                           ),
