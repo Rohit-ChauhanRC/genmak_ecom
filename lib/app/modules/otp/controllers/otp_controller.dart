@@ -161,22 +161,6 @@ class OtpController extends GetxController {
   }
 
   Future<void> createProfile(String body) async {
-    /*
-        [
-  {
-    "ClientId": "C000001",
-    "Name": "MakLife",
-    "Address": "Spaze ITech Park ",
-    "City": "Gurgaon",
-    "State": "HARYANA",
-    "Gstno": "03AAMCML1364IZ8",
-    "PanNo": "XXXXXXXXXX",
-    "PhoneNo": "9312001515",
-    "Email": "ABC@gmail.com",
-    "Pin": "122018"
-  }
-]
-         */
     final ByteData bytes = await rootBundle.load('assets/images/store.png');
 
     final res = json.decode(body);

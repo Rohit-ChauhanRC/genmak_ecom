@@ -29,7 +29,7 @@ class GridWidget extends StatelessWidget {
     return GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: MediaQuery.of(context).size.width > 650 ? 4 : 2,
-          mainAxisExtent: MediaQuery.of(context).size.width > 650 ? 250 : 155,
+          mainAxisExtent: MediaQuery.of(context).size.width > 650 ? 250 : 180,
         ),
         itemCount: product.length,
         itemBuilder: (_, i) {

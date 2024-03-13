@@ -125,6 +125,10 @@ class HomeController extends GetxController {
   String get customerId => _customerId.value;
   set customerId(String str) => _customerId.value = str;
 
+  final RxString _profileId = ''.obs;
+  String get profileId => _profileId.value;
+  set profileId(String str) => _profileId.value = str;
+
   @override
   void onInit() async {
     super.onInit();
@@ -141,7 +145,7 @@ class HomeController extends GetxController {
       if (result == ConnectivityResult.wifi ||
           result == ConnectivityResult.mobile ||
           result == ConnectivityResult.vpn) {
-        await checkUserStatus();
+        // await apiCallOnceInADay();
       }
     });
   }
@@ -187,6 +191,38 @@ class HomeController extends GetxController {
       }
     } catch (e) {
       // apiLopp(i);
+    }
+  }
+
+  Future<void> createProfile() async {
+    // final ByteData bytes = await rootBundle.load('assets/images/store.png');
+
+    // box.write("login", res[0]["ClientId"]);
+    await profileDB.update(
+      id: int.parse(profileId),
+      name: profile.name,
+      address: profile.address,
+      contact: profile.contact,
+      customerId: profile.customerId,
+      gst: profile.gst,
+      city: profile.city,
+      email: profile.email,
+      panNo: profile.panNo,
+      state: profile.state,
+      pin: profile.pin,
+    );
+  }
+
+  Future<void> apiCallOnceInADay() async {
+    String lastVisitDate = box.read('day');
+    String toDayDate = DateTime.now().day.toString();
+
+    if (toDayDate == lastVisitDate) {
+      print("hello will display once");
+    } else {
+      await createProfile();
+      await checkUserStatus();
+      box.write('day', toDayDate);
     }
   }
 
@@ -246,38 +282,39 @@ class HomeController extends GetxController {
   }
 
   Future<void> onSave() async {
-    if (box.read("status") == "A") {
-      for (var i = 0; i < orders.toSet().toList().length; i++) {
-        final index = products.indexWhere(
-            (element) => element.id == orders.toSet().toList()[i].id);
+    // if (box.read("status") == "A") {
+    for (var i = 0; i < orders.toSet().toList().length; i++) {
+      final index = products
+          .indexWhere((element) => element.id == orders.toSet().toList()[i].id);
 
-        await productDB.update(
-            id: products[index].id!,
-            quantity: "${int.tryParse(products[index].quantity!)!}");
-        await sellDB.create(
-          invoiceId: "${box.read("invoiceNo")}",
-          productName: orders[i].name!,
-          productWeight: orders[i].weight!,
-          price:
-              (int.tryParse(orders[i].price!)! * orders[i].count!).toString(),
-          productId: orders[i].id.toString(),
-          productQuantity: orders[i].count.toString(),
-          receivingDate: DateTime.now().toIso8601String(),
-        );
-      }
-      await fetchProduct();
-      box.write("invoiceNo", box.read("invoiceNo") + 1);
-
-      // }
-      print(DateTime.now().toString());
-      // orders.assignAll([]);
-      // totalAmount = 0.0;
-      await checkIp(
-        "${box.read("invoiceNo")}",
+      await productDB.update(
+          id: products[index].id!,
+          quantity: "${int.tryParse(products[index].quantity!)!}");
+      await sellDB.create(
+        invoiceId: "${box.read("invoiceNo") ?? invoiceNo}",
+        productName: orders[i].name!,
+        productWeight: orders[i].weight!,
+        price: (int.tryParse(orders[i].price!)! * orders[i].count!).toString(),
+        productId: orders[i].id.toString(),
+        productQuantity: orders[i].count.toString(),
+        receivingDate: DateTime.now().toIso8601String(),
       );
-    } else if (box.read("status") == "Z") {
-      Utils.showDialog("Your subscription is expired!");
     }
+    box.write("invoiceNo", box.read("invoiceNo") + 1);
+
+    await fetchProduct();
+
+    // }
+    print(DateTime.now().toString());
+    orders.assignAll([]);
+    totalAmount = 0.0;
+    // await checkIp(
+    //   "${box.read("invoiceNo")}",
+    // );
+    // }
+    // else if (box.read("status") == "Z") {
+    //   Utils.showDialog("Your subscription is expired!");
+    // }
   }
 
   Future<void> printBtn() async {
@@ -364,6 +401,7 @@ class HomeController extends GetxController {
         appTitle = v[0].name!;
         customerId = v[0].customerId!;
         print("v: ${v[0].name}");
+        profileId = v[0].id.toString();
       }
     });
   }
@@ -389,6 +427,8 @@ class HomeController extends GetxController {
           print("addr.address: ${addr.address}");
           ip = addr.address.split(".").getRange(0, 3).join(".");
           for (var i = 0; i < 255; i++) {
+            // print("ip:$ip");
+            // print("invoice:$invoice");
             apiLopp(i, invoice);
           }
         }
@@ -468,10 +508,10 @@ class HomeController extends GetxController {
             0.0,
             (previousValue, element) =>
                 double.parse(previousValue.toString()) + element);
-    final count = orders.toSet().map((e) => e.count).fold(
-        0,
-        (previousValue, element) =>
-            int.parse(previousValue.toString()) + element!);
+    final count = orders
+        .toSet()
+        .map((e) => e.count)
+        .fold(0, (previousValue, element) => previousValue + element!);
     List<Map<double, double>> gstList = calulateGST();
     late int count1 = 0;
 
@@ -519,8 +559,8 @@ class HomeController extends GetxController {
       });
       if (res.statusCode == 200) {
         print("send");
-        orders.assignAll([]);
-        totalAmount = 0.0;
+        // orders.assignAll([]);
+        // totalAmount = 0.0;
       }
     } catch (e) {
       // apiLopp(i);

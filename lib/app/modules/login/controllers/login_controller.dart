@@ -78,10 +78,11 @@ class LoginController extends GetxController {
   loginCred() async {
     circularProgress = false;
     try {
+      print(customerNumber);
       var res = await http.post(
         Uri.parse("http://182.78.13.18:8090/api/user"),
         body: {
-          "MobileNo": mobileNumber.trim(),
+          "MobileNo": mobileNumber.trim().toUpperCase(),
           "ClientId": customerNumber.trim()
         },
       );

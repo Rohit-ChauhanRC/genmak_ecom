@@ -38,17 +38,11 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>We need to access your camera to allow you to upload photos</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Used to Location's Info always for Using Beacon.</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Used to Location's Info always for Using Beacon.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Used to Location's Info for Using Beacon when In Use.</string>
+	<string>We need to access your camera to allow you to upload  profile photos</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>App needs access to the microphone</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>We need to access your photo library to allow you to upload photos</string>
+	<string>We need to access your photo library to allow you to upload profile photos</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIFileSharingEnabled</key>
