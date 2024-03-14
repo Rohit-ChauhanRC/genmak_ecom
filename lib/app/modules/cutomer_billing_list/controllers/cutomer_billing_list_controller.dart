@@ -78,7 +78,15 @@ class CutomerBillingListController extends GetxController {
     print(toDate);
     receiveListSearch
         .assignAll(await homeController.sellDB.fetchByDate(fromDate, toDate));
-    print(receiveList.first.productName);
+    final ids = receiveListSearch.map((e) => e.invoiceId).toSet();
+    for (var i = 0; i < receiveListSearch.length; i++) {
+      totalAmounnt =
+          totalAmounnt + double.tryParse(receiveListSearch[i].price!)!;
+    }
+    print(totalAmounnt);
+    receiveListSearch.retainWhere((x) => ids.remove(x.invoiceId));
+
+    print(receiveListSearch.first.productName);
     update();
 
     // } else {
@@ -93,6 +101,10 @@ class CutomerBillingListController extends GetxController {
     // if (fromDate.isNotEmpty && toDate.isNotEmpty) {
     receiveList.assignAll(await homeController.sellDB.fetchAll());
     final ids = receiveList.map((e) => e.invoiceId).toSet();
+    for (var i = 0; i < receiveList.length; i++) {
+      totalAmounnt = totalAmounnt + double.tryParse(receiveList[i].price!)!;
+    }
+    print(totalAmounnt);
     receiveList.retainWhere((x) => ids.remove(x.invoiceId));
 
     update();
@@ -123,18 +135,22 @@ class CutomerBillingListController extends GetxController {
     update();
   }
 
-  Future<void> fetchDataByInvoiceId(invoiceId) async {
+  Future<List<SellModel>> fetchDataByInvoiceId(invoiceId) async {
     receiveProduct
         .assignAll(await homeController.sellDB.fetchByInvoiceId(invoiceId));
 
     // for (var i = 0; i < receiveProduct.length; i++) {
     //   totalAmounnt = totalAmounnt + double.tryParse(receiveProduct[i].price!)!;
     // }
+    return receiveProduct;
   }
 
   Future<void> printBtn(data) async {
     await fetchDataByInvoiceId(data.invoiceId).then((value) async {
-      await checkIp(data.invoiceId);
+      if (value.isNotEmpty) {
+        // print(value[0].);
+        await checkIp(data.invoiceId);
+      }
     });
   }
 
@@ -146,24 +162,41 @@ class CutomerBillingListController extends GetxController {
       for (var addr in interface.addresses) {
         print("addr: $addr");
         if (addr.type == InternetAddressType.IPv4 &&
-            addr.address.startsWith('192')) {
+            addr.address.startsWith('192') &&
+            Platform.isAndroid) {
           ip = addr.address.split(".").getRange(0, 3).join(".");
+          print(receiveProduct);
+
           for (var i = 0; i < 255; i++) {
             apiLopp(i, invoice, receiveProduct);
           }
         } else if (addr.type == InternetAddressType.IPv4 &&
-            addr.address.startsWith('172')) {
+            addr.address.startsWith('172') &&
+            Platform.isIOS) {
           ip = addr.address.split(".").getRange(0, 3).join(".");
-          for (var i = 0; i < 255; i++) {
-            apiLopp(i, invoice, receiveProduct);
-          }
-        } else if (addr.type == InternetAddressType.IPv4 &&
-            addr.address.startsWith('10')) {
-          ip = addr.address.split(".").getRange(0, 3).join(".");
+          print("receiveProduct: $receiveProduct");
+
           for (var i = 0; i < 255; i++) {
             apiLopp(i, invoice, receiveProduct);
           }
         }
+        // else if (addr.type == InternetAddressType.IPv4 &&
+        //     addr.address.startsWith('10')) {
+        //   ip = addr.address.split(".").getRange(0, 3).join(".");
+        //   print(receiveProduct);
+
+        //   for (var i = 0; i < 255; i++) {
+        //     apiLopp(i, invoice, receiveProduct);
+        //   }
+        // } else if (addr.type == InternetAddressType.IPv4 &&
+        //     addr.address.startsWith('100')) {
+        //   ip = addr.address.split(".").getRange(0, 3).join(".");
+        //   print(receiveProduct);
+
+        //   for (var i = 0; i < 255; i++) {
+        //     apiLopp(i, invoice, receiveProduct);
+        //   }
+        // }
       }
     }
   }
@@ -251,7 +284,7 @@ class CutomerBillingListController extends GetxController {
     final li = orders
         .toSet()
         .map((e) =>
-            """${count1 = count1 + 1}.  ${e.name!} \n     Rs.${(double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))).toPrecision(2)}   ${e.count}   Rs.${((double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))) * e.count!).toPrecision(2)}\n\t""")
+            """${count1 = count1 + 1}.  ${e.productName!.length > 20 ? e.productName!.substring(0, 20) : e.productName} \n     Rs.${(double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))).toPrecision(2)}   ${e.count}   Rs.${((double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))) * e.count!).toPrecision(2)}\n """)
         .toString()
         .replaceAll("(", "")
         .replaceAll(",", "")
@@ -259,10 +292,9 @@ class CutomerBillingListController extends GetxController {
 
     late double az = 0.0;
     final gstli = gstList
-        .toSet()
         .map((e) {
           az = (az + e.values.first / 2).toPrecision(2);
-          return """${e.keys.first}   ${((e.values.first) / 2).toPrecision(2)}   ${((e.values.first) / 2).toPrecision(2)}\n\t""";
+          return """${e.keys.first}   ${((e.values.first) / 2).toPrecision(2)}        ${((e.values.first) / 2).toPrecision(2)}\n """;
         })
         .toString()
         .replaceAll("(", "")
@@ -278,8 +310,8 @@ class CutomerBillingListController extends GetxController {
   - - - - - - - - - - - - - - -
   Subtotal   $count   Rs.${subtotalPrice.toStringAsFixed(2)}
   - - - - - - - - - - - - - - -
-    %    CGST     SGST
-    $gstli
+  %     CGST        SGST
+  $gstli
   - - - - - - - - - - - - - - -
   Rs.${az.toStringAsFixed(2)}/-   Rs.${az.toStringAsFixed(2)}
   - - - - - - - - - - - - - - -

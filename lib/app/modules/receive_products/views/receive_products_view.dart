@@ -76,7 +76,8 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
               ),
               TextFormWidget(
                 label: "Please enter total amount...",
-                onChanged: (val) => controller.totalAmount = val,
+                onChanged: (val) =>
+                    controller.totalAmount = double.tryParse(val)!,
                 keyboardType: TextInputType.number,
                 validator: (v) => v!.isEmpty ? "Field is required!" : null,
               ),
@@ -262,8 +263,9 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                                                 productId: val.id.toString(),
                                                 productName: val.name,
                                                 productModel: val,
-                                                totalAmount:
-                                                    controller.totalAmount,
+                                                totalAmount: controller
+                                                    .totalAmount
+                                                    .toString(),
                                                 vendorId: controller.vendorId,
                                                 receivingDate:
                                                     controller.receivingDate,

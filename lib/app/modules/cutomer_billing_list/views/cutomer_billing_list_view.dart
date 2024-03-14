@@ -349,7 +349,15 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
                       ),
                     )),
                   ),
-          )
+          ),
+          Container(
+            child: Row(
+              children: [
+                Text("Total Amounnt: "),
+                Obx(() => Text(controller.totalAmounnt.toString())),
+              ],
+            ),
+          ),
         ],
       )),
     );

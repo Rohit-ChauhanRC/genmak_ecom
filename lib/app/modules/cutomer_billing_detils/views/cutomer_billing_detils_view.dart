@@ -18,7 +18,7 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
           size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
         ),
         title: Text(
-          'Cutomer Billing Detials',
+          'Cutomer Billing Details',
           style: TextStyle(
             color: Colors.white,
             fontSize: MediaQuery.of(Get.context!).size.width > 650
@@ -178,7 +178,7 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
                 height: 20,
               ),
               SizedBox(
-                // height: Get.height / 2,
+                height: Get.height * 0.45,
                 // color: AppColors.brownColor,
                 child: Obx(() => controller.receiveProduct.isNotEmpty
                     ? GridView.builder(

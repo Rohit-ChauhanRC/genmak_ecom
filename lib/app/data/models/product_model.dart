@@ -20,6 +20,7 @@ class ProductModel {
   String? discount;
   String? hsnCode;
   String? unit;
+  String? invoiceId;
 
   ProductModel({
     this.id,
@@ -35,6 +36,7 @@ class ProductModel {
     this.gst,
     this.hsnCode,
     this.unit,
+    this.invoiceId,
   });
 
   factory ProductModel.fromMap(Map<String, dynamic> json) => ProductModel(
@@ -51,6 +53,7 @@ class ProductModel {
         gst: json["gst"] ?? 0,
         hsnCode: json["hsnCode"] ?? 0,
         unit: json["unit"] ?? "",
+        invoiceId: json["invoiceId"] ?? "",
       );
 
   Map<String, dynamic> toMap() => {
@@ -67,5 +70,6 @@ class ProductModel {
         "discount": discount,
         "active": active,
         "unit": unit,
+        "invoiceId": invoiceId,
       };
 }

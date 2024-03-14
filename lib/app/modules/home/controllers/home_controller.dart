@@ -298,6 +298,8 @@ class HomeController extends GetxController {
         productId: orders[i].id.toString(),
         productQuantity: orders[i].count.toString(),
         receivingDate: DateTime.now().toIso8601String(),
+        count: orders[i].count!,
+        gst: orders[i].gst,
       );
     }
     box.write("invoiceNo", box.read("invoiceNo") + 1);
@@ -368,7 +370,7 @@ class HomeController extends GetxController {
   itemSub(int i) {
     if (orders.toSet().toList()[i].count! >= 1) {
       orders.toSet().toList()[i].count = orders.toSet().toList()[i].count! - 1;
-      orders.add(orders.toSet().toList()[i]);
+      orders.remove(orders.toSet().toList()[i]);
       totalAmountCal();
       final index = products
           .indexWhere((element) => element.id == orders.toSet().toList()[i].id);
@@ -380,6 +382,7 @@ class HomeController extends GetxController {
         totalAmountCal();
         update();
       }
+      print(orders.length);
     }
   }
 
@@ -408,37 +411,40 @@ class HomeController extends GetxController {
 
   Future<void> checkIp(String invoice) async {
     for (var interface in await NetworkInterface.list()) {
-      print(interface);
+      // print(interface);
       for (var addr in interface.addresses) {
         if (addr.type == InternetAddressType.IPv4 &&
-            addr.address.startsWith('192')) {
+            addr.address.startsWith('192') &&
+            Platform.isAndroid) {
           ip = addr.address.split(".").getRange(0, 3).join(".");
           for (var i = 0; i < 255; i++) {
             apiLopp(i, invoice);
           }
         } else if (addr.type == InternetAddressType.IPv4 &&
-            addr.address.startsWith('172')) {
+            addr.address.startsWith('172') &&
+            Platform.isIOS) {
           ip = addr.address.split(".").getRange(0, 3).join(".");
           for (var i = 0; i < 255; i++) {
-            apiLopp(i, invoice);
-          }
-        } else if (addr.type == InternetAddressType.IPv4 &&
-            addr.address.startsWith('10')) {
-          print("addr.address: ${addr.address}");
-          ip = addr.address.split(".").getRange(0, 3).join(".");
-          for (var i = 0; i < 255; i++) {
-            // print("ip:$ip");
-            // print("invoice:$invoice");
             apiLopp(i, invoice);
           }
         }
+        // else if (addr.type == InternetAddressType.IPv4 &&
+        //     addr.address.startsWith('10')) {
+        //   print("addr.address: ${addr.address}");
+        //   ip = addr.address.split(".").getRange(0, 3).join(".");
+        //   for (var i = 0; i < 255; i++) {
+        //     // print("ip:$ip");
+        //     // print("invoice:$invoice");
+        //     apiLopp(i, invoice);
+        //   }
+        // }
       }
     }
   }
 
   apiLopp(int i, String invoice) async {
     try {
-      var res = await http.post(Uri.parse("http://$ip.$i/status"), body: {
+      await http.post(Uri.parse("http://$ip.$i/status"), body: {
         "print": """
   $appTitle
   ${profile.address}
@@ -446,20 +452,26 @@ class HomeController extends GetxController {
   PH:${profile.contact}
   DATE: ${DateFormat("dd/MM/yyyy").add_Hms().format(DateTime.now())}
   BILL NO.: $invoice""",
+      }).then((res) {
+        print(res);
+        if (res.statusCode == 200) {
+          // apiUrl = "http://$ip.$i/status";
+          print(res.statusCode);
+          // print("http://$ip.$i/status");
+          setStatus("http://$ip.$i/status");
+        } else {
+          print(res.body);
+        }
       });
-      if (res.statusCode == 200) {
-        // apiUrl = "http://$ip.$i/status";
-        print(res.statusCode);
-        // print("http://$ip.$i/status");
-        setStatus("http://$ip.$i/status");
-      }
     } catch (e) {
       // apiLopp(i);
+      print("e: ${e.toString()}");
     }
   }
 
   List<Map<double, double>> calulateGST() {
-    final gst = orders.toSet().map((e) => (
+    // final v = 0.0;
+    final gst = orders.map((e) => (
           double.parse(e.gst!),
           (double.parse(e.price!) -
               (double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))))
@@ -509,7 +521,6 @@ class HomeController extends GetxController {
             (previousValue, element) =>
                 double.parse(previousValue.toString()) + element);
     final count = orders
-        .toSet()
         .map((e) => e.count)
         .fold(0, (previousValue, element) => previousValue + element!);
     List<Map<double, double>> gstList = calulateGST();
@@ -517,9 +528,8 @@ class HomeController extends GetxController {
 
     // orders.toSet().map((e) => count1 += 1);
     final li = orders
-        .toSet()
         .map((e) =>
-            """${count1 = count1 + 1}.  ${e.name!} \n     Rs.${(double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))).toPrecision(2)}   ${e.count}   Rs.${((double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))) * e.count!).toPrecision(2)}\n\t""")
+            """${count1 = count1 + 1}.  ${e.name!.length > 20 ? e.name!.substring(0, 20) : e.name} \n     Rs.${(double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))).toPrecision(2)}   ${e.count}   Rs.${((double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))) * e.count!).toPrecision(2)}\n """)
         .toString()
         .replaceAll("(", "")
         .replaceAll(",", "")
@@ -527,10 +537,9 @@ class HomeController extends GetxController {
 
     late double az = 0.0;
     final gstli = gstList
-        .toSet()
         .map((e) {
           az = (az + e.values.first / 2).toPrecision(2);
-          return """${e.keys.first}   ${((e.values.first) / 2).toPrecision(2)}   ${((e.values.first) / 2).toPrecision(2)}\n\t""";
+          return """${e.keys.first}   ${((e.values.first) / 2).toPrecision(2)}       ${((e.values.first) / 2).toPrecision(2)}\n """;
         })
         .toString()
         .replaceAll("(", "")
@@ -538,6 +547,8 @@ class HomeController extends GetxController {
         .replaceAll(")", "");
 
     try {
+      print("li: $li");
+
       var res = await http.post(Uri.parse(apiUrl), body: {
         "print": """
   - - - - - - - - - - - - - - -
@@ -546,8 +557,8 @@ class HomeController extends GetxController {
   - - - - - - - - - - - - - - -
   Subtotal   $count   Rs.${subtotalPrice.toStringAsFixed(2)}
   - - - - - - - - - - - - - - -
-    %    CGST     SGST
-    $gstli
+  %     CGST       SGST
+  $gstli
   - - - - - - - - - - - - - - -
   Rs.${az.toStringAsFixed(2)}/-   Rs.${az.toStringAsFixed(2)}
   - - - - - - - - - - - - - - -

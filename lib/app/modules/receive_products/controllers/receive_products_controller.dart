@@ -59,9 +59,13 @@ class ReceiveProductsController extends GetxController {
   String get invoiceId => _invoiceId.value;
   set invoiceId(String str) => _invoiceId.value = str;
 
-  final RxString _totalAmount = ''.obs;
-  String get totalAmount => _totalAmount.value;
-  set totalAmount(String str) => _totalAmount.value = str;
+  final RxDouble _totalAmount = 0.0.obs;
+  double get totalAmount => _totalAmount.value;
+  set totalAmount(double str) => _totalAmount.value = str;
+
+  final RxDouble _totalAmountP = 0.0.obs;
+  double get totalAmountP => _totalAmountP.value;
+  set totalAmountP(double str) => _totalAmountP.value = str;
 
   final RxList<ReceivingModel> _productListModel = RxList([ReceivingModel()]);
   List<ReceivingModel> get productListModel => _productListModel;
@@ -132,7 +136,7 @@ class ReceiveProductsController extends GetxController {
           vendorId: vendorId,
           invoiceId: invoiceId,
           receivingDate: receivingDate,
-          totalAmount: totalAmount,
+          totalAmount: totalAmount.toString(),
           vendorName: inputVendor,
           productId: "",
           productName: "",
@@ -147,9 +151,19 @@ class ReceiveProductsController extends GetxController {
   }
 
   Future onSumit() async {
-    // if (!receiveFormKey!.currentState!.validate()) {
-    //   return null;
-    // }
+    final amt = productListModel.map((e) {
+      totalAmountP = totalAmountP +
+          double.tryParse(e.productModel!.price!)!.toDouble() *
+              e.productModel!.count!.toDouble();
+      print(double.tryParse(e.productModel!.price!)!.toDouble());
+      print((e.productQuantity));
+      return totalAmountP;
+    });
+    print("amt: $amt");
+    print("totalAmount: $totalAmount");
+    print("productListModel: ${productListModel[0].productModel!.price}");
+
+    // s
     for (var i = 0; i < productListModel.length; i++) {
       final quantity = await homeController.productDB.fetchById(
         int.tryParse(productListModel[i].productId!)!,

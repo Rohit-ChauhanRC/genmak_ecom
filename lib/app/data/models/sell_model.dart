@@ -8,6 +8,8 @@ class SellModel {
   String? receivingDate;
   String? stampDate;
   String? invoiceId;
+  String? gst;
+  late int? count;
 
   SellModel({
     this.id,
@@ -19,6 +21,8 @@ class SellModel {
     this.productQuantity,
     this.invoiceId,
     this.stampDate,
+    this.gst,
+    this.count,
   });
 
   factory SellModel.fromMap(Map<String, dynamic> json) => SellModel(
@@ -32,6 +36,8 @@ class SellModel {
             json["receivingDate"] ?? DateTime.now().toIso8601String(),
         stampDate: json["stampDate"] ?? DateTime.now().toIso8601String(),
         invoiceId: json["invoiceId"] ?? "",
+        gst: json["gst"] ?? "",
+        count: json["count"] ?? 0,
       );
 
   Map<String, dynamic> toMap() => {
@@ -44,5 +50,7 @@ class SellModel {
         "receivingDate": receivingDate,
         "stampDate": stampDate,
         "invoiceId": invoiceId,
+        "gst": gst,
+        "count": count,
       };
 }
