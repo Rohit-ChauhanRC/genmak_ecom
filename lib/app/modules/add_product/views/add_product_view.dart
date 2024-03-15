@@ -91,6 +91,8 @@ class AddProductView extends GetView<AddProductController> {
                     label: "Please enter Product Weight...",
                     onChanged: (val) => controller.weight = val,
                     validator: (v) => v!.isEmpty ? "Field is required!" : null,
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
                   )),
               SizedBox(
                 height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
@@ -158,7 +160,9 @@ class AddProductView extends GetView<AddProductController> {
                     label: "Please enter Price...",
                     onChanged: (val) => controller.price = val,
                     validator: (v) => v!.isEmpty ? "Field is required!" : null,
-                    keyboardType: TextInputType.number,
+                    // keyboardType: TextInputType.number,
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
                   )),
               SizedBox(
                 height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
@@ -181,7 +185,9 @@ class AddProductView extends GetView<AddProductController> {
                     label: "Please enter GST...",
                     onChanged: (val) => controller.gst = val,
                     validator: (v) => v!.isEmpty ? "Field is required!" : null,
-                    keyboardType: TextInputType.number,
+                    // keyboardType: TextInputType.number,
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
                   )),
               SizedBox(
                 height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
@@ -205,7 +211,9 @@ class AddProductView extends GetView<AddProductController> {
                     onChanged: (val) {
                       controller.discount = val;
                     },
-                    keyboardType: TextInputType.number,
+                    // keyboardType: TextInputType.number,
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
                     // validator: (v) => v!.isEmpty ? "Field is required!" : null,
                   )),
               SizedBox(

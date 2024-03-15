@@ -90,9 +90,10 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                     ),
                   ),
                   Text(
-                    DateFormat("dd/MM/yyyy").format(DateTime.parse(
-                            controller.receive.receivingDate!.toString())) ??
-                        "",
+                    controller.receive.receivingDate!.isNotEmpty
+                        ? DateFormat("dd/MM/yyyy").format(DateTime.parse(
+                            controller.receive.receivingDate!.toString()))
+                        : "",
                     style: TextStyle(
                       fontSize: MediaQuery.of(Get.context!).size.width > 650
                           ? AppDimens.font22
@@ -194,16 +195,17 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                           mainAxisExtent:
                               MediaQuery.of(Get.context!).size.width > 650
                                   ? 200
-                                  : 130,
+                                  : 150,
                         ),
-                        itemCount: controller.receiveProduct.length,
+                        itemCount:
+                            controller.receiveProduct.toSet().toList().length,
                         itemBuilder: (ctx, index) {
                           final data = controller.receiveProduct[index];
 
                           return Container(
                             height: MediaQuery.of(Get.context!).size.width > 650
                                 ? 200
-                                : 100,
+                                : 130,
                             decoration: BoxDecoration(
                               border: Border.all(
                                 color: AppColors.blackColor,
@@ -235,16 +237,20 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    Text(
-                                      data.productName ?? "",
-                                      style: TextStyle(
-                                        fontSize: MediaQuery.of(Get.context!)
-                                                    .size
-                                                    .width >
-                                                650
-                                            ? AppDimens.font18
-                                            : AppDimens.font14,
-                                        color: AppColors.blackColor,
+                                    SizedBox(
+                                      width: Get.width * 0.45,
+                                      child: Text(
+                                        data.productName ?? "",
+                                        overflow: TextOverflow.visible,
+                                        style: TextStyle(
+                                          fontSize: MediaQuery.of(Get.context!)
+                                                      .size
+                                                      .width >
+                                                  650
+                                              ? AppDimens.font18
+                                              : AppDimens.font14,
+                                          color: AppColors.blackColor,
+                                        ),
                                       ),
                                     ),
                                   ],

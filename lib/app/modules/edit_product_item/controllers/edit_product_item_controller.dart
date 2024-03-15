@@ -78,7 +78,8 @@ class EditProductItemController extends GetxController {
   String get unit => _unit.value;
   set unit(String str) => _unit.value = str;
 
-  final listOfMea = ["KG", "GM", "ML", "NOS"];
+  // final listOfMea = ["KG", "GM", "ML", "NOS", "Ltr"];
+  final listOfMea = ["KG", "GM", "ML", "NOS", "LTR"];
 
   @override
   void onInit() async {

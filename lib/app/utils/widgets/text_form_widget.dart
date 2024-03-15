@@ -33,16 +33,18 @@ class TextFormWidget extends StatelessWidget {
       child: TextFormField(
         // key: UniqueKey(),
         maxLength: maxLength,
+
         controller: textController,
         validator: validator,
         initialValue: initialValue,
         autovalidateMode: AutovalidateMode.always,
         onChanged: onChanged,
-        inputFormatters: [
-          if (keyboardType == TextInputType.number ||
-              keyboardType == TextInputType.phone)
-            FilteringTextInputFormatter.digitsOnly,
-        ],
+        // inputFormatters: [
+        //   if (keyboardType == TextInputType.number ||
+        //       keyboardType == TextInputType.phone)
+        //     FilteringTextInputFormatter.digitsOnly,
+
+        // ],
         readOnly: readOnly,
         keyboardType: keyboardType ?? TextInputType.text,
         decoration: InputDecoration(

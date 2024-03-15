@@ -4,6 +4,7 @@ import 'package:genmak_ecom/app/data/models/product_model.dart';
 import 'package:genmak_ecom/app/data/models/receiving_model.dart';
 import 'package:genmak_ecom/app/data/models/vendor_model.dart';
 import 'package:genmak_ecom/app/modules/home/controllers/home_controller.dart';
+import 'package:genmak_ecom/app/utils/utils.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
@@ -151,50 +152,60 @@ class ReceiveProductsController extends GetxController {
   }
 
   Future onSumit() async {
-    final amt = productListModel.map((e) {
-      totalAmountP = totalAmountP +
-          double.tryParse(e.productModel!.price!)!.toDouble() *
-              e.productModel!.count!.toDouble();
-      print(double.tryParse(e.productModel!.price!)!.toDouble());
-      print((e.productQuantity));
-      return totalAmountP;
-    });
-    print("amt: $amt");
+    totalAmountP = 0.0;
+    final amt = productListModel
+        .map((e) {
+          totalAmountP = totalAmountP +
+              double.tryParse(e.productModel!.price!)!.toDouble() *
+                  double.tryParse(e.productQuantity!)!;
+
+          return totalAmountP;
+        })
+        .toString()
+        .replaceAll("(", "")
+        .replaceAll(")", "");
+    print("totalAmountP: $totalAmountP");
+    print("amt: ${double.tryParse(amt)}");
     print("totalAmount: $totalAmount");
-    print("productListModel: ${productListModel[0].productModel!.price}");
+    if (double.tryParse(amt)! != totalAmount) {
+      Utils.showDialog("Total amount is not same to total product amount!");
 
-    // s
-    for (var i = 0; i < productListModel.length; i++) {
-      final quantity = await homeController.productDB.fetchById(
-        int.tryParse(productListModel[i].productId!)!,
-      );
-      await homeController.productDB
-          .update(
-              id: int.tryParse(productListModel[i].productId!)!,
-              quantity: (int.tryParse(quantity.quantity!)!.toInt() +
-                          int.tryParse(
-                              productListModel[i].productQuantity ?? "0")! ??
-                      0)
-                  .toString())
-          .then((value) async {
-        await receivingDB.create(
-            vendorName: productListModel[i].vendorName.toString(),
-            totalAmount: productListModel[i].totalAmount.toString(),
-            productName: productListModel[i].productName.toString(),
-            invoiceId: productListModel[i].invoiceId,
-            productId: productListModel[i].productId,
-            productQuantity: productListModel[i].productQuantity,
-            receivingDate: productListModel[i].receivingDate,
-            vendorId: productListModel[i].vendorId);
-      }).then((value) async {
-        //  homeController. products.assignAll(await homeController.productDB.fetchAll());
-        await homeController.productDB.fetchAll().then((value) {
-          homeController.products.assignAll(value);
-          Get.back();
+      // return null;
+    } else if (invoiceId.isEmpty) {
+      Utils.showDialog("Invoice number is empty!");
+    } else if (totalAmount < 1.0) {
+      Utils.showDialog("Total amount cannot be zero!");
+    } else {
+      for (var i = 0; i < productListModel.length; i++) {
+        await homeController.productDB
+            .update(
+                id: productListModel[i].productModel!.id!,
+                quantity:
+                    (int.tryParse(productListModel[i].productModel!.quantity!)!
+                                .toInt() +
+                            int.tryParse(
+                                    productListModel[i].productQuantity ?? "0")!
+                                .toInt())
+                        .toString())
+            .then((value) async {
+          await receivingDB.create(
+              vendorName: productListModel[i].vendorName.toString(),
+              totalAmount: productListModel[i].totalAmount.toString(),
+              productName: productListModel[i].productName.toString(),
+              invoiceId: productListModel[i].invoiceId,
+              productId: productListModel[i].productId,
+              productQuantity: productListModel[i].productQuantity.toString(),
+              receivingDate: productListModel[i].receivingDate,
+              vendorId: productListModel[i].vendorId);
+        }).then((value) async {
+          //  homeController. products.assignAll(await homeController.productDB.fetchAll());
+          await homeController.productDB.fetchAll().then((value) {
+            homeController.products.assignAll(value);
+            Get.back();
+          });
         });
-      });
+      }
     }
-
     // print(receivingDate);
   }
 

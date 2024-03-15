@@ -101,7 +101,9 @@ class LoginView extends GetView<LoginController> {
                           onChanged: (val) => controller.mobileNumber = val,
                           validator: (v) =>
                               v!.isEmpty ? "Field is required!" : null,
-                          keyboardType: TextInputType.phone,
+                          // keyboardType: TextInputType.phone,
+                          keyboardType: const TextInputType.numberWithOptions(
+                              decimal: false, signed: false),
                         ),
                         // CheckboxFormField(
                         //   title: const Text(Constants.agreeTerms),

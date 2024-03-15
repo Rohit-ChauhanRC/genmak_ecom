@@ -98,6 +98,9 @@ class EditProductItemView extends GetView<EditProductItemController> {
                           label: "Please enter product weight...",
                           onChanged: (val) => controller.weight = val,
                           initialValue: controller.weight,
+                          // keyboardType: TextInputType.number,
+                          keyboardType: const TextInputType.numberWithOptions(
+                              decimal: true),
                         )),
                     SizedBox(
                       height: MediaQuery.of(Get.context!).size.width > 650
@@ -166,8 +169,11 @@ class EditProductItemView extends GetView<EditProductItemController> {
                     ),
                     Obx(() => TextFormWidget(
                           label: "Please enter price...",
-                          onChanged: (val) => controller.price = val!,
+                          onChanged: (val) => controller.price = val,
                           initialValue: controller.price.toString(),
+                          // keyboardType: TextInputType.number,
+                          keyboardType: const TextInputType.numberWithOptions(
+                              decimal: true),
                         )),
                     SizedBox(
                       height: MediaQuery.of(Get.context!).size.width > 650
@@ -189,8 +195,11 @@ class EditProductItemView extends GetView<EditProductItemController> {
                     ),
                     Obx(() => TextFormWidget(
                           label: "Please enter quantity...",
-                          onChanged: (val) => controller.quantity = val!,
+                          onChanged: (val) => controller.quantity = val,
                           initialValue: controller.quantity.toString(),
+                          // keyboardType: TextInputType.number,
+                          keyboardType: const TextInputType.numberWithOptions(
+                              decimal: true),
                         )),
                     SizedBox(
                       height: MediaQuery.of(Get.context!).size.width > 650
@@ -214,6 +223,10 @@ class EditProductItemView extends GetView<EditProductItemController> {
                           label: "Please enter GST...",
                           initialValue: controller.gst,
                           onChanged: (val) => controller.gst = val,
+                          // keyboardType: TextInputType.number,
+                          keyboardType: const TextInputType.numberWithOptions(
+                              decimal: true),
+
                           // validator: (v) =>
                           //     v!.isEmpty ? "Field is required!" : null,
                         )),
@@ -239,6 +252,9 @@ class EditProductItemView extends GetView<EditProductItemController> {
                           label: "Please enter Discount...",
                           initialValue: controller.discount,
                           onChanged: (val) => controller.discount = val,
+                          keyboardType: const TextInputType.numberWithOptions(
+                              decimal: true),
+
                           // validator: (v) => v!.isEmpty ? "Field is required!" : null,
                         )),
                     SizedBox(

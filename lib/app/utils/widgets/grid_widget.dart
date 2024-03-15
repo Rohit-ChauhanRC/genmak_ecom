@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:genmak_ecom/app/data/models/product_model.dart';
 import 'package:genmak_ecom/app/utils/app_colors/app_colors.dart';
 import 'package:genmak_ecom/app/utils/app_dimens/app_dimens.dart';
+import 'package:genmak_ecom/app/utils/utils.dart';
 import 'package:get/get.dart';
 
 import 'card_widget.dart';
@@ -38,6 +41,8 @@ class GridWidget extends StatelessWidget {
             onTap: () {
               if (grid.active == 0) {
                 handleProductQuantity(i);
+              } else {
+                Utils.showDialog("Please activate this product!");
               }
             },
             child: Container(

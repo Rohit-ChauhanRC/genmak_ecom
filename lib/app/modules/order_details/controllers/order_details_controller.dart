@@ -36,5 +36,10 @@ class OrderDetailsController extends GetxController {
   fetchDataByInvoiceId() async {
     receiveProduct.assignAll(
         await receivingDB.fetchByInvoiceId(Get.arguments!.invoiceId));
+
+    final ids = receiveProduct.map((e) => e.productName).toSet();
+
+    // print(totalAmounnt);
+    receiveProduct.retainWhere((x) => ids.remove(x.productName));
   }
 }

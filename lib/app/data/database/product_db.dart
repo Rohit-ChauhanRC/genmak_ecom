@@ -89,7 +89,8 @@ class ProductDB {
         SELECT * from $tableName WHERE id = ? 
       
       ''', [id]);
-    return ProductModel.fromMap(product.first);
+    return ProductModel.fromMap(
+        product.isNotEmpty ? product.first : <String, dynamic>{});
   }
 
   Future<int> update({

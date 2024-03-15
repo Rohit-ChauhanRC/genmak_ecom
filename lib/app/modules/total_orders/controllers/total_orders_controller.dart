@@ -85,7 +85,12 @@ class TotalOrdersController extends GetxController {
 
     receiveListSearch.assignAll(
         await receivingDB.fetchByDate(fromDate, toDate, inputVendor));
-    print(receiveList.first.productName);
+    print(receiveListSearch.isNotEmpty
+        ? receiveListSearch.first.productName
+        : "ppp");
+    final ids = receiveListSearch.map((e) => e.invoiceId).toSet();
+    receiveListSearch.retainWhere((x) => ids.remove(x.invoiceId));
+
     update();
 
     // } else {

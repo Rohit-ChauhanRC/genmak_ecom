@@ -284,10 +284,11 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                                       ),
                                     ),
                                     Text(
-                                      DateFormat("dd/MM/yyyy").format(
+                                      data.receivingDate!.isNotEmpty
+                                          ? DateFormat("dd/MM/yyyy").format(
                                               DateTime.parse(data.receivingDate!
-                                                  .toString())) ??
-                                          "",
+                                                  .toString()))
+                                          : "",
                                       style: TextStyle(
                                         fontSize: MediaQuery.of(Get.context!)
                                                     .size

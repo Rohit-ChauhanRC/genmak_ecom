@@ -76,9 +76,15 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
               ),
               TextFormWidget(
                 label: "Please enter total amount...",
-                onChanged: (val) =>
-                    controller.totalAmount = double.tryParse(val)!,
-                keyboardType: TextInputType.number,
+                onChanged: (val) {
+                  if (val.isNotEmpty) {
+                    controller.totalAmount = double.tryParse(val)!;
+                  }
+                },
+                // keyboardType: TextInputType.number,
+                keyboardType: const TextInputType.numberWithOptions(
+                    decimal: true, signed: false),
+
                 validator: (v) => v!.isEmpty ? "Field is required!" : null,
               ),
               SizedBox(
@@ -240,41 +246,41 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                                             child: SizedBox(
                                               width: Get.width * 0.6,
                                               child: Text(
-                                                dropDownStringItem.name
-                                                    .toString(),
-                                                overflow: TextOverflow.ellipsis,
+                                                "${dropDownStringItem.name}-${dropDownStringItem.weight}${dropDownStringItem.unit}",
+                                                overflow: TextOverflow.visible,
+                                                style: const TextStyle(
+                                                    fontSize: 12),
                                               ),
                                             ),
                                           );
                                         }).toList(),
                                         onChanged: (ProductModel? val) {
-                                          controller.productListModel[index]
-                                              .productName = val!.name;
-                                          controller.productListModel[index]
-                                              .productModel = val;
-                                          controller.productListModel[index]
-                                              .productId = val.id.toString();
-                                          // controller.pmodel = val;
-                                          // _product.productModel = val;
+                                          // controller.productListModel[index]
+                                          //     .productName = val!.name;
+                                          // controller.productListModel[index]
+                                          //     .productModel = val;
+                                          // controller.productListModel[index]
+                                          //     .productId = val.id.toString();
                                           controller.productListModel.update(
                                               index,
                                               ReceivingModel(
-                                                invoiceId: controller.invoiceId,
-                                                productId: val.id.toString(),
-                                                productName: val.name,
-                                                productModel: val,
-                                                totalAmount: controller
-                                                    .totalAmount
-                                                    .toString(),
-                                                vendorId: controller.vendorId,
-                                                receivingDate:
-                                                    controller.receivingDate,
-                                                vendorName:
-                                                    controller.vendorModel.name,
-                                              ));
-
-                                          controller.setSelectedProduct(
-                                              val.name.toString());
+                                                  invoiceId:
+                                                      controller.invoiceId,
+                                                  productId: val!.id.toString(),
+                                                  productName: val.name,
+                                                  productModel: val,
+                                                  totalAmount: controller
+                                                      .totalAmount
+                                                      .toString(),
+                                                  vendorId: controller.vendorId,
+                                                  receivingDate:
+                                                      controller.receivingDate,
+                                                  vendorName: controller
+                                                      .vendorModel.name,
+                                                  productQuantity: "0"));
+                                          controller.update();
+                                          // controller.setSelectedProduct(
+                                          //     val!.name.toString());
                                         },
                                         value: controller
                                             .productListModel[index]
@@ -357,14 +363,39 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                                         : null,
                                     label: "Please enter product quantity...",
                                     onChanged: (val) {
-                                      _product.productQuantity = val;
-                                      controller.productListModel[index]
-                                          .productQuantity = val;
+                                      print(
+                                          "product name: ${controller.productListModel[index].productName}");
+
+                                      controller.productListModel.update(
+                                          index,
+                                          ReceivingModel(
+                                            invoiceId: controller.invoiceId,
+                                            productQuantity: val.toString(),
+                                            productId: controller
+                                                .productListModel[index].id
+                                                .toString(),
+                                            productName: controller
+                                                .productListModel[index]
+                                                .productName,
+                                            productModel: controller
+                                                .productListModel[index]
+                                                .productModel,
+                                            totalAmount: controller.totalAmount
+                                                .toString(),
+                                            vendorId: controller.vendorId,
+                                            receivingDate:
+                                                controller.receivingDate,
+                                            vendorName:
+                                                controller.vendorModel.name,
+                                          ));
+
+                                      print(controller.productListModel[index]
+                                          .productQuantity);
                                     },
                                     keyboardType: TextInputType.number,
-                                    initialValue: controller
-                                        .productListModel[index]
-                                        .productQuantity,
+                                    // initialValue: controller
+                                    //     .productListModel[index]
+                                    //     .productQuantity,
                                   )
                                 : const SizedBox()),
                             Obx(() => controller.products.isNotEmpty

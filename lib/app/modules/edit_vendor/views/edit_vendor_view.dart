@@ -75,6 +75,8 @@ class EditVendorView extends GetView<EditVendorController> {
                           label: "Please enter Vendor Mobile No...",
                           onChanged: (val) => controller.mobileNumber = val,
                           initialValue: controller.mobileNumber,
+                          keyboardType: const TextInputType.numberWithOptions(
+                              decimal: false, signed: false),
                         )),
                     SizedBox(
                       height: MediaQuery.of(Get.context!).size.width > 650
@@ -98,6 +100,8 @@ class EditVendorView extends GetView<EditVendorController> {
                           label: "Please enter Vendor GSTIN No...",
                           onChanged: (val) => controller.gst = val,
                           initialValue: controller.gst,
+                          keyboardType: const TextInputType.numberWithOptions(
+                              decimal: true, signed: false),
                         )),
                     SizedBox(
                       height: MediaQuery.of(Get.context!).size.width > 650

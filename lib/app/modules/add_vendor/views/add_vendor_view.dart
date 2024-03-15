@@ -70,12 +70,13 @@ class AddVendorView extends GetView<AddVendorController> {
               ),
               Obx(() => TextFormWidget(
                     initialValue: controller.mobileNumber,
-                    keyboardType: TextInputType.phone,
+                    keyboardType: const TextInputType.numberWithOptions(
+                        decimal: false, signed: false),
                     maxLength: 10,
                     label: "Please enter Vendor Mobile No...",
                     onChanged: (val) => controller.mobileNumber = val,
                     validator: (val) =>
-                        val!.isEmpty ? "Field is required!" : null,
+                        val!.length < 10 ? "Field is required!" : null,
                   )),
               SizedBox(
                 height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
@@ -99,6 +100,8 @@ class AddVendorView extends GetView<AddVendorController> {
                     onChanged: (val) => controller.gst = val,
                     validator: (val) =>
                         val!.isEmpty ? "Field is required!" : null,
+                    keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true, signed: false),
                   )),
               SizedBox(
                 height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,

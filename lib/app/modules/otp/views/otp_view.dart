@@ -99,7 +99,10 @@ class OtpView extends GetView<OtpController> {
                     TextFormWidget(
                       label: "Please enter OTP...",
                       suffix: Platform.isIOS ? true : false,
-                      keyboardType: TextInputType.number,
+                      // keyboardType: TextInputType.number,
+                      keyboardType: const TextInputType.numberWithOptions(
+                          decimal: false, signed: false),
+
                       maxLength: 4,
                       onChanged: (val) => controller.otp = val,
                       validator: (value) =>

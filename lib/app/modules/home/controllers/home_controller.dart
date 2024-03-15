@@ -154,6 +154,9 @@ class HomeController extends GetxController {
   void onReady() async {
     super.onReady();
     await fetchProduct();
+    // final ByteData bytes = await rootBundle.load('assets/images/store.png');
+    // print(
+    //     "bytes.buffer.asUint8List(): ${bytes.buffer.asUint8List().toString()}");
   }
 
   @override
