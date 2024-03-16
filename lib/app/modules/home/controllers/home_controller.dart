@@ -306,14 +306,13 @@ class HomeController extends GetxController {
             .toIso8601String(),
         count: orders[i].count!,
         gst: orders[i].gst,
+        unit: orders[i].unit,
       );
     }
     box.write("invoiceNo", box.read("invoiceNo") + 1);
 
     await fetchProduct();
 
-    // }
-    print(DateTime.now().toString());
     orders.assignAll([]);
     totalAmount = 0.0;
     // await checkIp(
@@ -533,7 +532,7 @@ class HomeController extends GetxController {
     late String strp = "";
     for (var e in orders) {
       strp =
-          """$strp${count1 = count1 + 1}.  ${e.name!.length > 15 ? "${e.name!.substring(0, 15)}-${e.weight}${e.unit}" : "${e.name}-${e.weight}${e.unit}"} \n     Rs.${(double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))).toPrecision(2)}   ${e.count}   Rs.${((double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))) * e.count!).toPrecision(2)}\n  """;
+          """$strp${count1 = count1 + 1}.  ${"${e.name!}-${(e.weight.toString() + e.unit.toString()).toString().padRight(6, " ")}"} \n     Rs.${(double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))).toPrecision(2).toString().padRight(8, " ")}${e.count.toString().padRight(3, " ")}Rs.${((double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))) * e.count!).toPrecision(2).toString().padRight(8, " ")}\n  """;
       // print(str);
     }
     late String strpgst = "";
@@ -542,7 +541,7 @@ class HomeController extends GetxController {
     for (var e in gstList) {
       az = (az + e.values.first / 2).toPrecision(2);
       strpgst =
-          """$strpgst${e.keys.first}   ${((e.values.first) / 2).toPrecision(2)}       ${((e.values.first) / 2).toPrecision(2)}\n  """;
+          """$strpgst${e.keys.first.toString().padRight(9, " ")}${((e.values.first) / 2).toPrecision(2).toString().padRight(10, " ")}${((e.values.first) / 2).toPrecision(2)}\n  """;
       // print(str);
     }
     // final li = orders
@@ -567,15 +566,15 @@ class HomeController extends GetxController {
       var res = await http.post(Uri.parse(apiUrl), body: {
         "print": """
   - - - - - - - - - - - - - - -
-  SR. RATE       QTY   AMOUNT
+  SR. ${"RATE".toString().padRight(9, " ")}${"QTY".toString().padRight(6, " ")}${"AMOUNT".toString().padRight(8, " ")}
   $strp
   - - - - - - - - - - - - - - -
-  Subtotal   $count   Rs.${subtotalPrice.toStringAsFixed(2)}
+  Subtotal      $count   Rs.${subtotalPrice.toStringAsFixed(2)}
   - - - - - - - - - - - - - - -
-  %     CGST       SGST
+  %        CGST      SGST
   $strpgst
   - - - - - - - - - - - - - - -
-  Rs.${az.toStringAsFixed(2)}/-   Rs.${az.toStringAsFixed(2)}
+  Rs.${az.toStringAsFixed(2)}   Rs.${az.toStringAsFixed(2)}
   - - - - - - - - - - - - - - -
   Total   Rs.${(double.parse(subtotalPrice.toStringAsFixed(2)) + 2 * double.parse(az.toStringAsFixed(2))).toPrecision(2)}/-
   - - - - - - - - - - - - - - -

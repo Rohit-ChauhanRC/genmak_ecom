@@ -21,6 +21,7 @@ class SellDB {
     "count" INTEGER,
     "productQuantity" TEXT,
     "receivingDate" TEXT,
+    "unit" unit,
     PRIMARY KEY("id" AUTOINCREMENT)
   );
 """);
@@ -35,12 +36,13 @@ class SellDB {
     String? productId,
     String? invoiceId,
     String? gst,
+    String? unit,
     int? count,
   }) async {
     final database = await DataBaseService().database;
     return await database.rawInsert(
       '''
-        INSERT INTO $tableName (productName,productId,productWeight,price,productQuantity, receivingDate,invoiceId,gst,count) VALUES (?,?,?,?,?,?,?,?,?)
+        INSERT INTO $tableName (productName,productId,productWeight,price,productQuantity, receivingDate,invoiceId,gst,count,unit) VALUES (?,?,?,?,?,?,?,?,?,?)
       ''',
       [
         productName,
@@ -52,6 +54,7 @@ class SellDB {
         invoiceId,
         gst,
         count,
+        unit
       ],
     );
   }

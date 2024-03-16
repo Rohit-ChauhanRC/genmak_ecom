@@ -9,6 +9,7 @@ class SellModel {
   String? stampDate;
   String? invoiceId;
   String? gst;
+  String? unit;
   late int? count;
 
   SellModel({
@@ -23,6 +24,7 @@ class SellModel {
     this.stampDate,
     this.gst,
     this.count,
+    this.unit,
   });
 
   factory SellModel.fromMap(Map<String, dynamic> json) => SellModel(
@@ -37,6 +39,7 @@ class SellModel {
         stampDate: json["stampDate"] ?? DateTime.now().toIso8601String(),
         invoiceId: json["invoiceId"] ?? "",
         gst: json["gst"] ?? "",
+        unit: json["unit"] ?? "",
         count: json["count"] ?? 0,
       );
 
@@ -52,5 +55,6 @@ class SellModel {
         "invoiceId": invoiceId,
         "gst": gst,
         "count": count,
+        "unit": unit,
       };
 }
