@@ -532,7 +532,7 @@ class HomeController extends GetxController {
     late String strp = "";
     for (var e in orders) {
       strp =
-          """$strp${count1 = count1 + 1}.  ${"${e.name!}-${(e.weight.toString() + e.unit.toString()).toString().padRight(6, " ")}"} \n     Rs.${(double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))).toPrecision(2).toString().padRight(8, " ")}${e.count.toString().padRight(3, " ")}Rs.${((double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))) * e.count!).toPrecision(2).toString().padRight(8, " ")}\n  """;
+          """$strp${count1 = count1 + 1}.  ${"${e.name!}-${(e.weight.toString() + e.unit.toString()).toString().padRight(6, " ")}"} \n      ${(double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))).toPrecision(2).toString().padRight(11, " ")}${e.count.toString().padRight(4, " ")}${((double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))) * e.count!).toPrecision(2)}\n  """;
       // print(str);
     }
     late String strpgst = "";
@@ -566,15 +566,15 @@ class HomeController extends GetxController {
       var res = await http.post(Uri.parse(apiUrl), body: {
         "print": """
   - - - - - - - - - - - - - - -
-  SR. ${"RATE".toString().padRight(9, " ")}${"QTY".toString().padRight(6, " ")}${"AMOUNT".toString().padRight(8, " ")}
+  SR. ${"RATE(Rs.)".toString().padRight(10, " ")}${"QTY".toString().padRight(4, " ")}${"AMOUNT(Rs.)".toString().padRight(8, " ")}
   $strp
   - - - - - - - - - - - - - - -
-  Subtotal      $count   Rs.${subtotalPrice.toStringAsFixed(2)}
+  Subtotal:  | $count | ${subtotalPrice.toStringAsFixed(2)} |
   - - - - - - - - - - - - - - -
   %        CGST      SGST
   $strpgst
   - - - - - - - - - - - - - - -
-  Rs.${az.toStringAsFixed(2)}   Rs.${az.toStringAsFixed(2)}
+  Subtotal: | ${az.toStringAsFixed(2)} | ${az.toStringAsFixed(2)} |
   - - - - - - - - - - - - - - -
   Total   Rs.${(double.parse(subtotalPrice.toStringAsFixed(2)) + 2 * double.parse(az.toStringAsFixed(2))).toPrecision(2)}/-
   - - - - - - - - - - - - - - -

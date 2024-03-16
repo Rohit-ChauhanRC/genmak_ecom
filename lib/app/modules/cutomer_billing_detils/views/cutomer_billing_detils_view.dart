@@ -105,34 +105,34 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
               const SizedBox(
                 height: 20,
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Product:",
-                    style: TextStyle(
-                      fontSize: MediaQuery.of(Get.context!).size.width > 650
-                          ? AppDimens.font22
-                          : AppDimens.font16,
-                      color: AppColors.blackColor,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    controller.receive.productName ?? "",
-                    style: TextStyle(
-                      fontSize: MediaQuery.of(Get.context!).size.width > 650
-                          ? AppDimens.font22
-                          : AppDimens.font16,
-                      color: AppColors.blackColor,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
+              // Row(
+              //   crossAxisAlignment: CrossAxisAlignment.start,
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     Text(
+              //       "Product:",
+              //       style: TextStyle(
+              //         fontSize: MediaQuery.of(Get.context!).size.width > 650
+              //             ? AppDimens.font22
+              //             : AppDimens.font16,
+              //         color: AppColors.blackColor,
+              //         fontWeight: FontWeight.bold,
+              //       ),
+              //     ),
+              //     Text(
+              //       controller.receive.productName ?? "",
+              //       style: TextStyle(
+              //         fontSize: MediaQuery.of(Get.context!).size.width > 650
+              //             ? AppDimens.font22
+              //             : AppDimens.font16,
+              //         color: AppColors.blackColor,
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              // const SizedBox(
+              //   height: 20,
+              // ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -190,8 +190,8 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
                                   : 1,
                           mainAxisExtent:
                               MediaQuery.of(Get.context!).size.width > 650
-                                  ? 200
-                                  : 180,
+                                  ? 250
+                                  : 200,
                         ),
                         itemCount: controller.receiveProduct.length,
                         itemBuilder: (ctx, index) {
@@ -230,16 +230,19 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    Text(
-                                      data.productName ?? "",
-                                      style: TextStyle(
-                                        fontSize: MediaQuery.of(Get.context!)
-                                                    .size
-                                                    .width >
-                                                650
-                                            ? AppDimens.font16
-                                            : AppDimens.font14,
-                                        color: AppColors.blackColor,
+                                    SizedBox(
+                                      width: Get.width * 0.4,
+                                      child: Text(
+                                        data.productName ?? "",
+                                        style: TextStyle(
+                                          fontSize: MediaQuery.of(Get.context!)
+                                                      .size
+                                                      .width >
+                                                  650
+                                              ? AppDimens.font16
+                                              : AppDimens.font14,
+                                          color: AppColors.blackColor,
+                                        ),
                                       ),
                                     ),
                                   ],
