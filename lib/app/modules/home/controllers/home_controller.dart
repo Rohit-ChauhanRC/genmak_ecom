@@ -300,7 +300,10 @@ class HomeController extends GetxController {
         price: (int.tryParse(orders[i].price!)! * orders[i].count!).toString(),
         productId: orders[i].id.toString(),
         productQuantity: orders[i].count.toString(),
-        receivingDate: DateTime.now().toIso8601String(),
+        receivingDate: DateTime.now()
+            .copyWith(
+                hour: 0, microsecond: 0, minute: 0, second: 0, millisecond: 0)
+            .toIso8601String(),
         count: orders[i].count!,
         gst: orders[i].gst,
       );
@@ -532,7 +535,7 @@ class HomeController extends GetxController {
     // orders.toSet().map((e) => count1 += 1);
     final li = orders
         .map((e) =>
-            """${count1 = count1 + 1}.  ${e.name!.length > 20 ? e.name!.substring(0, 20) : e.name} \n     Rs.${(double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))).toPrecision(2)}   ${e.count}   Rs.${((double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))) * e.count!).toPrecision(2)}\n """)
+            """${count1 = count1 + 1}.  ${e.name!.length > 15 ? "${e.name!.substring(0, 15)}-${e.weight}${e.unit}" : "${e.name}-${e.weight}${e.unit}"} \n     Rs.${(double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))).toPrecision(2)}   ${e.count}   Rs.${((double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))) * e.count!).toPrecision(2)}\n """)
         .toString()
         .replaceAll("(", "")
         .replaceAll(",", "")

@@ -95,6 +95,17 @@ class SellDB {
     return products.map((e) => SellModel.fromMap(e)).toList();
   }
 
+  Future<Iterable<SellModel>> fetchByDateEqual(
+    String from,
+  ) async {
+    final database = await DataBaseService().database;
+    final product = await database.rawQuery('''
+        SELECT * from $tableName WHERE receivingDate == ?  
+      
+      ''', [from]);
+    return product.map((e) => SellModel.fromMap(e)).toList();
+  }
+
   Future<int> update({
     required int id,
     String? productName,

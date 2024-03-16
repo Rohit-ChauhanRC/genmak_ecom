@@ -186,7 +186,14 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
               DateTimePickerWidget(
                 hintText: "Receiving Date",
                 onChanged: (val) {
-                  controller.receivingDate = val!.toIso8601String();
+                  controller.receivingDate = val!
+                      .copyWith(
+                          hour: 0,
+                          microsecond: 0,
+                          minute: 0,
+                          second: 0,
+                          millisecond: 0)
+                      .toIso8601String();
                   print(val);
                 },
               ),

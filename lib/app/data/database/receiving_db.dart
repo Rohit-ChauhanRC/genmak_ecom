@@ -75,10 +75,21 @@ class ReceivingDB {
   Future<Iterable<ReceivingModel>> fetchByDate(
       String from, String to, String vendorName) async {
     final database = await DataBaseService().database;
+    // Iterable<ReceivingModel> products;
     final product = await database.rawQuery('''
         SELECT * from $tableName WHERE DATE(receivingDate) >= ? AND DATE(receivingDate) <= ? AND vendorName ==?
       
       ''', [from, to, vendorName]);
+    return product.map((e) => ReceivingModel.fromMap(e)).toList();
+  }
+
+  Future<Iterable<ReceivingModel>> fetchByDateEqual(
+      String from, String vendorName) async {
+    final database = await DataBaseService().database;
+    final product = await database.rawQuery('''
+        SELECT * from $tableName WHERE receivingDate == ?  AND vendorName ==?
+      
+      ''', [from, vendorName]);
     return product.map((e) => ReceivingModel.fromMap(e)).toList();
   }
 

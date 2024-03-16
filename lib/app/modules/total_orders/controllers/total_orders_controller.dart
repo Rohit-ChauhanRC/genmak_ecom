@@ -2,6 +2,7 @@ import 'package:genmak_ecom/app/data/database/receiving_db.dart';
 import 'package:genmak_ecom/app/data/database/vendor_db.dart';
 import 'package:genmak_ecom/app/data/models/receiving_model.dart';
 import 'package:genmak_ecom/app/data/models/vendor_model.dart';
+import 'package:genmak_ecom/app/utils/utils.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
@@ -45,6 +46,14 @@ class TotalOrdersController extends GetxController {
   VendorModel get vendorModel => _vendorModel.value;
   set vendorModel(VendorModel v) => _vendorModel.value = v;
 
+  final RxDouble _totalAmounnt = 0.0.obs;
+  double get totalAmounnt => _totalAmounnt.value;
+  set totalAmounnt(double str) => _totalAmounnt.value = str;
+
+  final RxDouble _totalAmounntS = 0.0.obs;
+  double get totalAmounntS => _totalAmounntS.value;
+  set totalAmounntS(double str) => _totalAmounntS.value = str;
+
   @override
   void onInit() async {
     super.onInit();
@@ -79,23 +88,38 @@ class TotalOrdersController extends GetxController {
     _inputVendor.value = value;
   }
 
+  int compareOnlyByDate(DateTime other) {
+    return DateTime(DateTime.parse(fromDate).year,
+            DateTime.parse(fromDate).month, DateTime.parse(fromDate).day)
+        .compareTo(
+      DateTime(other.year, other.month, other.day),
+    );
+  }
+
   filterDaateWise() async {
-    // if (fromDate.isNotEmpty && toDate.isNotEmpty) {
+//
     searchV = true;
 
-    receiveListSearch.assignAll(
-        await receivingDB.fetchByDate(fromDate, toDate, inputVendor));
-    print(receiveListSearch.isNotEmpty
-        ? receiveListSearch.first.productName
-        : "ppp");
+    final result = DateTime.parse(toDate).compareTo(DateTime.parse(fromDate));
+    // print(result);
+    if (result == 1) {
+      receiveListSearch.assignAll(
+          await receivingDB.fetchByDate(fromDate, toDate, inputVendor));
+    } else if (result == 0) {
+      receiveListSearch
+          .assignAll(await receivingDB.fetchByDateEqual(fromDate, inputVendor));
+    } else {
+      Utils.showDialog("To date should not be greater than from date!");
+    }
+
     final ids = receiveListSearch.map((e) => e.invoiceId).toSet();
     receiveListSearch.retainWhere((x) => ids.remove(x.invoiceId));
-
+    totalAmounntS = 0.0;
+    for (var i = 0; i < receiveListSearch.length; i++) {
+      totalAmounntS =
+          totalAmounntS + double.tryParse(receiveListSearch[i].totalAmount!)!;
+    }
     update();
-
-    // } else {
-    //   Utils.showDialog("Please select date!");
-    // }
   }
 
   Future<void> searchProduct(String name) async {
@@ -126,5 +150,10 @@ class TotalOrdersController extends GetxController {
     receiveList.assignAll(await receivingDB.fetchAll());
     final ids = receiveList.map((e) => e.invoiceId).toSet();
     receiveList.retainWhere((x) => ids.remove(x.invoiceId));
+    totalAmounnt = 0.0;
+    for (var i = 0; i < receiveList.length; i++) {
+      totalAmounnt =
+          totalAmounnt + double.tryParse(receiveList[i].totalAmount!)!;
+    }
   }
 }

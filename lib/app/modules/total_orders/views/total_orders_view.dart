@@ -193,7 +193,7 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                 ? Container(
                     margin: const EdgeInsets.only(top: 20),
                     // height: Get.height / 1.2,
-                    height: Get.height * 0.50,
+                    height: Get.height * 0.45,
                     // color: Colors.blue,
                     child: ListView.builder(
                       shrinkWrap: true,
@@ -356,6 +356,28 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                       ),
                     ),
                   )),
+          ),
+          Container(
+            margin: EdgeInsets.only(bottom: 20.h, top: 10.h),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Divider(
+                  color: AppColors.blackColor,
+                  thickness: 2,
+                ),
+                const Text("Total Amount: "),
+                SizedBox(
+                  width: 20.w,
+                ),
+                Obx(() => Text(
+                    "₹${controller.searchV ? controller.totalAmounntS : controller.totalAmounnt}/-")),
+                Divider(
+                  color: AppColors.blackColor,
+                  thickness: 2,
+                ),
+              ],
+            ),
           ),
         ],
       )),

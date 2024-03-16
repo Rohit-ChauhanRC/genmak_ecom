@@ -50,6 +50,10 @@ class CutomerBillingListController extends GetxController {
   double get totalAmounnt => _totalAmounnt.value;
   set totalAmounnt(double str) => _totalAmounnt.value = str;
 
+  final RxDouble _totalAmounntS = 0.0.obs;
+  double get totalAmounntS => _totalAmounntS.value;
+  set totalAmounntS(double str) => _totalAmounntS.value = str;
+
   @override
   void onInit() async {
     super.onInit();
@@ -74,37 +78,41 @@ class CutomerBillingListController extends GetxController {
   filterDaateWise() async {
     // if (fromDate.isNotEmpty && toDate.isNotEmpty) {
     searchV = true;
-    print(fromDate);
-    print(toDate);
-    receiveListSearch
-        .assignAll(await homeController.sellDB.fetchByDate(fromDate, toDate));
-    final ids = receiveListSearch.map((e) => e.invoiceId).toSet();
-    for (var i = 0; i < receiveListSearch.length; i++) {
-      totalAmounnt =
-          totalAmounnt + double.tryParse(receiveListSearch[i].price!)!;
+
+    final result = DateTime.parse(toDate).compareTo(DateTime.parse(fromDate));
+    // print(result);
+    if (result == 1) {
+      receiveListSearch
+          .assignAll(await homeController.sellDB.fetchByDate(fromDate, toDate));
+    } else if (result == 0) {
+      receiveListSearch
+          .assignAll(await homeController.sellDB.fetchByDateEqual(fromDate));
+    } else {
+      Utils.showDialog("To date should not be greater than from date!");
     }
-    print(totalAmounnt);
+
+    final ids = receiveListSearch.map((e) => e.invoiceId).toSet();
+    totalAmounntS = 0.0;
+    for (var i = 0; i < receiveListSearch.length; i++) {
+      totalAmounntS =
+          totalAmounntS + double.tryParse(receiveListSearch[i].price!)!;
+    }
     receiveListSearch.retainWhere((x) => ids.remove(x.invoiceId));
 
-    print(receiveListSearch.first.productName);
     update();
-
-    // } else {
-    //   Utils.showDialog("Please select date!");
-    // }
   }
 
   fetchAll() async {
     searchV = false;
-    // fromDate = "";
-    // toDate = "";
-    // if (fromDate.isNotEmpty && toDate.isNotEmpty) {
     receiveList.assignAll(await homeController.sellDB.fetchAll());
     final ids = receiveList.map((e) => e.invoiceId).toSet();
+    // totalAmounnt = 0.0;
+
+    print(totalAmounnt);
+    totalAmounnt = 0.0;
     for (var i = 0; i < receiveList.length; i++) {
       totalAmounnt = totalAmounnt + double.tryParse(receiveList[i].price!)!;
     }
-    print(totalAmounnt);
     receiveList.retainWhere((x) => ids.remove(x.invoiceId));
 
     update();
@@ -132,6 +140,11 @@ class CutomerBillingListController extends GetxController {
     fromDate = "";
     toDate = "";
     searchV = false;
+    // totalAmounnt = 0.0;
+    // for (var i = 0; i < receiveList.toSet().toList().length; i++) {
+    //   totalAmounnt = totalAmounnt +
+    //       double.tryParse(receiveList.toSet().toList()[i].price!)!;
+    // }
     update();
   }
 
@@ -281,10 +294,18 @@ class CutomerBillingListController extends GetxController {
     late int count1 = 0;
 
     // orders.toSet().map((e) => count1 += 1);
+    // final li = orders
+    //     .toSet()
+    //     .map((e) =>
+    //         """${count1 = count1 + 1}.  ${e.productName!.length > 20 ? e.productName!.substring(0, 20) : e.productName} \n     Rs.${(double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))).toPrecision(2)}   ${e.count}   Rs.${((double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))) * e.count!).toPrecision(2)}\n """)
+    //     .toString()
+    //     .replaceAll("(", "")
+    //     .replaceAll(",", "")
+    //     .replaceAll(")", "");
+
     final li = orders
-        .toSet()
         .map((e) =>
-            """${count1 = count1 + 1}.  ${e.productName!.length > 20 ? e.productName!.substring(0, 20) : e.productName} \n     Rs.${(double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))).toPrecision(2)}   ${e.count}   Rs.${((double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))) * e.count!).toPrecision(2)}\n """)
+            """${count1 = count1 + 1}.  ${e.productName!.length > 15 ? "${e.productName!.substring(0, 15)}-${e.weight}${e.unit}" : "${e.productName}-${e.weight}${e.unit}"} \n     Rs.${(double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))).toPrecision(2)}   ${e.count}   Rs.${((double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))) * e.count!).toPrecision(2)}\n """)
         .toString()
         .replaceAll("(", "")
         .replaceAll(",", "")
