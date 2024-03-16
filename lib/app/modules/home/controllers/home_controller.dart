@@ -508,9 +508,6 @@ class HomeController extends GetxController {
                   .toPrecision(2)
             });
     }
-    if (kDebugMode) {
-      print(c1);
-    }
 
     return c1;
   }
@@ -533,54 +530,64 @@ class HomeController extends GetxController {
     late int count1 = 0;
 
     // orders.toSet().map((e) => count1 += 1);
-    final li = orders
-        .map((e) =>
-            """${count1 = count1 + 1}.  ${e.name!.length > 15 ? "${e.name!.substring(0, 15)}-${e.weight}${e.unit}" : "${e.name}-${e.weight}${e.unit}"} \n     Rs.${(double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))).toPrecision(2)}   ${e.count}   Rs.${((double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))) * e.count!).toPrecision(2)}\n """)
-        .toString()
-        .replaceAll("(", "")
-        .replaceAll(",", "")
-        .replaceAll(")", "");
-
+    late String strp = "";
+    for (var e in orders) {
+      strp =
+          """$strp${count1 = count1 + 1}.  ${e.name!.length > 15 ? "${e.name!.substring(0, 15)}-${e.weight}${e.unit}" : "${e.name}-${e.weight}${e.unit}"} \n     Rs.${(double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))).toPrecision(2)}   ${e.count}   Rs.${((double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))) * e.count!).toPrecision(2)}\n  """;
+      // print(str);
+    }
+    late String strpgst = "";
     late double az = 0.0;
-    final gstli = gstList
-        .map((e) {
-          az = (az + e.values.first / 2).toPrecision(2);
-          return """${e.keys.first}   ${((e.values.first) / 2).toPrecision(2)}       ${((e.values.first) / 2).toPrecision(2)}\n """;
-        })
-        .toString()
-        .replaceAll("(", "")
-        .replaceAll(",", "")
-        .replaceAll(")", "");
+
+    for (var e in gstList) {
+      az = (az + e.values.first / 2).toPrecision(2);
+      strpgst =
+          """$strpgst${e.keys.first}   ${((e.values.first) / 2).toPrecision(2)}       ${((e.values.first) / 2).toPrecision(2)}\n  """;
+      // print(str);
+    }
+    // final li = orders
+    //     .map((e) =>
+    //         """${count1 = count1 + 1}.  ${e.name!.length > 15 ? "${e.name!.substring(0, 15)}-${e.weight}${e.unit}" : "${e.name}-${e.weight}${e.unit}"} \n     Rs.${(double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))).toPrecision(2)}   ${e.count}   Rs.${((double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))) * e.count!).toPrecision(2)}\n """)
+    //     .toString()
+    //     .replaceAll("(", "")
+    //     .replaceAll(",", "")
+    //     .replaceAll(")", "");
+
+    // final gstli = gstList
+    //     .map((e) {
+    //       az = (az + e.values.first / 2).toPrecision(2);
+    //       return """${e.keys.first}   ${((e.values.first) / 2).toPrecision(2)}       ${((e.values.first) / 2).toPrecision(2)}\n """;
+    //     })
+    //     .toString()
+    //     .replaceAll("(", "")
+    //     .replaceAll(",", "")
+    //     .replaceAll(")", "");
 
     try {
-      print("li: $li");
-
       var res = await http.post(Uri.parse(apiUrl), body: {
         "print": """
   - - - - - - - - - - - - - - -
   SR. RATE       QTY   AMOUNT
-  $li
+  $strp
   - - - - - - - - - - - - - - -
   Subtotal   $count   Rs.${subtotalPrice.toStringAsFixed(2)}
   - - - - - - - - - - - - - - -
   %     CGST       SGST
-  $gstli
+  $strpgst
   - - - - - - - - - - - - - - -
   Rs.${az.toStringAsFixed(2)}/-   Rs.${az.toStringAsFixed(2)}
   - - - - - - - - - - - - - - -
   Total   Rs.${(double.parse(subtotalPrice.toStringAsFixed(2)) + 2 * double.parse(az.toStringAsFixed(2))).toPrecision(2)}/-
   - - - - - - - - - - - - - - -
       Thank You
-    
+
  """,
       });
       if (res.statusCode == 200) {
         print("send");
-        // orders.assignAll([]);
-        // totalAmount = 0.0;
       }
     } catch (e) {
-      // apiLopp(i);
+      //
     }
   }
 }
