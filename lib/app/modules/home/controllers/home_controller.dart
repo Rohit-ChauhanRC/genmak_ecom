@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:collection/collection.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
 import 'package:flutter/foundation.dart';
@@ -10,7 +9,6 @@ import 'package:genmak_ecom/app/data/database/product_db.dart';
 import 'package:genmak_ecom/app/data/database/profile_db.dart';
 import 'package:genmak_ecom/app/data/database/sell_db.dart';
 import 'package:genmak_ecom/app/data/database/vendor_db.dart';
-import 'package:genmak_ecom/app/data/models/client_model.dart';
 import 'package:genmak_ecom/app/data/models/product_model.dart';
 import 'package:genmak_ecom/app/data/models/profile_model.dart';
 import 'package:genmak_ecom/app/data/models/vendor_model.dart';
@@ -145,7 +143,7 @@ class HomeController extends GetxController {
       if (result == ConnectivityResult.wifi ||
           result == ConnectivityResult.mobile ||
           result == ConnectivityResult.vpn) {
-        // await apiCallOnceInADay();
+        await apiCallOnceInADay();
       }
     });
   }
@@ -313,11 +311,9 @@ class HomeController extends GetxController {
 
     await fetchProduct();
 
-    orders.assignAll([]);
-    totalAmount = 0.0;
-    // await checkIp(
-    //   "${box.read("invoiceNo")}",
-    // );
+    await checkIp(
+      "${box.read("invoiceNo")}",
+    );
     // }
     // else if (box.read("status") == "Z") {
     //   Utils.showDialog("Your subscription is expired!");
@@ -415,22 +411,27 @@ class HomeController extends GetxController {
   }
 
   Future<void> checkIp(String invoice) async {
-    for (var interface in await NetworkInterface.list()) {
-      // print(interface);
-      for (var addr in interface.addresses) {
-        if (addr.type == InternetAddressType.IPv4 &&
-            addr.address.startsWith('192') &&
-            Platform.isAndroid) {
-          ip = addr.address.split(".").getRange(0, 3).join(".");
-          for (var i = 0; i < 255; i++) {
-            apiLopp(i, invoice);
-          }
-        } else if (addr.type == InternetAddressType.IPv4 &&
-            addr.address.startsWith('172') &&
-            Platform.isIOS) {
-          ip = addr.address.split(".").getRange(0, 3).join(".");
-          for (var i = 0; i < 255; i++) {
-            apiLopp(i, invoice);
+    if (box.read("status") == "A") {
+      for (var interface in await NetworkInterface.list()) {
+        // print(interface);
+        for (var addr in interface.addresses) {
+          if (addr.type == InternetAddressType.IPv4 &&
+              addr.address.startsWith('192') &&
+              Platform.isAndroid) {
+            ip = addr.address.split(".").getRange(0, 3).join(".");
+            for (var i = 0; i < 255; i++) {
+              apiLopp(i, invoice);
+            }
+          } else if (addr.type == InternetAddressType.IPv4 &&
+              addr.address.startsWith('172') &&
+              Platform.isIOS) {
+            ip = addr.address.split(".").getRange(0, 3).join(".");
+            for (var i = 0; i < 255; i++) {
+              apiLopp(i, invoice);
+            }
+          } else {
+            orders.assignAll([]);
+            totalAmount = 0.0;
           }
         }
         // else if (addr.type == InternetAddressType.IPv4 &&
@@ -444,6 +445,8 @@ class HomeController extends GetxController {
         //   }
         // }
       }
+    } else {
+      Utils.showDialog("Your Subscription is expired!");
     }
   }
 
@@ -583,6 +586,8 @@ class HomeController extends GetxController {
  """,
       });
       if (res.statusCode == 200) {
+        orders.assignAll([]);
+        totalAmount = 0.0;
         print("send");
       }
     } catch (e) {
