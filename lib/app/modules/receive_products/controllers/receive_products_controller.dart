@@ -151,23 +151,40 @@ class ReceiveProductsController extends GetxController {
     }
   }
 
-  Future onSumit() async {
-    totalAmountP = 0.0;
-    final amt = productListModel
-        .map((e) {
-          totalAmountP = totalAmountP +
-              double.tryParse(e.productModel!.price!)!.toDouble() *
-                  double.tryParse(e.productQuantity!)!;
+  calGrandTotal() {
+    final amt = productListModel.first.productQuantity!.isNotEmpty
+        ? productListModel
+            .map((e) {
+              totalAmountP = totalAmountP +
+                  double.tryParse(e.productModel!.price!)!.toDouble() *
+                      double.tryParse(e.productQuantity!)!;
 
-          return totalAmountP;
-        })
-        .toString()
-        .replaceAll("(", "")
-        .replaceAll(")", "");
-    print("totalAmountP: $totalAmountP");
-    print("amt: ${double.tryParse(amt)}");
+              return totalAmountP;
+            })
+            .toString()
+            .replaceAll("(", "")
+            .replaceAll(")", "")
+        : "0.0";
+    return amt;
+  }
+
+  Future onSumit() async {
+    // totalAmountP = 0.0;
+    // final amt = productListModel
+    //     .map((e) {
+    //       totalAmountP = totalAmountP +
+    //           double.tryParse(e.productModel!.price!)!.toDouble() *
+    //               double.tryParse(e.productQuantity!)!;
+
+    //       return totalAmountP;
+    //     })
+    //     .toString()
+    //     .replaceAll("(", "")
+    //     .replaceAll(")", "");
+    // print("totalAmountP: $totalAmountP");
+    // print("amt: ${double.tryParse(amt)}");
     print("totalAmount: $totalAmount");
-    if (double.tryParse(amt)! != totalAmount) {
+    if (totalAmountP != totalAmount) {
       Utils.showDialog("Total amount is not same to total product amount!");
 
       // return null;
@@ -190,7 +207,7 @@ class ReceiveProductsController extends GetxController {
             .then((value) async {
           await receivingDB.create(
               vendorName: productListModel[i].vendorName.toString(),
-              totalAmount: productListModel[i].totalAmount.toString(),
+              totalAmount: totalAmountP.toString(),
               productName: productListModel[i].productName.toString(),
               invoiceId: productListModel[i].invoiceId,
               productId: productListModel[i].productId,

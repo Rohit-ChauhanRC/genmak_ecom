@@ -12,7 +12,7 @@ class DateTimePickerWidget extends StatelessWidget {
   final TextStyle? style;
   final String? Function(DateTime?)? validate;
   final DateTime? initialDate;
-
+  DateTime? lastDate;
   DateTimePickerWidget({
     Key? key,
     this.iconColor,
@@ -23,6 +23,7 @@ class DateTimePickerWidget extends StatelessWidget {
     this.validate,
     this.onSaved,
     this.initialDate,
+    this.lastDate,
   }) : super(key: key);
 
   final format = DateFormat("yyyy-MM-dd");
@@ -58,7 +59,7 @@ class DateTimePickerWidget extends StatelessWidget {
             context: context,
             firstDate: DateTime(1900),
             initialDate: initialDate ?? currentValue,
-            lastDate: DateTime(2100));
+            lastDate: lastDate ?? DateTime(2100));
       },
     );
   }

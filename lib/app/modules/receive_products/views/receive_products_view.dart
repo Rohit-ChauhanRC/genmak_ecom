@@ -184,6 +184,7 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                 ),
               ),
               DateTimePickerWidget(
+                lastDate: DateTime.now(),
                 hintText: "Receiving Date",
                 onChanged: (val) {
                   controller.receivingDate = val!
@@ -372,7 +373,13 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                                     onChanged: (val) {
                                       print(
                                           "product name: ${controller.productListModel[index].productName}");
-
+                                      // controller.totalAmountP =
+                                      //     controller.totalAmountP +
+                                      //         double.tryParse(controller
+                                      //                 .productListModel[index]
+                                      //                 .productModel!
+                                      //                 .price!)! *
+                                      //             double.tryParse(val)!;
                                       controller.productListModel.update(
                                           index,
                                           ReceivingModel(
@@ -405,6 +412,41 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                                     //     .productQuantity,
                                   )
                                 : const SizedBox()),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Price :",
+                                    style: TextStyle(
+                                      fontSize: MediaQuery.of(Get.context!)
+                                                  .size
+                                                  .width >
+                                              650
+                                          ? AppDimens.font22
+                                          : AppDimens.font16,
+                                      color: AppColors.blackColor,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Obx(() => Text(
+                                        "${double.tryParse(controller.productListModel[index].productModel?.price ?? "0.0")! * int.tryParse(controller.productListModel[index].productQuantity ?? "0")!}",
+                                        style: TextStyle(
+                                          fontSize: MediaQuery.of(Get.context!)
+                                                      .size
+                                                      .width >
+                                                  650
+                                              ? AppDimens.font22
+                                              : AppDimens.font16,
+                                          color: AppColors.blackColor,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      )),
+                                ],
+                              ),
+                            ),
                             Obx(() => controller.products.isNotEmpty
                                 ? Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -450,6 +492,36 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
               const SizedBox(
                 height: 20,
               ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Grand Total:",
+                      style: TextStyle(
+                        fontSize: MediaQuery.of(Get.context!).size.width > 650
+                            ? AppDimens.font22
+                            : AppDimens.font16,
+                        color: AppColors.blackColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    // Obx(() => Text(
+                    //       "${double.tryParse(controller.productListModel.first.productQuantity ?? "0.0")! > 0 ? controller.productListModel.map((e) => double.tryParse(e.productModel!.price ?? "0.0")! * int.parse(e.productQuantity!)) : 0.0}",
+                    //       style: TextStyle(
+                    //         fontSize:
+                    //             MediaQuery.of(Get.context!).size.width > 650
+                    //                 ? AppDimens.font22
+                    //                 : AppDimens.font16,
+                    //         color: AppColors.blackColor,
+                    //         fontWeight: FontWeight.bold,
+                    //       ),
+                    //     )),
+                  ],
+                ),
+              ),
+
               ElevatedButton(
                 onPressed: () async {
                   if (controller.products.isNotEmpty &&
