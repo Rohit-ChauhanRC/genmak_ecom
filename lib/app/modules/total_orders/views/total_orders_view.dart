@@ -71,6 +71,7 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                                   minute: 0,
                                   second: 0,
                                   millisecond: 0)
+                              .subtract(const Duration(days: 1))
                               .toIso8601String();
                           print(val);
                         },

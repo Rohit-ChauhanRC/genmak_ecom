@@ -300,9 +300,12 @@ class EditProductItemView extends GetView<EditProductItemController> {
                       ),
                     ),
                     Obx(() => TextFormWidget(
-                          initialValue: controller.decription,
+                          initialValue: controller.description,
                           label: "Please enter description...",
-                          onChanged: (val) => controller.decription = val,
+                          onChanged: (val) {
+                            controller.description = val;
+                            print(controller.description);
+                          },
                         )),
                     SizedBox(
                       height: MediaQuery.of(Get.context!).size.width > 650

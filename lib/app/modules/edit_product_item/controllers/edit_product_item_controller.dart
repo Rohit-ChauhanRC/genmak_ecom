@@ -20,7 +20,7 @@ class EditProductItemController extends GetxController {
 
   final RxString _description = ''.obs;
   String get description => _description.value;
-  set description(String mobileNumber) => _description.value = description;
+  set description(String str) => _description.value = str;
 
   final RxString _name = ''.obs;
   String get name => _name.value;
@@ -70,9 +70,9 @@ class EditProductItemController extends GetxController {
   int get check => _check.value;
   set check(int i) => _check.value = i;
 
-  final RxString _decription = ''.obs;
-  String get decription => _decription.value;
-  set decription(String mobileNumber) => _decription.value = decription;
+  // final RxString _decription = ''.obs;
+  // String get decription => _decription.value;
+  // set decription(String mobileNumber) => _decription.value = decription;
 
   final RxString _unit = 'NOS'.obs;
   String get unit => _unit.value;
@@ -121,6 +121,7 @@ class EditProductItemController extends GetxController {
   }
 
   Future<void> updateProductTable() async {
+    print(description);
     await productDB
         .update(
       id: Get.arguments!,
@@ -165,7 +166,7 @@ class EditProductItemController extends GetxController {
       gst = value.gst!;
       check = value.active!;
       discount = value.discount!;
-      decription = value.description!;
+      description = value.description!;
       hsnCode = value.hsnCode!;
       unit = value.unit != "" ? value.unit! : "NOS";
       print(value.unit);

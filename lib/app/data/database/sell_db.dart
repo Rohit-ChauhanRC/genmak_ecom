@@ -92,9 +92,10 @@ class SellDB {
     // print(from,to);
     final database = await DataBaseService().database;
     final products = await database.rawQuery('''
-        SELECT * from $tableName WHERE DATE(receivingDate) >= ? AND DATE(receivingDate) <= ?
+        SELECT * from $tableName WHERE DATE(receivingDate) >=? AND DATE(receivingDate) <=?
       
       ''', [from, to]);
+    print(products.toSet());
     return products.map((e) => SellModel.fromMap(e)).toList();
   }
 

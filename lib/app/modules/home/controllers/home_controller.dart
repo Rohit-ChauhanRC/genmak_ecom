@@ -143,7 +143,7 @@ class HomeController extends GetxController {
       if (result == ConnectivityResult.wifi ||
           result == ConnectivityResult.mobile ||
           result == ConnectivityResult.vpn) {
-        await apiCallOnceInADay();
+        // await apiCallOnceInADay();
       }
     });
   }
@@ -274,9 +274,11 @@ class HomeController extends GetxController {
     totalAmount = 0.0;
     if (orders.toSet().toList().isNotEmpty) {
       for (var i = 0; i < orders.toSet().toList().length; i++) {
-        totalAmount += (int.tryParse(orders.toSet().toList()[i].price!)! *
-                orders.toSet().toList()[i].count!)
-            .toDouble();
+        totalAmount +=
+            (double.tryParse(orders.toSet().toList()[i].price.toString())! *
+                    orders.toSet().toList()[i].count!)
+                .toDouble();
+        print(totalAmount);
       }
     }
     return totalAmount;
@@ -295,7 +297,8 @@ class HomeController extends GetxController {
         invoiceId: "${box.read("invoiceNo") ?? invoiceNo}",
         productName: orders[i].name!,
         productWeight: orders[i].weight!,
-        price: (int.tryParse(orders[i].price!)! * orders[i].count!).toString(),
+        price:
+            (double.tryParse(orders[i].price!)! * orders[i].count!).toString(),
         productId: orders[i].id.toString(),
         productQuantity: orders[i].count.toString(),
         receivingDate: DateTime.now()
@@ -371,7 +374,7 @@ class HomeController extends GetxController {
   itemSub(int i) {
     if (orders.toSet().toList()[i].count! >= 1) {
       orders.toSet().toList()[i].count = orders.toSet().toList()[i].count! - 1;
-      orders.remove(orders.toSet().toList()[i]);
+      orders.add(orders.toSet().toList()[i]);
       totalAmountCal();
       final index = products
           .indexWhere((element) => element.id == orders.toSet().toList()[i].id);
@@ -434,19 +437,12 @@ class HomeController extends GetxController {
             totalAmount = 0.0;
           }
         }
-        // else if (addr.type == InternetAddressType.IPv4 &&
-        //     addr.address.startsWith('10')) {
-        //   print("addr.address: ${addr.address}");
-        //   ip = addr.address.split(".").getRange(0, 3).join(".");
-        //   for (var i = 0; i < 255; i++) {
-        //     // print("ip:$ip");
-        //     // print("invoice:$invoice");
-        //     apiLopp(i, invoice);
-        //   }
-        // }
       }
-    } else {
+    } else if (box.read("status") == "Z") {
       Utils.showDialog("Your Subscription is expired!");
+    } else {
+      orders.assignAll([]);
+      totalAmount = 0.0;
     }
   }
 

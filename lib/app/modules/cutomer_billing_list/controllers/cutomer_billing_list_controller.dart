@@ -82,6 +82,7 @@ class CutomerBillingListController extends GetxController {
     final result = DateTime.parse(toDate).compareTo(DateTime.parse(fromDate));
     // print(result);
     if (result == 1) {
+      print("$fromDate : $toDate");
       receiveListSearch
           .assignAll(await homeController.sellDB.fetchByDate(fromDate, toDate));
     } else if (result == 0) {

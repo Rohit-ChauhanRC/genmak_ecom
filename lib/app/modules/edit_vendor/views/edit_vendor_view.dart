@@ -77,6 +77,8 @@ class EditVendorView extends GetView<EditVendorController> {
                           initialValue: controller.mobileNumber,
                           keyboardType: const TextInputType.numberWithOptions(
                               decimal: false, signed: false),
+                          validator: (val) =>
+                              val!.length < 10 ? "Field is required!" : null,
                         )),
                     SizedBox(
                       height: MediaQuery.of(Get.context!).size.width > 650

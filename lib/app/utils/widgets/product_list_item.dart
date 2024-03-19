@@ -121,7 +121,8 @@ class ProductListItem extends StatelessWidget {
                         width: 25,
                       ),
                       Text(
-                        product.weight ?? "",
+                        product.weight.toString() + product.unit.toString() ??
+                            "",
                         style: TextStyle(
                           fontSize: MediaQuery.of(Get.context!).size.width > 650
                               ? AppDimens.font22
@@ -139,7 +140,7 @@ class ProductListItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Price",
+                        "Price:",
                         style: TextStyle(
                           fontSize: MediaQuery.of(Get.context!).size.width > 650
                               ? AppDimens.font22
@@ -170,7 +171,7 @@ class ProductListItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Quantity",
+                        "Quantity:",
                         style: TextStyle(
                           fontSize: MediaQuery.of(Get.context!).size.width > 650
                               ? AppDimens.font22
