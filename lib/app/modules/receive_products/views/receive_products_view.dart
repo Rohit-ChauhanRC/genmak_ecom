@@ -201,7 +201,7 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
               SizedBox(
                 height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
               ),
-              Container(
+              SizedBox(
                 height: Get.height / 2.3,
                 // color: Colors.black,
                 child: Obx(() => ListView.builder(
@@ -239,64 +239,82 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                               ),
                             ),
                             Obx(() => controller.products.isNotEmpty
-                                ? SizedBox(
-                                    width: Get.width,
-                                    child: InputDecorator(
-                                      decoration: const InputDecoration(
-                                        hintText: "Select Product",
-                                      ),
-                                      child: DropdownButtonHideUnderline(
-                                          child: DropdownButton<ProductModel>(
-                                        items: controller.products.map(
-                                            (ProductModel dropDownStringItem) {
-                                          return DropdownMenuItem<ProductModel>(
-                                            value: dropDownStringItem,
-                                            child: SizedBox(
-                                              width: Get.width * 0.6,
-                                              child: Text(
-                                                "${dropDownStringItem.name}-${dropDownStringItem.weight}${dropDownStringItem.unit}",
-                                                overflow: TextOverflow.visible,
-                                                style: const TextStyle(
-                                                    fontSize: 12),
+                                ? GetBuilder<ReceiveProductsController>(
+                                    builder: (_) {
+                                    return SizedBox(
+                                      width: Get.width,
+                                      child: InputDecorator(
+                                        decoration: const InputDecoration(
+                                          hintText: "Select Product",
+                                        ),
+                                        child: DropdownButtonHideUnderline(
+                                            child: DropdownButton<ProductModel>(
+                                          items: controller.products.map(
+                                              (ProductModel
+                                                  dropDownStringItem) {
+                                            return DropdownMenuItem<
+                                                ProductModel>(
+                                              value: dropDownStringItem,
+                                              child: SizedBox(
+                                                width: Get.width * 0.6,
+                                                child: Text(
+                                                  "${dropDownStringItem.name}-${dropDownStringItem.weight}${dropDownStringItem.unit}",
+                                                  overflow:
+                                                      TextOverflow.visible,
+                                                  style: const TextStyle(
+                                                      fontSize: 12),
+                                                ),
                                               ),
-                                            ),
-                                          );
-                                        }).toList(),
-                                        onChanged: (ProductModel? val) {
-                                          // controller.productListModel[index]
-                                          //     .productName = val!.name;
-                                          // controller.productListModel[index]
-                                          //     .productModel = val;
-                                          // controller.productListModel[index]
-                                          //     .productId = val.id.toString();
-                                          controller.productListModel.update(
-                                              index,
-                                              ReceivingModel(
-                                                  invoiceId:
-                                                      controller.invoiceId,
-                                                  productId: val!.id.toString(),
-                                                  productName: val.name,
-                                                  productModel: val,
-                                                  totalAmount: controller
-                                                      .totalAmount
-                                                      .toString(),
-                                                  vendorId: controller.vendorId,
-                                                  receivingDate:
-                                                      controller.receivingDate,
-                                                  vendorName: controller
-                                                      .vendorModel.name,
-                                                  productQuantity: "0"));
-                                          controller.update();
-                                          // controller.setSelectedProduct(
-                                          //     val!.name.toString());
-                                        },
-                                        value: controller
-                                            .productListModel[index]
-                                            .productModel,
-                                        isDense: true,
-                                      )),
-                                    ),
-                                  )
+                                            );
+                                          }).toList(),
+                                          onChanged: (ProductModel? val) {
+                                            controller.productListModel[index]
+                                              ..invoiceId = controller.invoiceId
+                                              ..vendorId = controller.vendorId
+                                              ..receivingDate =
+                                                  controller.receivingDate
+                                              ..totalAmount = controller
+                                                  .totalAmount
+                                                  .toString()
+                                              ..vendorName =
+                                                  controller.inputVendor
+                                              ..productQuantity
+                                              ..productId = val!.id.toString()
+                                              ..productName = val.name
+                                              ..productModel = val;
+                                            // controller.productListModel.update(
+                                            //     index,
+                                            //     ReceivingModel(
+                                            //       invoiceId: controller.invoiceId,
+                                            //       productId: val!.id.toString(),
+                                            //       productName: val.name,
+                                            //       productModel: val,
+                                            //       totalAmount: controller
+                                            //           .totalAmount
+                                            //           .toString(),
+                                            //       vendorId: controller.vendorId,
+                                            //       receivingDate:
+                                            //           controller.receivingDate,
+                                            //       vendorName:
+                                            //           controller.vendorModel.name,
+                                            //     ));
+                                            print(controller
+                                                .productListModel[index]
+                                                .productModel!
+                                                .name);
+                                            print(controller
+                                                .productListModel[index]
+                                                .productQuantity);
+                                            controller.update();
+                                          },
+                                          value: controller
+                                              .productListModel[index]
+                                              .productModel,
+                                          isDense: true,
+                                        )),
+                                      ),
+                                    );
+                                  })
                                 : const SizedBox()),
                             Container(
                               margin: const EdgeInsets.only(top: 10),
@@ -371,45 +389,53 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                                         : null,
                                     label: "Please enter product quantity...",
                                     onChanged: (val) {
-                                      print(
-                                          "product name: ${controller.productListModel[index].productName}");
-                                      // controller.totalAmountP =
-                                      //     controller.totalAmountP +
-                                      //         double.tryParse(controller
-                                      //                 .productListModel[index]
-                                      //                 .productModel!
-                                      //                 .price!)! *
-                                      //             double.tryParse(val)!;
-                                      controller.productListModel.update(
-                                          index,
-                                          ReceivingModel(
-                                            invoiceId: controller.invoiceId,
-                                            productQuantity: val.toString(),
-                                            productId: controller
-                                                .productListModel[index].id
-                                                .toString(),
-                                            productName: controller
-                                                .productListModel[index]
-                                                .productName,
-                                            productModel: controller
-                                                .productListModel[index]
-                                                .productModel,
-                                            totalAmount: controller.totalAmount
-                                                .toString(),
-                                            vendorId: controller.vendorId,
-                                            receivingDate:
-                                                controller.receivingDate,
-                                            vendorName:
-                                                controller.vendorModel.name,
-                                          ));
+                                      controller.productListModel[index]
+                                        ..invoiceId = controller.invoiceId
+                                        ..vendorId = controller.vendorId
+                                        ..receivingDate =
+                                            controller.receivingDate
+                                        ..totalAmount =
+                                            controller.totalAmount.toString()
+                                        ..vendorName = controller.inputVendor
+                                        ..productQuantity = val!.toString()
+                                        ..productId
+                                        ..productName
+                                        ..productModel;
+                                      controller.update();
 
-                                      print(controller.productListModel[index]
-                                          .productQuantity);
+                                      print(
+                                          "invoice id : ${controller.productListModel[index].invoiceId}");
+                                      // controller.productListModel.update(
+                                      //     index,
+                                      //     ReceivingModel(
+                                      //       invoiceId: controller.invoiceId,
+                                      //       productQuantity: val.toString(),
+                                      //       productId: controller
+                                      //           .productListModel[index].id
+                                      //           .toString(),
+                                      //       productName: controller
+                                      //           .productListModel[index]
+                                      //           .productName,
+                                      //       productModel: controller
+                                      //           .productListModel[index]
+                                      //           .productModel,
+                                      //       totalAmount: controller.totalAmount
+                                      //           .toString(),
+                                      //       vendorId: controller.vendorId,
+                                      //       receivingDate:
+                                      //           controller.receivingDate,
+                                      //       vendorName:
+                                      //           controller.vendorModel.name,
+                                      //     ));
+                                      print(
+                                          "qty: ${controller.productListModel[index].productName}");
+                                      print(
+                                          "qty: ${controller.productListModel[index].productQuantity}");
                                     },
                                     keyboardType: TextInputType.number,
-                                    // initialValue: controller
-                                    //     .productListModel[index]
-                                    //     .productQuantity,
+                                    initialValue: controller
+                                        .productListModel[index]
+                                        .productQuantity,
                                   )
                                 : const SizedBox()),
                             Align(
@@ -432,7 +458,7 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                                     ),
                                   ),
                                   Obx(() => Text(
-                                        "${double.tryParse(controller.productListModel[index].productModel?.price ?? "0.0")! * int.tryParse(controller.productListModel[index].productQuantity ?? "0")!}",
+                                        "₹${double.tryParse(controller.productListModel[index].productModel?.price! ?? "0.0")! * (int.tryParse(controller.productListModel[index].productQuantity ?? "1") ?? 0)}/-",
                                         style: TextStyle(
                                           fontSize: MediaQuery.of(Get.context!)
                                                       .size
@@ -492,35 +518,35 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
               const SizedBox(
                 height: 20,
               ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Grand Total:",
-                      style: TextStyle(
-                        fontSize: MediaQuery.of(Get.context!).size.width > 650
-                            ? AppDimens.font22
-                            : AppDimens.font16,
-                        color: AppColors.blackColor,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    // Obx(() => Text(
-                    //       "${double.tryParse(controller.productListModel.first.productQuantity ?? "0.0")! > 0 ? controller.productListModel.map((e) => double.tryParse(e.productModel!.price ?? "0.0")! * int.parse(e.productQuantity!)) : 0.0}",
-                    //       style: TextStyle(
-                    //         fontSize:
-                    //             MediaQuery.of(Get.context!).size.width > 650
-                    //                 ? AppDimens.font22
-                    //                 : AppDimens.font16,
-                    //         color: AppColors.blackColor,
-                    //         fontWeight: FontWeight.bold,
-                    //       ),
-                    //     )),
-                  ],
-                ),
-              ),
+              // Align(
+              //   alignment: Alignment.centerLeft,
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     children: [
+              //       Text(
+              //         "Grand Total:",
+              //         style: TextStyle(
+              //           fontSize: MediaQuery.of(Get.context!).size.width > 650
+              //               ? AppDimens.font22
+              //               : AppDimens.font16,
+              //           color: AppColors.blackColor,
+              //           fontWeight: FontWeight.bold,
+              //         ),
+              //       ),
+              //       // Obx(() => Text(
+              //       //       "${double.tryParse(controller.productListModel.first.productQuantity ?? "0.0")! > 0 ? controller.productListModel.map((e) => double.tryParse(e.productModel!.price ?? "0.0")! * int.parse(e.productQuantity!)) : 0.0}",
+              //       //       style: TextStyle(
+              //       //         fontSize:
+              //       //             MediaQuery.of(Get.context!).size.width > 650
+              //       //                 ? AppDimens.font22
+              //       //                 : AppDimens.font16,
+              //       //         color: AppColors.blackColor,
+              //       //         fontWeight: FontWeight.bold,
+              //       //       ),
+              //       //     )),
+              //     ],
+              //   ),
+              // ),
 
               ElevatedButton(
                 onPressed: () async {

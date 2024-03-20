@@ -131,18 +131,23 @@ class ReceiveProductsController extends GetxController {
 
   void addProductList(index) {
     // print(receivingDate);
-    productListModel.insert(
-        index + 1,
-        ReceivingModel(
-          vendorId: vendorId,
-          invoiceId: invoiceId,
-          receivingDate: receivingDate,
-          totalAmount: totalAmount.toString(),
-          vendorName: inputVendor,
-          productId: "",
-          productName: "",
-          productQuantity: "",
-        ));
+    if (double.tryParse(productListModel.first?.productQuantity ?? "0")! >=
+        1.0) {
+      productListModel.insert(
+          index + 1,
+          ReceivingModel(
+            vendorId: vendorId,
+            invoiceId: invoiceId,
+            receivingDate: receivingDate,
+            totalAmount: totalAmount.toString(),
+            vendorName: inputVendor,
+            productId: "",
+            productName: "",
+            productQuantity: "",
+          ));
+    } else {
+      Utils.showDialog("Please fill up details above!");
+    }
   }
 
   void removeProductList(int index, ReceivingModel product) {
@@ -151,22 +156,22 @@ class ReceiveProductsController extends GetxController {
     }
   }
 
-  calGrandTotal() {
-    final amt = productListModel.first.productQuantity!.isNotEmpty
-        ? productListModel
-            .map((e) {
-              totalAmountP = totalAmountP +
-                  double.tryParse(e.productModel!.price!)!.toDouble() *
-                      double.tryParse(e.productQuantity!)!;
+  // calGrandTotal() {
+  //   final amt = productListModel.first.productQuantity!.isNotEmpty
+  //       ? productListModel
+  //           .map((e) {
+  //             totalAmountP = totalAmountP +
+  //                 double.tryParse(e.productModel!.price!)!.toDouble() *
+  //                     double.tryParse(e.productQuantity!)!;
 
-              return totalAmountP;
-            })
-            .toString()
-            .replaceAll("(", "")
-            .replaceAll(")", "")
-        : "0.0";
-    return amt;
-  }
+  //             return totalAmountP;
+  //           })
+  //           .toString()
+  //           .replaceAll("(", "")
+  //           .replaceAll(")", "")
+  //       : "0.0";
+  //   return amt;
+  // }
 
   Future onSumit() async {
     // totalAmountP = 0.0;
@@ -181,7 +186,14 @@ class ReceiveProductsController extends GetxController {
     //     .toString()
     //     .replaceAll("(", "")
     //     .replaceAll(")", "");
-    // print("totalAmountP: $totalAmountP");
+    totalAmountP = 0.0;
+    for (var i = 0; i < productListModel.length; i++) {
+      totalAmountP = totalAmountP +
+          double.tryParse(productListModel[i].productModel!.price!)!
+                  .toDouble() *
+              double.tryParse(productListModel[i].productQuantity!)!;
+    }
+    print("totalAmountP: $totalAmountP");
     // print("amt: ${double.tryParse(amt)}");
     print("totalAmount: $totalAmount");
     if (totalAmountP != totalAmount) {
