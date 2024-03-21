@@ -48,7 +48,7 @@ class AppTheme {
             backgroundColor: AppColors.buttonColor,
             textStyle: const TextStyle(
               color: Colors.white,
-              // fontSize: MediaQuery.of(Get.context!).size.width > 650
+              // fontSize: MediaQuery.of(Get.context!).size.width > 720
               //     ? AppDimens.font22
               //     : AppDimens.font16,
             ),

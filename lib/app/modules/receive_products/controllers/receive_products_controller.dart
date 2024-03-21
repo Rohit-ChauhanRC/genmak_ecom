@@ -76,11 +76,17 @@ class ReceiveProductsController extends GetxController {
   String get receivingDate => _receivingDate.value;
   set receivingDate(String ti) => _receivingDate.value = ti;
 
+  final RxList<ReceivingModel> _receiveList = RxList();
+  List<ReceivingModel> get receiveList => _receiveList;
+  set receiveList(List<ReceivingModel> lt) => _receiveList.assignAll(lt);
+
   @override
   void onInit() async {
     super.onInit();
     await fetchProduct();
     await fetchVendor();
+    receiveList.assignAll(await receivingDB.fetchAll());
+
     // await fetchAll();
   }
 
@@ -156,36 +162,58 @@ class ReceiveProductsController extends GetxController {
     }
   }
 
-  // calGrandTotal() {
-  //   final amt = productListModel.first.productQuantity!.isNotEmpty
-  //       ? productListModel
-  //           .map((e) {
-  //             totalAmountP = totalAmountP +
-  //                 double.tryParse(e.productModel!.price!)!.toDouble() *
-  //                     double.tryParse(e.productQuantity!)!;
+  grandCalculation() {
+    double td = 0.0;
+    for (var i = 0; i < productListModel.length; i++) {
+      td = td +
+          double.tryParse(productListModel[i].productModel?.price ?? "0.0")!
+                  .toDouble() *
+              (double.tryParse(
+                      productListModel[i].productQuantity.toString().isNotEmpty
+                          ? productListModel[i].productQuantity.toString()
+                          : "0") ??
+                  0.0);
+    }
+    print("td: $td");
+    return td;
+  }
 
-  //             return totalAmountP;
-  //           })
-  //           .toString()
-  //           .replaceAll("(", "")
-  //           .replaceAll(")", "")
-  //       : "0.0";
-  //   return amt;
-  // }
+  bool checkInvoiceExist() {
+    bool b = true;
+    // homeController.products;
+    for (var i = 0; i < receiveList.length; i++) {
+      if (receiveList.isNotEmpty) {
+        if (receiveList[i].invoiceId!.trim().toLowerCase().toString() !=
+                invoiceId.toString().trim().toLowerCase().toString() &&
+            receiveList[i]
+                    .vendorId!
+                    .trim()
+                    .toString()
+                    .trim()
+                    .toLowerCase()
+                    .toString() !=
+                vendorId.toLowerCase().toString()) {
+          b = true;
+        } else if (receiveList[i].invoiceId!.trim().toLowerCase().toString() ==
+                invoiceId.toString().trim().toLowerCase().toString() &&
+            receiveList[i]
+                    .vendorId!
+                    .trim()
+                    .toString()
+                    .trim()
+                    .toLowerCase()
+                    .toString() ==
+                vendorId.toLowerCase().toString()) {
+          Utils.showDialog("Invoive Number already exit!");
+          b = false;
+        }
+      }
+    }
+    return b;
+  }
 
   Future onSumit() async {
-    // totalAmountP = 0.0;
-    // final amt = productListModel
-    //     .map((e) {
-    //       totalAmountP = totalAmountP +
-    //           double.tryParse(e.productModel!.price!)!.toDouble() *
-    //               double.tryParse(e.productQuantity!)!;
-
-    //       return totalAmountP;
-    //     })
-    //     .toString()
-    //     .replaceAll("(", "")
-    //     .replaceAll(")", "");
+    checkInvoiceExist();
     totalAmountP = 0.0;
     for (var i = 0; i < productListModel.length; i++) {
       totalAmountP = totalAmountP +
@@ -217,7 +245,7 @@ class ReceiveProductsController extends GetxController {
                                 .toInt())
                         .toString())
             .then((value) async {
-          await receivingDB.create(
+          await homeController.receivingDB.create(
               vendorName: productListModel[i].vendorName.toString(),
               totalAmount: totalAmountP.toString(),
               productName: productListModel[i].productName.toString(),

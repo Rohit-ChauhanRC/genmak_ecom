@@ -16,13 +16,13 @@ class EditProductItemView extends GetView<EditProductItemController> {
       appBar: AppBar(
         iconTheme: IconThemeData(
           color: AppColors.whiteColor,
-          size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
+          size: MediaQuery.of(Get.context!).size.width > 720 ? 40 : 20,
         ),
         title: Text(
           'Edit Product',
           style: TextStyle(
             color: Colors.white,
-            fontSize: MediaQuery.of(Get.context!).size.width > 650
+            fontSize: MediaQuery.of(Get.context!).size.width > 720
                 ? AppDimens.font30
                 : AppDimens.font18,
           ),
@@ -41,10 +41,10 @@ class EditProductItemView extends GetView<EditProductItemController> {
                     ),
                     CircleAvatar(
                       //
-                      maxRadius: MediaQuery.of(Get.context!).size.width > 650
+                      maxRadius: MediaQuery.of(Get.context!).size.width > 720
                           ? 102
                           : 52,
-                      minRadius: MediaQuery.of(Get.context!).size.width > 650
+                      minRadius: MediaQuery.of(Get.context!).size.width > 720
                           ? 100
                           : 50,
                       backgroundColor: AppColors.buttonColor,
@@ -63,7 +63,7 @@ class EditProductItemView extends GetView<EditProductItemController> {
                       child: Text(
                         "Name :",
                         style: TextStyle(
-                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                          fontSize: MediaQuery.of(Get.context!).size.width > 720
                               ? AppDimens.font22
                               : AppDimens.font16,
                           color: AppColors.blackColor,
@@ -77,7 +77,7 @@ class EditProductItemView extends GetView<EditProductItemController> {
                           initialValue: controller.name,
                         )),
                     SizedBox(
-                      height: MediaQuery.of(Get.context!).size.width > 650
+                      height: MediaQuery.of(Get.context!).size.width > 720
                           ? 20
                           : 10,
                     ),
@@ -86,7 +86,7 @@ class EditProductItemView extends GetView<EditProductItemController> {
                       child: Text(
                         "Product weight :",
                         style: TextStyle(
-                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                          fontSize: MediaQuery.of(Get.context!).size.width > 720
                               ? AppDimens.font22
                               : AppDimens.font16,
                           color: AppColors.blackColor,
@@ -103,7 +103,7 @@ class EditProductItemView extends GetView<EditProductItemController> {
                               decimal: true),
                         )),
                     SizedBox(
-                      height: MediaQuery.of(Get.context!).size.width > 650
+                      height: MediaQuery.of(Get.context!).size.width > 720
                           ? 20
                           : 10,
                     ),
@@ -112,7 +112,7 @@ class EditProductItemView extends GetView<EditProductItemController> {
                       child: Text(
                         "Units of Measurement:",
                         style: TextStyle(
-                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                          fontSize: MediaQuery.of(Get.context!).size.width > 720
                               ? AppDimens.font22
                               : AppDimens.font16,
                           color: AppColors.blackColor,
@@ -150,7 +150,7 @@ class EditProductItemView extends GetView<EditProductItemController> {
                           ),
                         )),
                     SizedBox(
-                      height: MediaQuery.of(Get.context!).size.width > 650
+                      height: MediaQuery.of(Get.context!).size.width > 720
                           ? 20
                           : 10,
                     ),
@@ -159,7 +159,7 @@ class EditProductItemView extends GetView<EditProductItemController> {
                       child: Text(
                         "Price :",
                         style: TextStyle(
-                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                          fontSize: MediaQuery.of(Get.context!).size.width > 720
                               ? AppDimens.font22
                               : AppDimens.font16,
                           color: AppColors.blackColor,
@@ -176,7 +176,7 @@ class EditProductItemView extends GetView<EditProductItemController> {
                               decimal: true),
                         )),
                     SizedBox(
-                      height: MediaQuery.of(Get.context!).size.width > 650
+                      height: MediaQuery.of(Get.context!).size.width > 720
                           ? 20
                           : 10,
                     ),
@@ -185,7 +185,7 @@ class EditProductItemView extends GetView<EditProductItemController> {
                       child: Text(
                         "Quantity :",
                         style: TextStyle(
-                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                          fontSize: MediaQuery.of(Get.context!).size.width > 720
                               ? AppDimens.font22
                               : AppDimens.font16,
                           color: AppColors.blackColor,
@@ -202,7 +202,7 @@ class EditProductItemView extends GetView<EditProductItemController> {
                               decimal: true),
                         )),
                     SizedBox(
-                      height: MediaQuery.of(Get.context!).size.width > 650
+                      height: MediaQuery.of(Get.context!).size.width > 720
                           ? 20
                           : 10,
                     ),
@@ -211,7 +211,7 @@ class EditProductItemView extends GetView<EditProductItemController> {
                       child: Text(
                         "GST :",
                         style: TextStyle(
-                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                          fontSize: MediaQuery.of(Get.context!).size.width > 720
                               ? AppDimens.font22
                               : AppDimens.font16,
                           color: AppColors.blackColor,
@@ -231,7 +231,7 @@ class EditProductItemView extends GetView<EditProductItemController> {
                           //     v!.isEmpty ? "Field is required!" : null,
                         )),
                     SizedBox(
-                      height: MediaQuery.of(Get.context!).size.width > 650
+                      height: MediaQuery.of(Get.context!).size.width > 720
                           ? 20
                           : 10,
                     ),
@@ -240,7 +240,7 @@ class EditProductItemView extends GetView<EditProductItemController> {
                       child: Text(
                         "Discount :",
                         style: TextStyle(
-                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                          fontSize: MediaQuery.of(Get.context!).size.width > 720
                               ? AppDimens.font22
                               : AppDimens.font16,
                           color: AppColors.blackColor,
@@ -258,7 +258,7 @@ class EditProductItemView extends GetView<EditProductItemController> {
                           // validator: (v) => v!.isEmpty ? "Field is required!" : null,
                         )),
                     SizedBox(
-                      height: MediaQuery.of(Get.context!).size.width > 650
+                      height: MediaQuery.of(Get.context!).size.width > 720
                           ? 20
                           : 10,
                     ),
@@ -267,7 +267,7 @@ class EditProductItemView extends GetView<EditProductItemController> {
                       child: Text(
                         "HSNCode :",
                         style: TextStyle(
-                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                          fontSize: MediaQuery.of(Get.context!).size.width > 720
                               ? AppDimens.font22
                               : AppDimens.font16,
                           color: AppColors.blackColor,
@@ -282,7 +282,7 @@ class EditProductItemView extends GetView<EditProductItemController> {
                           // validator: (v) => v!.isEmpty ? "Field is required!" : null,
                         )),
                     SizedBox(
-                      height: MediaQuery.of(Get.context!).size.width > 650
+                      height: MediaQuery.of(Get.context!).size.width > 720
                           ? 20
                           : 10,
                     ),
@@ -291,7 +291,7 @@ class EditProductItemView extends GetView<EditProductItemController> {
                       child: Text(
                         "Description :",
                         style: TextStyle(
-                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                          fontSize: MediaQuery.of(Get.context!).size.width > 720
                               ? AppDimens.font22
                               : AppDimens.font16,
                           color: AppColors.blackColor,
@@ -308,7 +308,7 @@ class EditProductItemView extends GetView<EditProductItemController> {
                           },
                         )),
                     SizedBox(
-                      height: MediaQuery.of(Get.context!).size.width > 650
+                      height: MediaQuery.of(Get.context!).size.width > 720
                           ? 20
                           : 10,
                     ),
@@ -321,7 +321,7 @@ class EditProductItemView extends GetView<EditProductItemController> {
                             "\tActive: ",
                             style: TextStyle(
                               fontSize:
-                                  MediaQuery.of(Get.context!).size.width > 650
+                                  MediaQuery.of(Get.context!).size.width > 720
                                       ? AppDimens.font22
                                       : AppDimens.font16,
                               decoration: TextDecoration.underline,
@@ -344,7 +344,7 @@ class EditProductItemView extends GetView<EditProductItemController> {
                                         fontSize: MediaQuery.of(Get.context!)
                                                     .size
                                                     .width >
-                                                650
+                                                720
                                             ? AppDimens.font18
                                             : AppDimens.font14),
                                   ),
@@ -373,7 +373,7 @@ class EditProductItemView extends GetView<EditProductItemController> {
                                           fontSize: MediaQuery.of(Get.context!)
                                                       .size
                                                       .width >
-                                                  650
+                                                  720
                                               ? AppDimens.font18
                                               : AppDimens.font14),
                                     ),

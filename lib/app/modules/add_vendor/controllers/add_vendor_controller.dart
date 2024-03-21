@@ -1,4 +1,5 @@
 import 'package:genmak_ecom/app/modules/home/controllers/home_controller.dart';
+import 'package:genmak_ecom/app/utils/utils.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
@@ -40,20 +41,58 @@ class AddVendorController extends GetxController {
     super.onClose();
   }
 
+  bool checkvendorsExist() {
+    bool b = true;
+    // homeController.products;
+    for (var i = 0; i < homeController.vendors.length; i++) {
+      if (homeController.vendors.isNotEmpty) {
+        if (homeController.vendors[i].name!.trim().toLowerCase().toString() !=
+                name.toLowerCase().toString() &&
+            homeController.vendors[i].mobileNo!
+                    .toString()
+                    .trim()
+                    .toLowerCase()
+                    .toString() !=
+                mobileNumber.toLowerCase().toString() &&
+            homeController.vendors[i].gst!.trim().toLowerCase().toString() !=
+                gst.toLowerCase().toString()) {
+          b = true;
+        } else if (homeController.vendors[i].name!
+                    .trim()
+                    .toLowerCase()
+                    .toString() ==
+                name.toLowerCase().toString() &&
+            homeController.vendors[i].mobileNo!
+                    .toString()
+                    .trim()
+                    .toLowerCase()
+                    .toString() ==
+                mobileNumber.toLowerCase().toString() &&
+            homeController.vendors[i].gst!.trim().toLowerCase().toString() ==
+                gst.toLowerCase().toString()) {
+          Utils.showDialog("This Vendor already exit!");
+          b = false;
+        }
+      }
+    }
+    return b;
+  }
+
   void checkValidate() async {
     if (!vendorFormKey!.currentState!.validate()) {
       return null;
     }
+    checkvendorsExist();
     await createVendorTable().then((value) => Get.back());
   }
 
   Future<void> createVendorTable() async {
     await homeController.vendorDB
         .create(
-      name: name.toUpperCase(),
-      address: address,
-      gst: gst,
-      mobileNo: int.tryParse(mobileNumber),
+      name: name.trim().toUpperCase(),
+      address: address.trim(),
+      gst: gst.trim(),
+      mobileNo: int.tryParse(mobileNumber.trim()),
     )
         .then((value) async {
       homeController.vendors

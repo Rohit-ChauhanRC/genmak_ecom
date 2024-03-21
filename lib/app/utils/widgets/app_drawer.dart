@@ -26,7 +26,7 @@ class AppDrawer extends StatelessWidget {
             children: [
               // Obx(() => CircleAvatar(
               //       radius:
-              //           MediaQuery.of(Get.context!).size.width > 650 ? 70 : 45,
+              //           MediaQuery.of(Get.context!).size.width > 720 ? 70 : 45,
               //       backgroundColor: AppColors.greenColor,
               //       // color: Colors.white,
               //       backgroundImage: controller.personPic != null &&
@@ -41,7 +41,7 @@ class AppDrawer extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(
-                        MediaQuery.of(Get.context!).size.width > 650
+                        MediaQuery.of(Get.context!).size.width > 720
                             ? 100
                             : 50),
                     border: Border.all(
@@ -63,7 +63,7 @@ class AppDrawer extends StatelessWidget {
                     // overflow: TextOverflow.visible,
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: MediaQuery.of(Get.context!).size.width > 650
+                      fontSize: MediaQuery.of(Get.context!).size.width > 720
                           ? AppDimens.font30
                           : AppDimens.font18,
                       fontWeight: FontWeight.bold,
@@ -74,7 +74,7 @@ class AppDrawer extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: MediaQuery.of(Get.context!).size.width > 650
+                      fontSize: MediaQuery.of(Get.context!).size.width > 720
                           ? AppDimens.font30
                           : AppDimens.font18,
                       fontWeight: FontWeight.bold,
@@ -98,7 +98,7 @@ class AppDrawer extends StatelessWidget {
                   "Profile",
                   style: TextStyle(
                     color: AppColors.blackColor,
-                    fontSize: MediaQuery.of(Get.context!).size.width > 650
+                    fontSize: MediaQuery.of(Get.context!).size.width > 720
                         ? AppDimens.font26
                         : AppDimens.font18,
                   ),
@@ -106,7 +106,7 @@ class AppDrawer extends StatelessWidget {
                 leading: Icon(
                   Icons.person,
                   color: AppColors.blackColor,
-                  size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
+                  size: MediaQuery.of(Get.context!).size.width > 720 ? 40 : 20,
                 ),
               ),
               ListTile(
@@ -114,7 +114,7 @@ class AppDrawer extends StatelessWidget {
                   "Admin",
                   style: TextStyle(
                     color: AppColors.blackColor,
-                    fontSize: MediaQuery.of(Get.context!).size.width > 650
+                    fontSize: MediaQuery.of(Get.context!).size.width > 720
                         ? AppDimens.font26
                         : AppDimens.font18,
                   ),
@@ -122,7 +122,7 @@ class AppDrawer extends StatelessWidget {
                 leading: Icon(
                   Icons.admin_panel_settings,
                   color: AppColors.blackColor,
-                  size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
+                  size: MediaQuery.of(Get.context!).size.width > 720 ? 40 : 20,
                 ),
                 onTap: () {
                   Get.toNamed(Routes.ADMIN);
@@ -136,7 +136,7 @@ class AppDrawer extends StatelessWidget {
           //     "Billing",
           //     style: TextStyle(
           //       color: AppColors.blackColor,
-          //       fontSize: MediaQuery.of(Get.context!).size.width > 650
+          //       fontSize: MediaQuery.of(Get.context!).size.width > 720
           //           ? AppDimens.font26
           //           : AppDimens.font18,
           //     ),
@@ -144,7 +144,7 @@ class AppDrawer extends StatelessWidget {
           //   leading: Icon(
           //     Icons.home,
           //     color: AppColors.blackColor,
-          //     size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
+          //     size: MediaQuery.of(Get.context!).size.width > 720 ? 40 : 20,
           //   ),
           //   onTap: () {
           //     Get.toNamed(Routes.HOME);

@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:genmak_ecom/app/routes/app_pages.dart';
 import 'package:genmak_ecom/app/utils/app_colors/app_colors.dart';
 import 'package:genmak_ecom/app/utils/app_dimens/app_dimens.dart';
 import 'package:genmak_ecom/app/utils/widgets/app_drawer.dart';
@@ -23,7 +20,7 @@ class HomeView extends GetView<HomeController> {
       appBar: AppBar(
         iconTheme: IconThemeData(
           color: AppColors.whiteColor,
-          size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
+          size: MediaQuery.of(Get.context!).size.width > 720 ? 40 : 20,
         ),
         title: SizedBox(
           width: Get.width * 0.6,
@@ -32,7 +29,7 @@ class HomeView extends GetView<HomeController> {
                 // overflow: TextOverflow.visible,
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: MediaQuery.of(Get.context!).size.width > 650
+                  fontSize: MediaQuery.of(Get.context!).size.width > 720
                       ? AppDimens.font30
                       : AppDimens.font18,
                 ),
@@ -41,7 +38,7 @@ class HomeView extends GetView<HomeController> {
         centerTitle: true,
         actions: [
           // Obx(() => CircleAvatar(
-          //       radius: MediaQuery.of(Get.context!).size.width > 650 ? 50 : 20,
+          //       radius: MediaQuery.of(Get.context!).size.width > 720 ? 50 : 20,
           //       backgroundColor: AppColors.greenColor,
           //       // color: Colors.white,
           //       backgroundImage: controller.personPic != null &&
@@ -55,8 +52,8 @@ class HomeView extends GetView<HomeController> {
           //     )),
           CircleAvatar(
             //
-            maxRadius: MediaQuery.of(Get.context!).size.width > 650 ? 42 : 22,
-            minRadius: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
+            maxRadius: MediaQuery.of(Get.context!).size.width > 720 ? 42 : 22,
+            minRadius: MediaQuery.of(Get.context!).size.width > 720 ? 40 : 20,
             backgroundColor: AppColors.bgColor1,
             child: Obx(() => UploadImageWidget(
                   imageFile: controller.personPic,
@@ -87,8 +84,8 @@ class HomeView extends GetView<HomeController> {
                 height: 35.h,
                 margin: const EdgeInsets.only(top: 20),
                 padding: EdgeInsets.only(
-                  left: MediaQuery.of(Get.context!).size.width > 650 ? 10 : 3,
-                  right: MediaQuery.of(Get.context!).size.width > 650 ? 10 : 3,
+                  left: MediaQuery.of(Get.context!).size.width > 720 ? 10 : 3,
+                  right: MediaQuery.of(Get.context!).size.width > 720 ? 10 : 3,
                 ),
                 child: ListView(
                   shrinkWrap: true,
@@ -181,7 +178,7 @@ class HomeView extends GetView<HomeController> {
                           style: TextStyle(
                             color: AppColors.blackColor,
                             fontSize:
-                                MediaQuery.of(Get.context!).size.width > 650
+                                MediaQuery.of(Get.context!).size.width > 720
                                     ? AppDimens.font30
                                     : AppDimens.font18,
                             fontWeight: FontWeight.bold,
@@ -209,7 +206,7 @@ class HomeView extends GetView<HomeController> {
                       child: Text(
                         "Order",
                         style: TextStyle(
-                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                          fontSize: MediaQuery.of(Get.context!).size.width > 720
                               ? AppDimens.font24
                               : AppDimens.font18,
                           color: AppColors.whiteColor,
@@ -287,7 +284,7 @@ class HomeView extends GetView<HomeController> {
                                                                           context)
                                                                       .size
                                                                       .width >
-                                                                  650
+                                                                  720
                                                               ? 20
                                                               : 5,
                                                         ),
@@ -298,7 +295,7 @@ class HomeView extends GetView<HomeController> {
                                                                             context)
                                                                         .size
                                                                         .width >
-                                                                    650
+                                                                    720
                                                                 ? AppDimens
                                                                     .font24
                                                                 : AppDimens
@@ -314,7 +311,7 @@ class HomeView extends GetView<HomeController> {
                                                                           context)
                                                                       .size
                                                                       .width >
-                                                                  650
+                                                                  720
                                                               ? 20
                                                               : 5,
                                                         ),
@@ -339,7 +336,7 @@ class HomeView extends GetView<HomeController> {
                                                         MediaQuery.of(context)
                                                                     .size
                                                                     .width >
-                                                                650
+                                                                720
                                                             ? Get.width / 2.7
                                                             : Get.width / 3.5,
                                                     child: Text(
@@ -351,7 +348,7 @@ class HomeView extends GetView<HomeController> {
                                                                         context)
                                                                     .size
                                                                     .width >
-                                                                650
+                                                                720
                                                             ? AppDimens.font24
                                                             : AppDimens.font16,
                                                         color: AppColors
@@ -366,7 +363,7 @@ class HomeView extends GetView<HomeController> {
                                                         MediaQuery.of(context)
                                                                     .size
                                                                     .width >
-                                                                650
+                                                                720
                                                             ? Get.width / 6
                                                             : Get.width / 7,
                                                     child: Text(
@@ -376,7 +373,7 @@ class HomeView extends GetView<HomeController> {
                                                                         context)
                                                                     .size
                                                                     .width >
-                                                                650
+                                                                720
                                                             ? AppDimens.font24
                                                             : AppDimens.font16,
                                                         color: AppColors
@@ -393,10 +390,12 @@ class HomeView extends GetView<HomeController> {
                                     },
                                     separatorBuilder:
                                         (BuildContext context, int index) {
-                                      return Obx(() =>
-                                          controller.orders.isNotEmpty
-                                              ? const Divider()
-                                              : const SizedBox());
+                                      return Obx(() => controller.orders
+                                              .toSet()
+                                              .toList()
+                                              .isNotEmpty
+                                          ? const Divider()
+                                          : const SizedBox());
                                     },
                                   )
                                 : const SizedBox()),
@@ -420,7 +419,7 @@ class HomeView extends GetView<HomeController> {
                                   style: TextStyle(
                                     fontSize:
                                         MediaQuery.of(Get.context!).size.width >
-                                                650
+                                                720
                                             ? AppDimens.font24
                                             : AppDimens.font18,
                                     color: AppColors.blackColor,
@@ -434,7 +433,7 @@ class HomeView extends GetView<HomeController> {
                                           fontSize: MediaQuery.of(Get.context!)
                                                       .size
                                                       .width >
-                                                  650
+                                                  720
                                               ? AppDimens.font24
                                               : AppDimens.font18,
                                           color: AppColors.blackColor,
@@ -447,7 +446,7 @@ class HomeView extends GetView<HomeController> {
                                           fontSize: MediaQuery.of(Get.context!)
                                                       .size
                                                       .width >
-                                                  650
+                                                  720
                                               ? AppDimens.font24
                                               : AppDimens.font18,
                                           color: AppColors.blackColor,

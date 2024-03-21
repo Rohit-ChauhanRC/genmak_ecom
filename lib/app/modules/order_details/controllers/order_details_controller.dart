@@ -1,10 +1,12 @@
 import 'package:genmak_ecom/app/data/database/receiving_db.dart';
 import 'package:genmak_ecom/app/data/models/receiving_model.dart';
+import 'package:genmak_ecom/app/modules/home/controllers/home_controller.dart';
 import 'package:get/get.dart';
 
 class OrderDetailsController extends GetxController {
   //
-  final ReceivingDB receivingDB = ReceivingDB();
+  // final ReceivingDB receivingDB = ReceivingDB();
+  final HomeController homeController = Get.find();
 
   final Rx<ReceivingModel> _receive = Rx(ReceivingModel());
   ReceivingModel get receive => _receive.value;
@@ -34,8 +36,8 @@ class OrderDetailsController extends GetxController {
   }
 
   fetchDataByInvoiceId() async {
-    receiveProduct.assignAll(
-        await receivingDB.fetchByInvoiceId(Get.arguments!.invoiceId));
+    receiveProduct.assignAll(await homeController.receivingDB
+        .fetchByInvoiceId(Get.arguments!.invoiceId));
 
     final ids = receiveProduct.map((e) => e.productName).toSet();
 

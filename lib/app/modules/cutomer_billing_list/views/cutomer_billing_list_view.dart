@@ -20,13 +20,13 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
       appBar: AppBar(
         iconTheme: IconThemeData(
           color: AppColors.whiteColor,
-          size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
+          size: MediaQuery.of(Get.context!).size.width > 720 ? 40 : 20,
         ),
         title: Text(
           'Customer Billing List',
           style: TextStyle(
             color: Colors.white,
-            fontSize: MediaQuery.of(Get.context!).size.width > 650
+            fontSize: MediaQuery.of(Get.context!).size.width > 720
                 ? AppDimens.font30
                 : AppDimens.font18,
           ),
@@ -43,8 +43,8 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
             height: Get.height * 0.25,
             margin: const EdgeInsets.only(top: 20),
             padding: EdgeInsets.only(
-              left: MediaQuery.of(Get.context!).size.width > 650 ? 10 : 3,
-              right: MediaQuery.of(Get.context!).size.width > 650 ? 10 : 3,
+              left: MediaQuery.of(Get.context!).size.width > 720 ? 10 : 3,
+              right: MediaQuery.of(Get.context!).size.width > 720 ? 10 : 3,
             ),
             child: ListView(
               shrinkWrap: true,
@@ -194,13 +194,13 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
                       // reverse: true,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount:
-                            MediaQuery.of(Get.context!).size.width > 650
+                            MediaQuery.of(Get.context!).size.width > 720
                                 ? 4
                                 : 1,
                         mainAxisExtent:
-                            MediaQuery.of(Get.context!).size.width > 650
-                                ? 180.h
-                                : 130.h,
+                            MediaQuery.of(Get.context!).size.width > 720
+                                ? 200.h
+                                : 150.h,
                       ),
                       itemCount: controller.searchV
                           ? controller.receiveListSearch.length
@@ -240,7 +240,7 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
                                         fontSize: MediaQuery.of(Get.context!)
                                                     .size
                                                     .width >
-                                                650
+                                                720
                                             ? AppDimens.font22
                                             : AppDimens.font16,
                                         color: AppColors.blackColor,
@@ -253,7 +253,7 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
                                         fontSize: MediaQuery.of(Get.context!)
                                                     .size
                                                     .width >
-                                                650
+                                                720
                                             ? AppDimens.font22
                                             : AppDimens.font16,
                                         color: AppColors.blackColor,
@@ -264,7 +264,7 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
                                 SizedBox(
                                   height:
                                       MediaQuery.of(Get.context!).size.width >
-                                              650
+                                              720
                                           ? 10
                                           : 5,
                                 ),
@@ -279,7 +279,7 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
                                         fontSize: MediaQuery.of(Get.context!)
                                                     .size
                                                     .width >
-                                                650
+                                                720
                                             ? AppDimens.font18
                                             : AppDimens.font16,
                                         color: AppColors.blackColor,
@@ -297,7 +297,7 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
                                         fontSize: MediaQuery.of(Get.context!)
                                                     .size
                                                     .width >
-                                                650
+                                                720
                                             ? AppDimens.font18
                                             : AppDimens.font16,
                                         color: AppColors.blackColor,
@@ -343,7 +343,7 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
                       "No data found...",
                       style: TextStyle(
                         color: AppColors.blackColor,
-                        fontSize: MediaQuery.of(Get.context!).size.width > 650
+                        fontSize: MediaQuery.of(Get.context!).size.width > 720
                             ? AppDimens.font30
                             : AppDimens.font18,
                         fontWeight: FontWeight.bold,

@@ -18,12 +18,12 @@ class ProductListView extends GetView<ProductListController> {
       appBar: AppBar(
         iconTheme: IconThemeData(
           color: AppColors.whiteColor,
-          size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
+          size: MediaQuery.of(Get.context!).size.width > 720 ? 40 : 20,
         ),
         title: Text('Product List',
             style: TextStyle(
               color: Colors.white,
-              fontSize: MediaQuery.of(Get.context!).size.width > 650
+              fontSize: MediaQuery.of(Get.context!).size.width > 720
                   ? AppDimens.font30
                   : AppDimens.font18,
             )),
@@ -43,12 +43,12 @@ class ProductListView extends GetView<ProductListController> {
                     margin: const EdgeInsets.only(top: 20),
                     padding: EdgeInsets.only(
                       left:
-                          MediaQuery.of(Get.context!).size.width > 650 ? 10 : 5,
+                          MediaQuery.of(Get.context!).size.width > 720 ? 10 : 5,
                       right:
-                          MediaQuery.of(Get.context!).size.width > 650 ? 10 : 5,
+                          MediaQuery.of(Get.context!).size.width > 720 ? 10 : 5,
                     ),
                     // color: AppColors.buttonColor,
-                    // height: MediaQuery.of(context).size.width > 650 ? 70 : 50,
+                    // height: MediaQuery.of(context).size.width > 720 ? 70 : 50,
                     // margin: const EdgeInsets.only(top: 20),
                     // padding: const EdgeInsets.only(left: 10, right: 10),
                     child: ListView(
@@ -121,8 +121,10 @@ class ProductListView extends GetView<ProductListController> {
                     child: ListView.builder(
                         shrinkWrap: true,
                         itemCount: controller.homeController.searchP
-                            ? controller.homeController.productSearch.length
-                            : controller.homeController.products.length,
+                            ? controller.homeController.productSearch
+                                .toSet()
+                                .length
+                            : controller.homeController.products.toSet().length,
                         itemBuilder: (ctx, i) {
                           ProductModel product =
                               controller.homeController.searchP
@@ -139,7 +141,7 @@ class ProductListView extends GetView<ProductListController> {
                   "No data found...",
                   style: TextStyle(
                     color: AppColors.blackColor,
-                    fontSize: MediaQuery.of(Get.context!).size.width > 650
+                    fontSize: MediaQuery.of(Get.context!).size.width > 720
                         ? AppDimens.font30
                         : AppDimens.font18,
                     fontWeight: FontWeight.bold,

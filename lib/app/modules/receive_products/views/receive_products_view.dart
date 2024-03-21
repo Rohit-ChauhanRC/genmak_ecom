@@ -20,13 +20,13 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
       appBar: AppBar(
         iconTheme: IconThemeData(
           color: AppColors.whiteColor,
-          size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
+          size: MediaQuery.of(Get.context!).size.width > 720 ? 40 : 20,
         ),
         title: Text(
           'Receive Products',
           style: TextStyle(
             color: Colors.white,
-            fontSize: MediaQuery.of(Get.context!).size.width > 650
+            fontSize: MediaQuery.of(Get.context!).size.width > 720
                 ? AppDimens.font30
                 : AppDimens.font18,
           ),
@@ -45,7 +45,7 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                 child: Text(
                   "Invoice No. :",
                   style: TextStyle(
-                    fontSize: MediaQuery.of(Get.context!).size.width > 650
+                    fontSize: MediaQuery.of(Get.context!).size.width > 720
                         ? AppDimens.font22
                         : AppDimens.font16,
                     color: AppColors.blackColor,
@@ -59,14 +59,14 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                 validator: (v) => v!.isEmpty ? "Field is required!" : null,
               ),
               SizedBox(
-                height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
+                height: MediaQuery.of(Get.context!).size.width > 720 ? 20 : 10,
               ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   "Total amount :",
                   style: TextStyle(
-                    fontSize: MediaQuery.of(Get.context!).size.width > 650
+                    fontSize: MediaQuery.of(Get.context!).size.width > 720
                         ? AppDimens.font22
                         : AppDimens.font16,
                     color: AppColors.blackColor,
@@ -88,7 +88,7 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                 validator: (v) => v!.isEmpty ? "Field is required!" : null,
               ),
               SizedBox(
-                height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
+                height: MediaQuery.of(Get.context!).size.width > 720 ? 20 : 10,
               ),
               // const SizedBox(
               //   height: 20,
@@ -99,7 +99,7 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                       child: Text(
                         "Select Vendor :",
                         style: TextStyle(
-                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                          fontSize: MediaQuery.of(Get.context!).size.width > 720
                               ? AppDimens.font22
                               : AppDimens.font16,
                           color: AppColors.blackColor,
@@ -141,7 +141,7 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                     Text(
                       "if vendor not available in the above list please,",
                       style: TextStyle(
-                        fontSize: MediaQuery.of(Get.context!).size.width > 650
+                        fontSize: MediaQuery.of(Get.context!).size.width > 720
                             ? AppDimens.font18
                             : AppDimens.font10,
                       ),
@@ -153,7 +153,7 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                       child: Text(
                         "\tclick here",
                         style: TextStyle(
-                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                          fontSize: MediaQuery.of(Get.context!).size.width > 720
                               ? AppDimens.font18
                               : AppDimens.font10,
                           color: AppColors.reddishColor,
@@ -168,14 +168,14 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
               ),
               // : const SizedBox(),
               SizedBox(
-                height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
+                height: MediaQuery.of(Get.context!).size.width > 720 ? 20 : 10,
               ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   "Receiving Date :",
                   style: TextStyle(
-                    fontSize: MediaQuery.of(Get.context!).size.width > 650
+                    fontSize: MediaQuery.of(Get.context!).size.width > 720
                         ? AppDimens.font22
                         : AppDimens.font16,
                     color: AppColors.blackColor,
@@ -199,7 +199,7 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                 },
               ),
               SizedBox(
-                height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
+                height: MediaQuery.of(Get.context!).size.width > 720 ? 20 : 10,
               ),
               SizedBox(
                 height: Get.height / 2.3,
@@ -230,7 +230,7 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                                 style: TextStyle(
                                   fontSize:
                                       MediaQuery.of(Get.context!).size.width >
-                                              650
+                                              720
                                           ? AppDimens.font22
                                           : AppDimens.font16,
                                   color: AppColors.blackColor,
@@ -330,7 +330,7 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                                         fontSize: MediaQuery.of(Get.context!)
                                                     .size
                                                     .width >
-                                                650
+                                                720
                                             ? AppDimens.font18
                                             : AppDimens.font10,
                                         overflow: TextOverflow.visible,
@@ -347,7 +347,7 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                                         fontSize: MediaQuery.of(Get.context!)
                                                     .size
                                                     .width >
-                                                650
+                                                720
                                             ? AppDimens.font18
                                             : AppDimens.font10,
                                         color: AppColors.reddishColor,
@@ -363,7 +363,7 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                             ),
                             SizedBox(
                               height:
-                                  MediaQuery.of(Get.context!).size.width > 650
+                                  MediaQuery.of(Get.context!).size.width > 720
                                       ? 20
                                       : 10,
                             ),
@@ -374,7 +374,7 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                                 style: TextStyle(
                                   fontSize:
                                       MediaQuery.of(Get.context!).size.width >
-                                              650
+                                              720
                                           ? AppDimens.font22
                                           : AppDimens.font16,
                                   color: AppColors.blackColor,
@@ -427,6 +427,7 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                                       //       vendorName:
                                       //           controller.vendorModel.name,
                                       //     ));
+                                      controller.grandCalculation();
                                       print(
                                           "qty: ${controller.productListModel[index].productName}");
                                       print(
@@ -450,7 +451,7 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                                       fontSize: MediaQuery.of(Get.context!)
                                                   .size
                                                   .width >
-                                              650
+                                              720
                                           ? AppDimens.font22
                                           : AppDimens.font16,
                                       color: AppColors.blackColor,
@@ -458,12 +459,12 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                                     ),
                                   ),
                                   Obx(() => Text(
-                                        "₹${double.tryParse(controller.productListModel[index].productModel?.price! ?? "0.0")! * (int.tryParse(controller.productListModel[index].productQuantity ?? "1") ?? 0)}/-",
+                                        "₹${(double.tryParse(controller.productListModel[index].productModel?.price! ?? "0.0")! * (int.tryParse(controller.productListModel[index].productQuantity ?? "1") ?? 0)).toPrecision(2)}/-",
                                         style: TextStyle(
                                           fontSize: MediaQuery.of(Get.context!)
                                                       .size
                                                       .width >
-                                                  650
+                                                  720
                                               ? AppDimens.font22
                                               : AppDimens.font16,
                                           color: AppColors.blackColor,
@@ -518,35 +519,35 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
               const SizedBox(
                 height: 20,
               ),
-              // Align(
-              //   alignment: Alignment.centerLeft,
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //     children: [
-              //       Text(
-              //         "Grand Total:",
-              //         style: TextStyle(
-              //           fontSize: MediaQuery.of(Get.context!).size.width > 650
-              //               ? AppDimens.font22
-              //               : AppDimens.font16,
-              //           color: AppColors.blackColor,
-              //           fontWeight: FontWeight.bold,
-              //         ),
-              //       ),
-              //       // Obx(() => Text(
-              //       //       "${double.tryParse(controller.productListModel.first.productQuantity ?? "0.0")! > 0 ? controller.productListModel.map((e) => double.tryParse(e.productModel!.price ?? "0.0")! * int.parse(e.productQuantity!)) : 0.0}",
-              //       //       style: TextStyle(
-              //       //         fontSize:
-              //       //             MediaQuery.of(Get.context!).size.width > 650
-              //       //                 ? AppDimens.font22
-              //       //                 : AppDimens.font16,
-              //       //         color: AppColors.blackColor,
-              //       //         fontWeight: FontWeight.bold,
-              //       //       ),
-              //       //     )),
-              //     ],
-              //   ),
-              // ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Grand Total:",
+                      style: TextStyle(
+                        fontSize: MediaQuery.of(Get.context!).size.width > 720
+                            ? AppDimens.font22
+                            : AppDimens.font16,
+                        color: AppColors.blackColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Obx(() => Text(
+                          "${controller.grandCalculation()}",
+                          style: TextStyle(
+                            fontSize:
+                                MediaQuery.of(Get.context!).size.width > 720
+                                    ? AppDimens.font22
+                                    : AppDimens.font16,
+                            color: AppColors.blackColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )),
+                  ],
+                ),
+              ),
 
               ElevatedButton(
                 onPressed: () async {

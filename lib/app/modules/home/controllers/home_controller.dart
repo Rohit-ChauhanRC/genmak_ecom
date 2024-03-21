@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:genmak_ecom/app/data/database/product_db.dart';
 import 'package:genmak_ecom/app/data/database/profile_db.dart';
+import 'package:genmak_ecom/app/data/database/receiving_db.dart';
 import 'package:genmak_ecom/app/data/database/sell_db.dart';
 import 'package:genmak_ecom/app/data/database/vendor_db.dart';
 import 'package:genmak_ecom/app/data/models/product_model.dart';
@@ -31,6 +32,7 @@ class HomeController extends GetxController {
   final SellDB sellDB = SellDB();
   final VendorDB vendorDB = VendorDB();
   final ProfileDB profileDB = ProfileDB();
+  final ReceivingDB receivingDB = ReceivingDB();
 
   ConnectivityResult _connectionStatus = ConnectivityResult.none;
   final Connectivity _connectivity = Connectivity();
@@ -297,8 +299,7 @@ class HomeController extends GetxController {
         invoiceId: "${box.read("invoiceNo") ?? invoiceNo}",
         productName: orders[i].name!,
         productWeight: orders[i].weight!,
-        price:
-            (double.tryParse(orders[i].price!)! * orders[i].count!).toString(),
+        price: (double.tryParse(orders[i].price!)!).toString(),
         productId: orders[i].id.toString(),
         productQuantity: orders[i].count.toString(),
         receivingDate: DateTime.now()
@@ -317,6 +318,10 @@ class HomeController extends GetxController {
     await checkIp(
       "${box.read("invoiceNo")}",
     );
+    Future.delayed(const Duration(seconds: 5), () {
+      orders.assignAll([]);
+      totalAmount = 0.0;
+    });
     // }
     // else if (box.read("status") == "Z") {
     //   Utils.showDialog("Your subscription is expired!");
@@ -373,8 +378,13 @@ class HomeController extends GetxController {
 
   itemSub(int i) {
     if (orders.toSet().toList()[i].count! >= 1) {
+      // orders.add(orders.toSet().toList()[i]);
+      // orders[i]..count! -= 1;
+
       orders.toSet().toList()[i].count = orders.toSet().toList()[i].count! - 1;
-      orders.add(orders.toSet().toList()[i]);
+      // orders.toSet().toList()[i].quantity =
+      //     (int.tryParse(orders.toSet().toList()[i].quantity.toString())! - 1)
+      //         .toString();
       totalAmountCal();
       final index = products
           .indexWhere((element) => element.id == orders.toSet().toList()[i].id);
@@ -385,6 +395,8 @@ class HomeController extends GetxController {
 
         totalAmountCal();
         update();
+      } else {
+        orders.remove(orders.toSet().toList()[i]);
       }
       print(orders.length);
     }
@@ -414,36 +426,36 @@ class HomeController extends GetxController {
   }
 
   Future<void> checkIp(String invoice) async {
-    if (box.read("status") == "A") {
-      for (var interface in await NetworkInterface.list()) {
-        // print(interface);
-        for (var addr in interface.addresses) {
-          if (addr.type == InternetAddressType.IPv4 &&
-              addr.address.startsWith('192') &&
-              Platform.isAndroid) {
-            ip = addr.address.split(".").getRange(0, 3).join(".");
-            for (var i = 0; i < 255; i++) {
-              apiLopp(i, invoice);
-            }
-          } else if (addr.type == InternetAddressType.IPv4 &&
-              addr.address.startsWith('172') &&
-              Platform.isIOS) {
-            ip = addr.address.split(".").getRange(0, 3).join(".");
-            for (var i = 0; i < 255; i++) {
-              apiLopp(i, invoice);
-            }
-          } else {
-            orders.assignAll([]);
-            totalAmount = 0.0;
+    // if (box.read("status") == "A") {
+    for (var interface in await NetworkInterface.list()) {
+      // print(interface);
+      for (var addr in interface.addresses) {
+        if (addr.type == InternetAddressType.IPv4 &&
+            addr.address.startsWith('192') &&
+            Platform.isAndroid) {
+          ip = addr.address.split(".").getRange(0, 3).join(".");
+          for (var i = 0; i < 255; i++) {
+            apiLopp(i, invoice);
+          }
+        } else if (addr.type == InternetAddressType.IPv4 &&
+            addr.address.startsWith('172') &&
+            Platform.isIOS) {
+          ip = addr.address.split(".").getRange(0, 3).join(".");
+          for (var i = 0; i < 255; i++) {
+            apiLopp(i, invoice);
           }
         }
+        // else {
+        //   Utils.showDialog("Printer not connected!");
+        // orders.assignAll([]);
+        // totalAmount = 0.0;
+        // }
+        // }
       }
-    } else if (box.read("status") == "Z") {
-      Utils.showDialog("Your Subscription is expired!");
-    } else {
-      orders.assignAll([]);
-      totalAmount = 0.0;
     }
+    // else if (box.read("status") == "Z") {
+    //   Utils.showDialog("Your Subscription is expired!");
+    // }
   }
 
   apiLopp(int i, String invoice) async {
@@ -459,9 +471,6 @@ class HomeController extends GetxController {
       }).then((res) {
         print(res);
         if (res.statusCode == 200) {
-          // apiUrl = "http://$ip.$i/status";
-          print(res.statusCode);
-          // print("http://$ip.$i/status");
           setStatus("http://$ip.$i/status");
         } else {
           print(res.body);
@@ -522,17 +531,17 @@ class HomeController extends GetxController {
             (previousValue, element) =>
                 double.parse(previousValue.toString()) + element);
     final count = orders
+        .toSet()
+        .toList()
         .map((e) => e.count)
         .fold(0, (previousValue, element) => previousValue + element!);
     List<Map<double, double>> gstList = calulateGST();
     late int count1 = 0;
 
-    // orders.toSet().map((e) => count1 += 1);
     late String strp = "";
-    for (var e in orders) {
+    for (var e in orders.toSet().toList()) {
       strp =
           """$strp${count1 = count1 + 1}.  ${"${e.name!}-${(e.weight.toString() + e.unit.toString()).toString().padRight(6, " ")}"} \n      ${(double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))).toPrecision(2).toString().padRight(11, " ")}${e.count.toString().padRight(4, " ")}${((double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))) * e.count!).toPrecision(2)}\n  """;
-      // print(str);
     }
     late String strpgst = "";
     late double az = 0.0;
@@ -541,25 +550,7 @@ class HomeController extends GetxController {
       az = (az + e.values.first / 2).toPrecision(2);
       strpgst =
           """$strpgst${e.keys.first.toString().padRight(9, " ")}${((e.values.first) / 2).toPrecision(2).toString().padRight(10, " ")}${((e.values.first) / 2).toPrecision(2)}\n  """;
-      // print(str);
     }
-    // final li = orders
-    //     .map((e) =>
-    //         """${count1 = count1 + 1}.  ${e.name!.length > 15 ? "${e.name!.substring(0, 15)}-${e.weight}${e.unit}" : "${e.name}-${e.weight}${e.unit}"} \n     Rs.${(double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))).toPrecision(2)}   ${e.count}   Rs.${((double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))) * e.count!).toPrecision(2)}\n """)
-    //     .toString()
-    //     .replaceAll("(", "")
-    //     .replaceAll(",", "")
-    //     .replaceAll(")", "");
-
-    // final gstli = gstList
-    //     .map((e) {
-    //       az = (az + e.values.first / 2).toPrecision(2);
-    //       return """${e.keys.first}   ${((e.values.first) / 2).toPrecision(2)}       ${((e.values.first) / 2).toPrecision(2)}\n """;
-    //     })
-    //     .toString()
-    //     .replaceAll("(", "")
-    //     .replaceAll(",", "")
-    //     .replaceAll(")", "");
 
     try {
       var res = await http.post(Uri.parse(apiUrl), body: {
@@ -583,6 +574,7 @@ class HomeController extends GetxController {
       });
       if (res.statusCode == 200) {
         orders.assignAll([]);
+        orders.clear();
         totalAmount = 0.0;
         print("send");
       }

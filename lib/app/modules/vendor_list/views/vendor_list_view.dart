@@ -18,13 +18,13 @@ class VendorListView extends GetView<VendorListController> {
       appBar: AppBar(
         iconTheme: IconThemeData(
           color: AppColors.whiteColor,
-          size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
+          size: MediaQuery.of(Get.context!).size.width > 720 ? 40 : 20,
         ),
         title: Text(
           'Vendor List',
           style: TextStyle(
             color: Colors.white,
-            fontSize: MediaQuery.of(Get.context!).size.width > 650
+            fontSize: MediaQuery.of(Get.context!).size.width > 720
                 ? AppDimens.font30
                 : AppDimens.font18,
           ),
@@ -46,9 +46,9 @@ class VendorListView extends GetView<VendorListController> {
                     margin: const EdgeInsets.only(top: 20),
                     padding: EdgeInsets.only(
                       left:
-                          MediaQuery.of(Get.context!).size.width > 650 ? 10 : 3,
+                          MediaQuery.of(Get.context!).size.width > 720 ? 10 : 3,
                       right:
-                          MediaQuery.of(Get.context!).size.width > 650 ? 10 : 3,
+                          MediaQuery.of(Get.context!).size.width > 720 ? 10 : 3,
                     ),
                     child: ListView(
                       shrinkWrap: true,
@@ -133,7 +133,7 @@ class VendorListView extends GetView<VendorListController> {
                   "No data found...",
                   style: TextStyle(
                     color: AppColors.blackColor,
-                    fontSize: MediaQuery.of(Get.context!).size.width > 650
+                    fontSize: MediaQuery.of(Get.context!).size.width > 720
                         ? AppDimens.font30
                         : AppDimens.font18,
                     fontWeight: FontWeight.bold,

@@ -17,8 +17,8 @@ class ProductListItem extends StatelessWidget {
         Get.toNamed(Routes.EDIT_PRODUCT_ITEM, arguments: product.id);
       },
       child: Container(
-        height: MediaQuery.of(Get.context!).size.width > 650 ? 250.h : 150.h,
-        width: MediaQuery.of(Get.context!).size.width > 650 ? 200.w : 150.w,
+        height: MediaQuery.of(Get.context!).size.width > 720 ? 250.h : 180.h,
+        width: MediaQuery.of(Get.context!).size.width > 720 ? 200.w : 150.w,
         margin: const EdgeInsets.all(10),
         decoration: BoxDecoration(
             border: Border.all(
@@ -72,7 +72,7 @@ class ProductListItem extends StatelessWidget {
                       Text(
                         "Name: ",
                         style: TextStyle(
-                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                          fontSize: MediaQuery.of(Get.context!).size.width > 720
                               ? AppDimens.font22
                               : AppDimens.font16,
                           color: AppColors.blackColor,
@@ -85,12 +85,12 @@ class ProductListItem extends StatelessWidget {
                       SizedBox(
                         width: Get.width * 0.3,
                         child: Text(
-                          // maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
+                          maxLines: 3,
+                          overflow: TextOverflow.visible,
                           product.name ?? "",
                           style: TextStyle(
                             fontSize:
-                                MediaQuery.of(Get.context!).size.width > 650
+                                MediaQuery.of(Get.context!).size.width > 720
                                     ? AppDimens.font22
                                     : AppDimens.font16,
                             color: AppColors.blackColor,
@@ -102,7 +102,7 @@ class ProductListItem extends StatelessWidget {
                   ),
                   SizedBox(
                     height:
-                        MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
+                        MediaQuery.of(Get.context!).size.width > 720 ? 20 : 10,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -110,7 +110,7 @@ class ProductListItem extends StatelessWidget {
                       Text(
                         "Weight:",
                         style: TextStyle(
-                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                          fontSize: MediaQuery.of(Get.context!).size.width > 720
                               ? AppDimens.font22
                               : AppDimens.font16,
                           color: AppColors.blackColor,
@@ -124,7 +124,7 @@ class ProductListItem extends StatelessWidget {
                         product.weight.toString() + product.unit.toString() ??
                             "",
                         style: TextStyle(
-                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                          fontSize: MediaQuery.of(Get.context!).size.width > 720
                               ? AppDimens.font22
                               : AppDimens.font16,
                           color: AppColors.blackColor,
@@ -134,7 +134,7 @@ class ProductListItem extends StatelessWidget {
                   ),
                   SizedBox(
                     height:
-                        MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
+                        MediaQuery.of(Get.context!).size.width > 720 ? 20 : 10,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -142,7 +142,7 @@ class ProductListItem extends StatelessWidget {
                       Text(
                         "Price:",
                         style: TextStyle(
-                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                          fontSize: MediaQuery.of(Get.context!).size.width > 720
                               ? AppDimens.font22
                               : AppDimens.font16,
                           color: AppColors.blackColor,
@@ -155,7 +155,7 @@ class ProductListItem extends StatelessWidget {
                       Text(
                         "₹${product.price}" ?? "₹0.0",
                         style: TextStyle(
-                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                          fontSize: MediaQuery.of(Get.context!).size.width > 720
                               ? AppDimens.font22
                               : AppDimens.font16,
                           color: AppColors.blackColor,
@@ -165,7 +165,7 @@ class ProductListItem extends StatelessWidget {
                   ),
                   SizedBox(
                     height:
-                        MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
+                        MediaQuery.of(Get.context!).size.width > 720 ? 20 : 10,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -173,7 +173,7 @@ class ProductListItem extends StatelessWidget {
                       Text(
                         "Quantity:",
                         style: TextStyle(
-                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                          fontSize: MediaQuery.of(Get.context!).size.width > 720
                               ? AppDimens.font22
                               : AppDimens.font16,
                           color: AppColors.blackColor,
@@ -186,7 +186,7 @@ class ProductListItem extends StatelessWidget {
                       Text(
                         product.quantity.toString() ?? "0",
                         style: TextStyle(
-                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                          fontSize: MediaQuery.of(Get.context!).size.width > 720
                               ? AppDimens.font22
                               : AppDimens.font16,
                           color: AppColors.blackColor,

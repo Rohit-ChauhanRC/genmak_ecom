@@ -16,13 +16,13 @@ class ProfileView extends GetView<ProfileController> {
       appBar: AppBar(
         iconTheme: IconThemeData(
           color: AppColors.whiteColor,
-          size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
+          size: MediaQuery.of(Get.context!).size.width > 720 ? 40 : 20,
         ),
         title: Text(
           'Profile',
           style: TextStyle(
             color: Colors.white,
-            fontSize: MediaQuery.of(Get.context!).size.width > 650
+            fontSize: MediaQuery.of(Get.context!).size.width > 720
                 ? AppDimens.font30
                 : AppDimens.font18,
           ),
@@ -44,7 +44,7 @@ class ProfileView extends GetView<ProfileController> {
                     Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(
-                              MediaQuery.of(Get.context!).size.width > 650
+                              MediaQuery.of(Get.context!).size.width > 720
                                   ? 100
                                   : 50),
                           border: Border.all(
@@ -65,7 +65,7 @@ class ProfileView extends GetView<ProfileController> {
                       child: Text(
                         "Customer ID: ${controller.customerId}",
                         style: TextStyle(
-                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                          fontSize: MediaQuery.of(Get.context!).size.width > 720
                               ? AppDimens.font22
                               : AppDimens.font16,
                           color: AppColors.blackColor,
@@ -74,7 +74,7 @@ class ProfileView extends GetView<ProfileController> {
                       ),
                     ),
                     SizedBox(
-                      height: MediaQuery.of(Get.context!).size.width > 650
+                      height: MediaQuery.of(Get.context!).size.width > 720
                           ? 20
                           : 10,
                     ),
@@ -85,7 +85,7 @@ class ProfileView extends GetView<ProfileController> {
                     //       initialValue: controller.name,
                     //     )),
                     SizedBox(
-                      height: MediaQuery.of(Get.context!).size.width > 650
+                      height: MediaQuery.of(Get.context!).size.width > 720
                           ? 20
                           : 10,
                     ),
@@ -97,21 +97,21 @@ class ProfileView extends GetView<ProfileController> {
                     //       initialValue: controller.gst,
                     //     )),
                     SizedBox(
-                      height: MediaQuery.of(Get.context!).size.width > 650
+                      height: MediaQuery.of(Get.context!).size.width > 720
                           ? 20
                           : 10,
                     ),
                     _textContainer("Contact No.:", controller.contact),
 
                     SizedBox(
-                      height: MediaQuery.of(Get.context!).size.width > 650
+                      height: MediaQuery.of(Get.context!).size.width > 720
                           ? 20
                           : 10,
                     ),
                     _textContainer("Pan No.:", controller.panNo),
 
                     SizedBox(
-                      height: MediaQuery.of(Get.context!).size.width > 650
+                      height: MediaQuery.of(Get.context!).size.width > 720
                           ? 20
                           : 10,
                     ),
@@ -119,21 +119,21 @@ class ProfileView extends GetView<ProfileController> {
                     _textContainer("Shop Address:", controller.address),
 
                     SizedBox(
-                      height: MediaQuery.of(Get.context!).size.width > 650
+                      height: MediaQuery.of(Get.context!).size.width > 720
                           ? 20
                           : 10,
                     ),
                     _textContainer("State:", controller.state),
 
                     SizedBox(
-                      height: MediaQuery.of(Get.context!).size.width > 650
+                      height: MediaQuery.of(Get.context!).size.width > 720
                           ? 20
                           : 10,
                     ),
                     _textContainer("Pincode:", controller.pin),
 
                     SizedBox(
-                      height: MediaQuery.of(Get.context!).size.width > 650
+                      height: MediaQuery.of(Get.context!).size.width > 720
                           ? 20
                           : 10,
                     ),
@@ -176,7 +176,7 @@ class ProfileView extends GetView<ProfileController> {
               title,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                fontSize: MediaQuery.of(Get.context!).size.width > 650
+                fontSize: MediaQuery.of(Get.context!).size.width > 720
                     ? AppDimens.font22
                     : AppDimens.font16,
                 color: AppColors.blackColor,
@@ -191,7 +191,7 @@ class ProfileView extends GetView<ProfileController> {
               // textAlign: TextAlign.center,
               overflow: TextOverflow.visible,
               style: TextStyle(
-                fontSize: MediaQuery.of(Get.context!).size.width > 650
+                fontSize: MediaQuery.of(Get.context!).size.width > 720
                     ? AppDimens.font22
                     : AppDimens.font16,
                 color: AppColors.blackColor,

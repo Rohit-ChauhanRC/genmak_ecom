@@ -93,12 +93,18 @@ class CutomerBillingListController extends GetxController {
     }
 
     final ids = receiveListSearch.map((e) => e.invoiceId).toSet();
+
     totalAmounntS = 0.0;
     for (var i = 0; i < receiveListSearch.length; i++) {
       totalAmounntS =
           totalAmounntS + double.tryParse(receiveListSearch[i].price!)!;
     }
     receiveListSearch.retainWhere((x) => ids.remove(x.invoiceId));
+    receiveListSearch.sort((a, b) {
+      var adate = DateTime.tryParse(a.receivingDate.toString());
+      var bdate = DateTime.tryParse(b.receivingDate.toString());
+      return -bdate!.compareTo(adate!);
+    });
 
     update();
   }
@@ -115,6 +121,11 @@ class CutomerBillingListController extends GetxController {
       totalAmounnt = totalAmounnt + double.tryParse(receiveList[i].price!)!;
     }
     receiveList.retainWhere((x) => ids.remove(x.invoiceId));
+    receiveList.sort((a, b) {
+      var adate = DateTime.tryParse(a.receivingDate.toString());
+      var bdate = DateTime.tryParse(b.receivingDate.toString());
+      return -bdate!.compareTo(adate!);
+    });
 
     update();
     FocusScope.of(Get.context!).unfocus();
@@ -153,16 +164,16 @@ class CutomerBillingListController extends GetxController {
     receiveProduct
         .assignAll(await homeController.sellDB.fetchByInvoiceId(invoiceId));
 
-    // for (var i = 0; i < receiveProduct.length; i++) {
-    //   totalAmounnt = totalAmounnt + double.tryParse(receiveProduct[i].price!)!;
-    // }
+    final ids = receiveProduct.map((e) => e.invoiceId).toSet();
+    // receiveProduct.retainWhere((x) => ids.remove(x.invoiceId));
+
     return receiveProduct;
   }
 
   Future<void> printBtn(data) async {
     await fetchDataByInvoiceId(data.invoiceId).then((value) async {
       if (value.isNotEmpty) {
-        // print(value[0].);
+        print(data.price);
         await checkIp(data.invoiceId);
       }
     });
@@ -303,10 +314,13 @@ class CutomerBillingListController extends GetxController {
     //     .replaceAll("(", "")
     //     .replaceAll(",", "")
     //     .replaceAll(")", "");
+    // for (var i = 0; i < orders.length; i++) {
+    //   print(orders[i].price.toString());
+    // }
     late String strp = "";
-    for (var e in orders) {
+    for (var e in orders.toSet()) {
       strp =
-          """$strp${count1 = count1 + 1}.  ${e.productName!}-${(e.productWeight + e.unit).toString().padRight(6, " ")} \n     Rs.${(double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))).toPrecision(2).toString().padRight(8, " ")}${e.count.toString().padRight(3, " ")}Rs.${((double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))) * e.count!).toPrecision(2).toString().padRight(8, " ")}\n  """;
+          """$strp${count1 = count1 + 1}.  ${e.productName!}-${(e.productWeight + e.unit).toString().padRight(6, " ")} \n     Rs.${(double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))).toPrecision(2).toString().padRight(8, " ")}Rs.${((double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))) * e.count!).toPrecision(2).toString().padRight(8, " ")}\n  """;
       // print(str);
     }
     late String strpgst = "";

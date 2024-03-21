@@ -88,7 +88,7 @@ class OtpView extends GetView<OtpController> {
                       child: Text(
                         "Please enter OTP:",
                         style: TextStyle(
-                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                          fontSize: MediaQuery.of(Get.context!).size.width > 720
                               ? AppDimens.font22
                               : AppDimens.font16,
                           color: AppColors.blackColor,

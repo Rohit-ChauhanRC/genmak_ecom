@@ -40,7 +40,9 @@ class CutomerBillingDetilsController extends GetxController {
         await homeController.sellDB.fetchByInvoiceId(Get.arguments!.invoiceId));
     for (var i = 0; i < receiveProduct.length; i++) {
       print(receiveProduct[i].productName);
-      totalAmounnt = totalAmounnt + double.tryParse(receiveProduct[i].price!)!;
+      totalAmounnt = totalAmounnt +
+          (double.tryParse(receiveProduct[i].price!)! *
+              double.tryParse(receiveProduct[i].productQuantity!)!);
     }
   }
 }

@@ -40,7 +40,7 @@ class ProductWidget extends StatelessWidget {
                 child: Text(
                   "Select Product :",
                   style: TextStyle(
-                    fontSize: MediaQuery.of(Get.context!).size.width > 650
+                    fontSize: MediaQuery.of(Get.context!).size.width > 720
                         ? AppDimens.font22
                         : AppDimens.font16,
                     color: AppColors.blackColor,
@@ -92,7 +92,7 @@ class ProductWidget extends StatelessWidget {
                         // maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                          fontSize: MediaQuery.of(Get.context!).size.width > 720
                               ? AppDimens.font18
                               : AppDimens.font10,
                           overflow: TextOverflow.visible,
@@ -106,7 +106,7 @@ class ProductWidget extends StatelessWidget {
                       child: Text(
                         "\tclick here",
                         style: TextStyle(
-                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                          fontSize: MediaQuery.of(Get.context!).size.width > 720
                               ? AppDimens.font18
                               : AppDimens.font10,
                           color: AppColors.reddishColor,
@@ -120,14 +120,14 @@ class ProductWidget extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
+                height: MediaQuery.of(Get.context!).size.width > 720 ? 20 : 10,
               ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   "Quantity :",
                   style: TextStyle(
-                    fontSize: MediaQuery.of(Get.context!).size.width > 650
+                    fontSize: MediaQuery.of(Get.context!).size.width > 720
                         ? AppDimens.font22
                         : AppDimens.font16,
                     color: AppColors.blackColor,
@@ -155,7 +155,7 @@ class ProductWidget extends StatelessWidget {
                     Text(
                       "Price :",
                       style: TextStyle(
-                        fontSize: MediaQuery.of(Get.context!).size.width > 650
+                        fontSize: MediaQuery.of(Get.context!).size.width > 720
                             ? AppDimens.font22
                             : AppDimens.font16,
                         color: AppColors.blackColor,
@@ -168,7 +168,7 @@ class ProductWidget extends StatelessWidget {
                     //         fontSize: MediaQuery.of(Get.context!)
                     //                     .size
                     //                     .width >
-                    //                 650
+                    //                 720
                     //             ? AppDimens.font22
                     //             : AppDimens.font16,
                     //         color: AppColors.blackColor,

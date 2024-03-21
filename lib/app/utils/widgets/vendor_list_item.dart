@@ -17,8 +17,8 @@ class VendorListItem extends StatelessWidget {
         Get.toNamed(Routes.EDIT_VENDOR, arguments: vendorModel.id);
       },
       child: Container(
-        height: MediaQuery.of(context).size.width > 650 ? 250.h : 150.h,
-        width: MediaQuery.of(context).size.width > 650 ? 200.w : 150.w,
+        height: MediaQuery.of(context).size.width > 720 ? 250.h : 150.h,
+        width: MediaQuery.of(context).size.width > 720 ? 200.w : 150.w,
         margin: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           color: AppColors.whiteColor,
@@ -39,7 +39,7 @@ class VendorListItem extends StatelessWidget {
                   Text(
                     "Name: ",
                     style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.width > 650
+                      fontSize: MediaQuery.of(context).size.width > 720
                           ? AppDimens.font22
                           : AppDimens.font16,
                       color: AppColors.blackColor,
@@ -52,7 +52,7 @@ class VendorListItem extends StatelessWidget {
                   Text(
                     vendorModel.name ?? "",
                     style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.width > 650
+                      fontSize: MediaQuery.of(context).size.width > 720
                           ? AppDimens.font22
                           : AppDimens.font16,
                       color: AppColors.blackColor,
@@ -61,7 +61,7 @@ class VendorListItem extends StatelessWidget {
                 ],
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.width > 650 ? 20 : 10,
+                height: MediaQuery.of(context).size.width > 720 ? 20 : 10,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -69,7 +69,7 @@ class VendorListItem extends StatelessWidget {
                   Text(
                     "Mobile No.:",
                     style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.width > 650
+                      fontSize: MediaQuery.of(context).size.width > 720
                           ? AppDimens.font22
                           : AppDimens.font16,
                       color: AppColors.blackColor,
@@ -82,7 +82,7 @@ class VendorListItem extends StatelessWidget {
                   Text(
                     vendorModel.mobileNo.toString() ?? "",
                     style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.width > 650
+                      fontSize: MediaQuery.of(context).size.width > 720
                           ? AppDimens.font22
                           : AppDimens.font16,
                       color: AppColors.blackColor,
@@ -91,7 +91,7 @@ class VendorListItem extends StatelessWidget {
                 ],
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.width > 650 ? 20 : 10,
+                height: MediaQuery.of(context).size.width > 720 ? 20 : 10,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -99,7 +99,7 @@ class VendorListItem extends StatelessWidget {
                   Text(
                     "GSTIN No.",
                     style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.width > 650
+                      fontSize: MediaQuery.of(context).size.width > 720
                           ? AppDimens.font22
                           : AppDimens.font16,
                       color: AppColors.blackColor,
@@ -112,7 +112,7 @@ class VendorListItem extends StatelessWidget {
                   Text(
                     "${vendorModel.gst}" ?? "",
                     style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.width > 650
+                      fontSize: MediaQuery.of(context).size.width > 720
                           ? AppDimens.font22
                           : AppDimens.font16,
                       color: AppColors.blackColor,
@@ -121,7 +121,7 @@ class VendorListItem extends StatelessWidget {
                 ],
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.width > 650 ? 20 : 10,
+                height: MediaQuery.of(context).size.width > 720 ? 20 : 10,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -129,7 +129,7 @@ class VendorListItem extends StatelessWidget {
                   Text(
                     "Address",
                     style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.width > 650
+                      fontSize: MediaQuery.of(context).size.width > 720
                           ? AppDimens.font22
                           : AppDimens.font16,
                       color: AppColors.blackColor,
@@ -142,7 +142,7 @@ class VendorListItem extends StatelessWidget {
                   Text(
                     vendorModel.address.toString() ?? "",
                     style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.width > 650
+                      fontSize: MediaQuery.of(context).size.width > 720
                           ? AppDimens.font22
                           : AppDimens.font16,
                       color: AppColors.blackColor,

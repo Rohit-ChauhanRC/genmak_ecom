@@ -42,7 +42,7 @@ class AdminController extends GetxController {
     },
     {
       "icon": Icons.shopping_cart_rounded,
-      "title": MediaQuery.of(Get.context!).size.width > 650
+      "title": MediaQuery.of(Get.context!).size.width > 720
           ? "Received products history"
           : "Received \nproducts history",
       "onTap": () {
@@ -51,7 +51,7 @@ class AdminController extends GetxController {
     },
     {
       "icon": Icons.list,
-      "title": MediaQuery.of(Get.context!).size.width > 650
+      "title": MediaQuery.of(Get.context!).size.width > 720
           ? "Customer billing history"
           : "Customer \nbilling history",
       "onTap": () {

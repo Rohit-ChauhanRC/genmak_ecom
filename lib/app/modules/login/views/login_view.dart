@@ -59,7 +59,7 @@ class LoginView extends GetView<LoginController> {
                             "Customer Id:",
                             style: TextStyle(
                               fontSize:
-                                  MediaQuery.of(Get.context!).size.width > 650
+                                  MediaQuery.of(Get.context!).size.width > 720
                                       ? AppDimens.font22
                                       : AppDimens.font16,
                               color: AppColors.blackColor,
@@ -76,7 +76,7 @@ class LoginView extends GetView<LoginController> {
                         ),
 
                         SizedBox(
-                          height: MediaQuery.of(Get.context!).size.width > 650
+                          height: MediaQuery.of(Get.context!).size.width > 720
                               ? 20
                               : 10,
                         ),
@@ -87,7 +87,7 @@ class LoginView extends GetView<LoginController> {
                             "Mobile No.:",
                             style: TextStyle(
                               fontSize:
-                                  MediaQuery.of(Get.context!).size.width > 650
+                                  MediaQuery.of(Get.context!).size.width > 720
                                       ? AppDimens.font22
                                       : AppDimens.font16,
                               color: AppColors.blackColor,

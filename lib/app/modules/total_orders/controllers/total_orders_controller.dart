@@ -2,13 +2,15 @@ import 'package:genmak_ecom/app/data/database/receiving_db.dart';
 import 'package:genmak_ecom/app/data/database/vendor_db.dart';
 import 'package:genmak_ecom/app/data/models/receiving_model.dart';
 import 'package:genmak_ecom/app/data/models/vendor_model.dart';
+import 'package:genmak_ecom/app/modules/home/controllers/home_controller.dart';
 import 'package:genmak_ecom/app/utils/utils.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 class TotalOrdersController extends GetxController {
   //
-  final ReceivingDB receivingDB = ReceivingDB();
+  // final ReceivingDB receivingDB = ReceivingDB();
+  final HomeController homeController = Get.find();
   final VendorDB vendorDB = VendorDB();
 
   final RxList<ReceivingModel> _receiveList = RxList();
@@ -103,17 +105,23 @@ class TotalOrdersController extends GetxController {
     final result = DateTime.parse(toDate).compareTo(DateTime.parse(fromDate));
     // print(result);
     if (result == 1) {
-      receiveListSearch.assignAll(
-          await receivingDB.fetchByDate(fromDate, toDate, inputVendor));
+      receiveListSearch.assignAll(await homeController.receivingDB
+          .fetchByDate(fromDate, toDate, inputVendor));
     } else if (result == 0) {
-      receiveListSearch
-          .assignAll(await receivingDB.fetchByDateEqual(fromDate, inputVendor));
+      receiveListSearch.assignAll(await homeController.receivingDB
+          .fetchByDateEqual(fromDate, inputVendor));
     } else {
       Utils.showDialog("To date should not be greater than from date!");
     }
 
     final ids = receiveListSearch.map((e) => e.invoiceId).toSet();
     receiveListSearch.retainWhere((x) => ids.remove(x.invoiceId));
+    receiveListSearch.sort((a, b) {
+      var adate = DateTime.tryParse(a.receivingDate.toString());
+      var bdate = DateTime.tryParse(b.receivingDate.toString());
+      return -bdate!.compareTo(adate!);
+    });
+    // receiveListSearch = receiveListSearch.sort();
     totalAmounntS = 0.0;
     for (var i = 0; i < receiveListSearch.length; i++) {
       totalAmounntS =
@@ -147,9 +155,14 @@ class TotalOrdersController extends GetxController {
   fetchAll() async {
     searchV = false;
     receiveListSearch.assignAll([]);
-    receiveList.assignAll(await receivingDB.fetchAll());
+    receiveList.assignAll(await homeController.receivingDB.fetchAll());
     final ids = receiveList.map((e) => e.invoiceId).toSet();
     receiveList.retainWhere((x) => ids.remove(x.invoiceId));
+    receiveList.sort((a, b) {
+      var adate = DateTime.tryParse(a.receivingDate.toString());
+      var bdate = DateTime.tryParse(b.receivingDate.toString());
+      return -bdate!.compareTo(adate!);
+    });
     totalAmounnt = 0.0;
     for (var i = 0; i < receiveList.length; i++) {
       totalAmounnt =

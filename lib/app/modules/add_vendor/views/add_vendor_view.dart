@@ -15,12 +15,12 @@ class AddVendorView extends GetView<AddVendorController> {
       appBar: AppBar(
         iconTheme: IconThemeData(
           color: AppColors.whiteColor,
-          size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
+          size: MediaQuery.of(Get.context!).size.width > 720 ? 40 : 20,
         ),
         title: Text('Add Vendor',
             style: TextStyle(
               color: Colors.white,
-              fontSize: MediaQuery.of(Get.context!).size.width > 650
+              fontSize: MediaQuery.of(Get.context!).size.width > 720
                   ? AppDimens.font30
                   : AppDimens.font18,
             )),
@@ -37,7 +37,7 @@ class AddVendorView extends GetView<AddVendorController> {
                 child: Text(
                   "Name:",
                   style: TextStyle(
-                    fontSize: MediaQuery.of(Get.context!).size.width > 650
+                    fontSize: MediaQuery.of(Get.context!).size.width > 720
                         ? AppDimens.font22
                         : AppDimens.font16,
                     color: AppColors.blackColor,
@@ -53,14 +53,14 @@ class AddVendorView extends GetView<AddVendorController> {
                         val!.isEmpty ? "Field is required!" : null,
                   )),
               SizedBox(
-                height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
+                height: MediaQuery.of(Get.context!).size.width > 720 ? 20 : 10,
               ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   "Mobile No:",
                   style: TextStyle(
-                    fontSize: MediaQuery.of(Get.context!).size.width > 650
+                    fontSize: MediaQuery.of(Get.context!).size.width > 720
                         ? AppDimens.font22
                         : AppDimens.font16,
                     color: AppColors.blackColor,
@@ -79,14 +79,14 @@ class AddVendorView extends GetView<AddVendorController> {
                         val!.length < 10 ? "Field is required!" : null,
                   )),
               SizedBox(
-                height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
+                height: MediaQuery.of(Get.context!).size.width > 720 ? 20 : 10,
               ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   "GSTIN No:",
                   style: TextStyle(
-                    fontSize: MediaQuery.of(Get.context!).size.width > 650
+                    fontSize: MediaQuery.of(Get.context!).size.width > 720
                         ? AppDimens.font22
                         : AppDimens.font16,
                     color: AppColors.blackColor,
@@ -104,14 +104,14 @@ class AddVendorView extends GetView<AddVendorController> {
                         decimal: true, signed: false),
                   )),
               SizedBox(
-                height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
+                height: MediaQuery.of(Get.context!).size.width > 720 ? 20 : 10,
               ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   "Vendor Address:",
                   style: TextStyle(
-                    fontSize: MediaQuery.of(Get.context!).size.width > 650
+                    fontSize: MediaQuery.of(Get.context!).size.width > 720
                         ? AppDimens.font22
                         : AppDimens.font16,
                     color: AppColors.blackColor,
@@ -127,7 +127,7 @@ class AddVendorView extends GetView<AddVendorController> {
                         val!.isEmpty ? "Field is required!" : null,
                   )),
               SizedBox(
-                height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
+                height: MediaQuery.of(Get.context!).size.width > 720 ? 20 : 10,
               ),
               ElevatedButton(
                 onPressed: () {

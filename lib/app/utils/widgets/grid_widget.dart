@@ -31,8 +31,8 @@ class GridWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: MediaQuery.of(context).size.width > 650 ? 4 : 2,
-          mainAxisExtent: MediaQuery.of(context).size.width > 650 ? 250 : 180,
+          crossAxisCount: MediaQuery.of(context).size.width > 720 ? 4 : 2,
+          mainAxisExtent: MediaQuery.of(context).size.width > 720 ? 250 : 180,
         ),
         itemCount: product.length,
         itemBuilder: (_, i) {
@@ -46,7 +46,7 @@ class GridWidget extends StatelessWidget {
               }
             },
             child: Container(
-              height: MediaQuery.of(context).size.width > 650 ? 200 : 120,
+              height: MediaQuery.of(context).size.width > 720 ? 200 : 120,
               width: 120,
               margin: const EdgeInsets.all(10),
               foregroundDecoration: int.parse(grid.quantity!) == 0
@@ -71,7 +71,7 @@ class GridWidget extends StatelessWidget {
                 children: [
                   product[i].picture != null
                       ? SizedBox(
-                          height: MediaQuery.of(context).size.width > 650
+                          height: MediaQuery.of(context).size.width > 720
                               ? 140
                               : 70,
                           width: Get.width,
@@ -86,7 +86,7 @@ class GridWidget extends StatelessWidget {
                           ),
                         )
                       : SizedBox(
-                          height: MediaQuery.of(context).size.width > 650
+                          height: MediaQuery.of(context).size.width > 720
                               ? 140
                               : 70,
                           width: Get.width,
@@ -114,7 +114,7 @@ class GridWidget extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: AppColors.whiteColor,
-                        fontSize: MediaQuery.of(context).size.width > 650
+                        fontSize: MediaQuery.of(context).size.width > 720
                             ? AppDimens.font18
                             : AppDimens.font14,
                         overflow: TextOverflow.ellipsis,

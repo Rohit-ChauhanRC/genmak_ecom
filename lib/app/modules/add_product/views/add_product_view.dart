@@ -16,12 +16,12 @@ class AddProductView extends GetView<AddProductController> {
       appBar: AppBar(
         iconTheme: IconThemeData(
           color: AppColors.whiteColor,
-          size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
+          size: MediaQuery.of(Get.context!).size.width > 720 ? 40 : 20,
         ),
         title: Text('Add Product',
             style: TextStyle(
               color: Colors.white,
-              fontSize: MediaQuery.of(Get.context!).size.width > 650
+              fontSize: MediaQuery.of(Get.context!).size.width > 720
                   ? AppDimens.font30
                   : AppDimens.font18,
             )),
@@ -39,9 +39,9 @@ class AddProductView extends GetView<AddProductController> {
               CircleAvatar(
                 //
                 maxRadius:
-                    MediaQuery.of(Get.context!).size.width > 650 ? 102 : 52,
+                    MediaQuery.of(Get.context!).size.width > 720 ? 102 : 52,
                 minRadius:
-                    MediaQuery.of(Get.context!).size.width > 650 ? 100 : 50,
+                    MediaQuery.of(Get.context!).size.width > 720 ? 100 : 50,
                 backgroundColor: AppColors.buttonColor,
                 child: Obx(() => UploadImageWidget(
                       imageFile: controller.personPic,
@@ -56,7 +56,7 @@ class AddProductView extends GetView<AddProductController> {
                 child: Text(
                   "Product Name:",
                   style: TextStyle(
-                    fontSize: MediaQuery.of(Get.context!).size.width > 650
+                    fontSize: MediaQuery.of(Get.context!).size.width > 720
                         ? AppDimens.font22
                         : AppDimens.font16,
                     color: AppColors.blackColor,
@@ -71,14 +71,14 @@ class AddProductView extends GetView<AddProductController> {
                     validator: (v) => v!.isEmpty ? "Field is required!" : null,
                   )),
               SizedBox(
-                height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
+                height: MediaQuery.of(Get.context!).size.width > 720 ? 20 : 10,
               ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   "Product Weight:",
                   style: TextStyle(
-                    fontSize: MediaQuery.of(Get.context!).size.width > 650
+                    fontSize: MediaQuery.of(Get.context!).size.width > 720
                         ? AppDimens.font22
                         : AppDimens.font16,
                     color: AppColors.blackColor,
@@ -95,14 +95,14 @@ class AddProductView extends GetView<AddProductController> {
                         const TextInputType.numberWithOptions(decimal: true),
                   )),
               SizedBox(
-                height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
+                height: MediaQuery.of(Get.context!).size.width > 720 ? 20 : 10,
               ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   "Units of Measurement:",
                   style: TextStyle(
-                    fontSize: MediaQuery.of(Get.context!).size.width > 650
+                    fontSize: MediaQuery.of(Get.context!).size.width > 720
                         ? AppDimens.font22
                         : AppDimens.font16,
                     color: AppColors.blackColor,
@@ -140,14 +140,14 @@ class AddProductView extends GetView<AddProductController> {
                     ),
                   )),
               SizedBox(
-                height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
+                height: MediaQuery.of(Get.context!).size.width > 720 ? 20 : 10,
               ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   "Price:",
                   style: TextStyle(
-                    fontSize: MediaQuery.of(Get.context!).size.width > 650
+                    fontSize: MediaQuery.of(Get.context!).size.width > 720
                         ? AppDimens.font22
                         : AppDimens.font16,
                     color: AppColors.blackColor,
@@ -165,14 +165,14 @@ class AddProductView extends GetView<AddProductController> {
                         const TextInputType.numberWithOptions(decimal: true),
                   )),
               SizedBox(
-                height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
+                height: MediaQuery.of(Get.context!).size.width > 720 ? 20 : 10,
               ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   "GST:",
                   style: TextStyle(
-                    fontSize: MediaQuery.of(Get.context!).size.width > 650
+                    fontSize: MediaQuery.of(Get.context!).size.width > 720
                         ? AppDimens.font22
                         : AppDimens.font16,
                     color: AppColors.blackColor,
@@ -190,14 +190,14 @@ class AddProductView extends GetView<AddProductController> {
                         const TextInputType.numberWithOptions(decimal: true),
                   )),
               SizedBox(
-                height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
+                height: MediaQuery.of(Get.context!).size.width > 720 ? 20 : 10,
               ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   "Discount:",
                   style: TextStyle(
-                    fontSize: MediaQuery.of(Get.context!).size.width > 650
+                    fontSize: MediaQuery.of(Get.context!).size.width > 720
                         ? AppDimens.font22
                         : AppDimens.font16,
                     color: AppColors.blackColor,
@@ -217,14 +217,14 @@ class AddProductView extends GetView<AddProductController> {
                     // validator: (v) => v!.isEmpty ? "Field is required!" : null,
                   )),
               SizedBox(
-                height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
+                height: MediaQuery.of(Get.context!).size.width > 720 ? 20 : 10,
               ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   "HSNCode:",
                   style: TextStyle(
-                    fontSize: MediaQuery.of(Get.context!).size.width > 650
+                    fontSize: MediaQuery.of(Get.context!).size.width > 720
                         ? AppDimens.font22
                         : AppDimens.font16,
                     color: AppColors.blackColor,
@@ -238,14 +238,14 @@ class AddProductView extends GetView<AddProductController> {
                     onChanged: (val) => controller.hsnCode = val,
                   )),
               SizedBox(
-                height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
+                height: MediaQuery.of(Get.context!).size.width > 720 ? 20 : 10,
               ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   "Description:",
                   style: TextStyle(
-                    fontSize: MediaQuery.of(Get.context!).size.width > 650
+                    fontSize: MediaQuery.of(Get.context!).size.width > 720
                         ? AppDimens.font22
                         : AppDimens.font16,
                     color: AppColors.blackColor,
@@ -260,7 +260,7 @@ class AddProductView extends GetView<AddProductController> {
                     // validator: (v) => v!.isEmpty ? "Field is required!" : null,
                   )),
               SizedBox(
-                height: MediaQuery.of(Get.context!).size.width > 650 ? 20 : 10,
+                height: MediaQuery.of(Get.context!).size.width > 720 ? 20 : 10,
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -270,7 +270,7 @@ class AddProductView extends GetView<AddProductController> {
                     child: Text(
                       "\tActive: ",
                       style: TextStyle(
-                        fontSize: MediaQuery.of(Get.context!).size.width > 650
+                        fontSize: MediaQuery.of(Get.context!).size.width > 720
                             ? AppDimens.font22
                             : AppDimens.font16,
                         decoration: TextDecoration.underline,
@@ -291,7 +291,7 @@ class AddProductView extends GetView<AddProductController> {
                                   fontWeight: FontWeight.bold,
                                   fontSize:
                                       MediaQuery.of(Get.context!).size.width >
-                                              650
+                                              720
                                           ? AppDimens.font18
                                           : AppDimens.font14),
                             ),
@@ -320,7 +320,7 @@ class AddProductView extends GetView<AddProductController> {
                                     fontWeight: FontWeight.bold,
                                     fontSize:
                                         MediaQuery.of(Get.context!).size.width >
-                                                650
+                                                720
                                             ? AppDimens.font18
                                             : AppDimens.font14),
                               ),

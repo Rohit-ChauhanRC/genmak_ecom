@@ -67,6 +67,7 @@ class AddProductController extends GetxController {
   void onInit() async {
     super.onInit();
     await permissionCheck();
+    await homeController.fetchProduct();
   }
 
   @override
@@ -92,10 +93,46 @@ class AddProductController extends GetxController {
     });
   }
 
+  bool checkProductsExist() {
+    bool b = true;
+    // homeController.products;
+    for (var i = 0; i < homeController.products.length; i++) {
+      if (homeController.products.isNotEmpty) {
+        if (homeController.products[i].name!.trim().toLowerCase().toString() !=
+                name.toLowerCase().toString() &&
+            homeController.products[i].unit!.trim().toLowerCase().toString() !=
+                unit.toLowerCase().toString() &&
+            homeController.products[i].price!.trim().toLowerCase().toString() !=
+                price.toLowerCase().toString()) {
+          b = true;
+        } else if (homeController.products[i].name!
+                    .trim()
+                    .toLowerCase()
+                    .toString() ==
+                name.toLowerCase().toString() &&
+            homeController.products[i].unit!.trim().toLowerCase().toString() ==
+                unit.toLowerCase().toString() &&
+            homeController.products[i].price!.trim().toLowerCase().toString() ==
+                price.toLowerCase().toString()) {
+          print(
+              "homeController.products[i].name:${homeController.products[i].name}");
+          print("name:$name, weight:$weight, unit:$unit");
+          Utils.showDialog("This Product already exit!");
+          b = false;
+        }
+      }
+    }
+    return b;
+  }
+
   void checkValidate() async {
     if (!productsFormKey.currentState!.validate()) {
       return null;
     }
+    checkProductsExist();
+    // if (checkProductsExist() != true) {
+    //   return null;
+    // }
     if (personPic.path.isNotEmpty && unit.isNotEmpty) {
       await createproductTable();
     } else {
@@ -106,16 +143,16 @@ class AddProductController extends GetxController {
   Future<void> createproductTable() async {
     await productDB
         .create(
-      name: name.toUpperCase(),
-      weight: weight,
-      price: price,
-      quantity: quantity,
+      name: name.trim().toUpperCase(),
+      weight: weight.trim(),
+      price: price.trim(),
+      quantity: quantity.trim(),
       active: check,
-      gst: gst,
-      discount: discount,
+      gst: gst.trim(),
+      discount: discount.trim(),
       hsnCode: hsnCode,
       unit: unit,
-      description: decription,
+      description: decription.trim(),
       picture: File(personPic.path.toString()).readAsBytesSync(),
     )
         .then((value) async {

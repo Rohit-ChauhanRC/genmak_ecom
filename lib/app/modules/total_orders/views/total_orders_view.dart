@@ -20,13 +20,13 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
       appBar: AppBar(
         iconTheme: IconThemeData(
           color: AppColors.whiteColor,
-          size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
+          size: MediaQuery.of(Get.context!).size.width > 720 ? 40 : 20,
         ),
         title: Text(
           'Received products history',
           style: TextStyle(
             color: Colors.white,
-            fontSize: MediaQuery.of(Get.context!).size.width > 650
+            fontSize: MediaQuery.of(Get.context!).size.width > 720
                 ? AppDimens.font30
                 : AppDimens.font18,
           ),
@@ -45,8 +45,8 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
 
             margin: const EdgeInsets.only(top: 20),
             padding: EdgeInsets.only(
-              left: MediaQuery.of(Get.context!).size.width > 650 ? 10 : 3,
-              right: MediaQuery.of(Get.context!).size.width > 650 ? 10 : 3,
+              left: MediaQuery.of(Get.context!).size.width > 720 ? 10 : 3,
+              right: MediaQuery.of(Get.context!).size.width > 720 ? 10 : 3,
             ),
             // margin: const EdgeInsets.only(left: 10, right: 10),
             child: ListView(
@@ -210,10 +210,10 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                             Get.toNamed(Routes.ORDER_DETAILS, arguments: data);
                           },
                           child: Container(
-                            height: MediaQuery.of(Get.context!).size.width > 650
+                            height: MediaQuery.of(Get.context!).size.width > 720
                                 ? 250.h
                                 : 150.h,
-                            width: MediaQuery.of(Get.context!).size.width > 650
+                            width: MediaQuery.of(Get.context!).size.width > 720
                                 ? 200.w
                                 : 150.w,
                             // margin: const EdgeInsets.all(10),
@@ -242,7 +242,7 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                                         fontSize: MediaQuery.of(Get.context!)
                                                     .size
                                                     .width >
-                                                650
+                                                720
                                             ? AppDimens.font22
                                             : AppDimens.font16,
                                         color: AppColors.blackColor,
@@ -255,7 +255,7 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                                         fontSize: MediaQuery.of(Get.context!)
                                                     .size
                                                     .width >
-                                                650
+                                                720
                                             ? AppDimens.font22
                                             : AppDimens.font16,
                                         color: AppColors.blackColor,
@@ -277,7 +277,7 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                                         fontSize: MediaQuery.of(Get.context!)
                                                     .size
                                                     .width >
-                                                650
+                                                720
                                             ? AppDimens.font22
                                             : AppDimens.font16,
                                         color: AppColors.blackColor,
@@ -294,7 +294,7 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                                         fontSize: MediaQuery.of(Get.context!)
                                                     .size
                                                     .width >
-                                                650
+                                                720
                                             ? AppDimens.font22
                                             : AppDimens.font16,
                                         color: AppColors.blackColor,
@@ -316,7 +316,7 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                                         fontSize: MediaQuery.of(Get.context!)
                                                     .size
                                                     .width >
-                                                650
+                                                720
                                             ? AppDimens.font22
                                             : AppDimens.font16,
                                         color: AppColors.blackColor,
@@ -329,7 +329,7 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                                         fontSize: MediaQuery.of(Get.context!)
                                                     .size
                                                     .width >
-                                                650
+                                                720
                                             ? AppDimens.font22
                                             : AppDimens.font16,
                                         color: AppColors.blackColor,
@@ -350,7 +350,7 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                       "No data found...",
                       style: TextStyle(
                         color: AppColors.blackColor,
-                        fontSize: MediaQuery.of(Get.context!).size.width > 650
+                        fontSize: MediaQuery.of(Get.context!).size.width > 720
                             ? AppDimens.font30
                             : AppDimens.font18,
                         fontWeight: FontWeight.bold,

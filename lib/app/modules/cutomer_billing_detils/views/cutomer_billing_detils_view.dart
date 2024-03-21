@@ -15,13 +15,13 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
       appBar: AppBar(
         iconTheme: IconThemeData(
           color: AppColors.whiteColor,
-          size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
+          size: MediaQuery.of(Get.context!).size.width > 720 ? 40 : 20,
         ),
         title: Text(
           'Cutomer Billing Details',
           style: TextStyle(
             color: Colors.white,
-            fontSize: MediaQuery.of(Get.context!).size.width > 650
+            fontSize: MediaQuery.of(Get.context!).size.width > 720
                 ? AppDimens.font30
                 : AppDimens.font18,
           ),
@@ -54,7 +54,7 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
                   Text(
                     "Invoice No.:",
                     style: TextStyle(
-                      fontSize: MediaQuery.of(Get.context!).size.width > 650
+                      fontSize: MediaQuery.of(Get.context!).size.width > 720
                           ? AppDimens.font22
                           : AppDimens.font16,
                       color: AppColors.blackColor,
@@ -64,7 +64,7 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
                   Text(
                     controller.receive.invoiceId ?? "",
                     style: TextStyle(
-                      fontSize: MediaQuery.of(Get.context!).size.width > 650
+                      fontSize: MediaQuery.of(Get.context!).size.width > 720
                           ? AppDimens.font22
                           : AppDimens.font16,
                       color: AppColors.blackColor,
@@ -82,7 +82,7 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
                   Text(
                     "Date:",
                     style: TextStyle(
-                      fontSize: MediaQuery.of(Get.context!).size.width > 650
+                      fontSize: MediaQuery.of(Get.context!).size.width > 720
                           ? AppDimens.font22
                           : AppDimens.font16,
                       color: AppColors.blackColor,
@@ -94,7 +94,7 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
                             (controller.receive.receivingDate.toString()))) ??
                         "",
                     style: TextStyle(
-                      fontSize: MediaQuery.of(Get.context!).size.width > 650
+                      fontSize: MediaQuery.of(Get.context!).size.width > 720
                           ? AppDimens.font22
                           : AppDimens.font16,
                       color: AppColors.blackColor,
@@ -112,7 +112,7 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
               //     Text(
               //       "Product:",
               //       style: TextStyle(
-              //         fontSize: MediaQuery.of(Get.context!).size.width > 650
+              //         fontSize: MediaQuery.of(Get.context!).size.width > 720
               //             ? AppDimens.font22
               //             : AppDimens.font16,
               //         color: AppColors.blackColor,
@@ -122,7 +122,7 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
               //     Text(
               //       controller.receive.productName ?? "",
               //       style: TextStyle(
-              //         fontSize: MediaQuery.of(Get.context!).size.width > 650
+              //         fontSize: MediaQuery.of(Get.context!).size.width > 720
               //             ? AppDimens.font22
               //             : AppDimens.font16,
               //         color: AppColors.blackColor,
@@ -140,7 +140,7 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
                   Text(
                     "Total amount:",
                     style: TextStyle(
-                      fontSize: MediaQuery.of(Get.context!).size.width > 650
+                      fontSize: MediaQuery.of(Get.context!).size.width > 720
                           ? AppDimens.font22
                           : AppDimens.font16,
                       color: AppColors.blackColor,
@@ -150,7 +150,7 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
                   Obx(() => Text(
                         "₹${controller.totalAmounnt}/-" ?? "0.0",
                         style: TextStyle(
-                          fontSize: MediaQuery.of(Get.context!).size.width > 650
+                          fontSize: MediaQuery.of(Get.context!).size.width > 720
                               ? AppDimens.font22
                               : AppDimens.font16,
                           color: AppColors.blackColor,
@@ -164,7 +164,7 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
               Text(
                 "Product List: ",
                 style: TextStyle(
-                  fontSize: MediaQuery.of(Get.context!).size.width > 650
+                  fontSize: MediaQuery.of(Get.context!).size.width > 720
                       ? AppDimens.font22
                       : AppDimens.font18,
                   color: AppColors.blackColor,
@@ -185,11 +185,11 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
                         shrinkWrap: true,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount:
-                              MediaQuery.of(Get.context!).size.width > 650
+                              MediaQuery.of(Get.context!).size.width > 720
                                   ? 3
                                   : 1,
                           mainAxisExtent:
-                              MediaQuery.of(Get.context!).size.width > 650
+                              MediaQuery.of(Get.context!).size.width > 720
                                   ? 250
                                   : 200,
                         ),
@@ -223,7 +223,7 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
                                         fontSize: MediaQuery.of(Get.context!)
                                                     .size
                                                     .width >
-                                                650
+                                                720
                                             ? AppDimens.font18
                                             : AppDimens.font16,
                                         color: AppColors.blackColor,
@@ -238,7 +238,7 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
                                           fontSize: MediaQuery.of(Get.context!)
                                                       .size
                                                       .width >
-                                                  650
+                                                  720
                                               ? AppDimens.font16
                                               : AppDimens.font14,
                                           color: AppColors.blackColor,
@@ -265,7 +265,7 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
                                         fontSize: MediaQuery.of(Get.context!)
                                                     .size
                                                     .width >
-                                                650
+                                                720
                                             ? AppDimens.font16
                                             : AppDimens.font14,
                                         color: AppColors.blackColor,
@@ -278,7 +278,7 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
                                         fontSize: MediaQuery.of(Get.context!)
                                                     .size
                                                     .width >
-                                                650
+                                                720
                                             ? AppDimens.font16
                                             : AppDimens.font14,
                                         color: AppColors.blackColor,
@@ -304,7 +304,7 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
                                         fontSize: MediaQuery.of(Get.context!)
                                                     .size
                                                     .width >
-                                                650
+                                                720
                                             ? AppDimens.font16
                                             : AppDimens.font14,
                                         color: AppColors.blackColor,
@@ -317,7 +317,7 @@ class CutomerBillingDetilsView extends GetView<CutomerBillingDetilsController> {
                                         fontSize: MediaQuery.of(Get.context!)
                                                     .size
                                                     .width >
-                                                650
+                                                720
                                             ? AppDimens.font16
                                             : AppDimens.font14,
                                         color: AppColors.blackColor,

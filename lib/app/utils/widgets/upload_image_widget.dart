@@ -28,7 +28,7 @@ class UploadImageWidget extends StatelessWidget {
     return InkWell(
       onTap: onTap ?? () {},
       child: CircleAvatar(
-        radius: MediaQuery.of(Get.context!).size.width > 650 ? 100 : 50,
+        radius: MediaQuery.of(Get.context!).size.width > 720 ? 100 : 50,
         backgroundColor: AppColors.buttonColor,
         // color: Colors.white,
         backgroundImage: imageDb == false &&

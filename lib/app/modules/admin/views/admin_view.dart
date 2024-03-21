@@ -16,13 +16,13 @@ class AdminView extends GetView<AdminController> {
       appBar: AppBar(
         iconTheme: IconThemeData(
           color: AppColors.whiteColor,
-          size: MediaQuery.of(Get.context!).size.width > 650 ? 40 : 20,
+          size: MediaQuery.of(Get.context!).size.width > 720 ? 40 : 20,
         ),
         title: Text(
           'Admin',
           style: TextStyle(
             color: Colors.white,
-            fontSize: MediaQuery.of(Get.context!).size.width > 650
+            fontSize: MediaQuery.of(Get.context!).size.width > 720
                 ? AppDimens.font30
                 : AppDimens.font18,
           ),
@@ -33,9 +33,9 @@ class AdminView extends GetView<AdminController> {
         margin: const EdgeInsets.only(top: 20),
         child: GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: MediaQuery.of(context).size.width > 650 ? 4 : 2,
+              crossAxisCount: MediaQuery.of(context).size.width > 720 ? 4 : 2,
               mainAxisExtent:
-                  MediaQuery.of(Get.context!).size.width > 650 ? 200.h : 120.h,
+                  MediaQuery.of(Get.context!).size.width > 720 ? 200.h : 120.h,
             ),
             itemCount: controller.gridList.length,
             itemBuilder: (_, i) {
@@ -82,7 +82,7 @@ class AdminView extends GetView<AdminController> {
             Text(
               title,
               style: TextStyle(
-                fontSize: MediaQuery.of(Get.context!).size.width > 650
+                fontSize: MediaQuery.of(Get.context!).size.width > 720
                     ? AppDimens.font20
                     : AppDimens.font18,
                 color: AppColors.blackColor,
