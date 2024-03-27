@@ -102,8 +102,9 @@ class CutomerBillingListController extends GetxController {
 
     totalAmounntS = 0.0;
     for (var i = 0; i < receiveListSearch.length; i++) {
-      totalAmounntS =
-          totalAmounntS + double.tryParse(receiveListSearch[i].price!)!;
+      totalAmounntS = totalAmounntS +
+          double.tryParse(receiveListSearch[i].price!)! *
+              int.tryParse(receiveListSearch[i].productQuantity!)!;
     }
     receiveListSearch.retainWhere((x) => ids.remove(x.invoiceId));
     receiveListSearch.sort((a, b) {
@@ -124,7 +125,9 @@ class CutomerBillingListController extends GetxController {
     print(totalAmounnt);
     totalAmounnt = 0.0;
     for (var i = 0; i < receiveList.length; i++) {
-      totalAmounnt = totalAmounnt + double.tryParse(receiveList[i].price!)!;
+      totalAmounnt = totalAmounnt +
+          double.tryParse(receiveList[i].price!)! *
+              int.tryParse(receiveList[i].productQuantity!)!;
     }
     receiveList.retainWhere((x) => ids.remove(x.invoiceId));
     receiveList.sort((a, b) {
@@ -304,10 +307,14 @@ class CutomerBillingListController extends GetxController {
             0.0,
             (previousValue, element) =>
                 double.parse(previousValue.toString()) + element);
-    final count = orders.toSet().map((e) => e.count).fold(
-        0,
-        (previousValue, element) =>
-            int.parse(previousValue.toString()) + element!);
+    final count = orders
+        .toSet()
+        .toList()
+        .map((e) => int.tryParse(e.productQuantity!)!)
+        .fold(
+            0,
+            (previousValue, element) =>
+                int.parse(previousValue.toString()) + element!);
     List<Map<double, double>> gstList = calulateGST(orders);
     late int count1 = 0;
 
@@ -324,10 +331,16 @@ class CutomerBillingListController extends GetxController {
     //   print(orders[i].price.toString());
     // }
     late String strp = "";
-    for (var e in orders.toSet()) {
-      strp =
-          """$strp${count1 = count1 + 1}.  ${e.productName!}-${(e.productWeight + e.unit).toString().padRight(6, " ")} \n     Rs.${(double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))).toPrecision(2).toString().padRight(8, " ")}Rs.${((double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))) * e.count!).toPrecision(2).toString().padRight(8, " ")}\n  """;
-      // print(str);
+    // for (var e in orders.toSet()) {
+    //   strp =
+    //       """$strp${count1 + 1}.  ${e.productName!}-${(e.productWeight + e.unit).toString().padRight(6, " ")} \n     Rs.${(double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))).toPrecision(2).toString().padRight(11, " ")}${e.count.toString().padRight(4, " ")}Rs.${((double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))) * e.count!).toPrecision(2).toString().padRight(8, " ")}\n  """;
+    //   // print(str);
+    // }
+    for (var e in orders.toSet().toList()) {
+      if (e.count! >= 1) {
+        strp =
+            """$strp${count1 = count1 + 1}.  ${"${e.productName!}-${(e.productWeight.toString() + e.unit.toString()).toString().padRight(6, " ")}"} \n      ${(double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))).toPrecision(2).toString().padRight(11, " ")}${e.count.toString().padRight(4, " ")}${((double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))) * e.count!).toPrecision(2)}\n  """;
+      }
     }
     late String strpgst = "";
     late double az = 0.0;

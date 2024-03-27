@@ -35,7 +35,7 @@ class AdminView extends GetView<AdminController> {
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: MediaQuery.of(context).size.width > 720 ? 4 : 2,
               mainAxisExtent:
-                  MediaQuery.of(Get.context!).size.width > 720 ? 200.h : 120.h,
+                  MediaQuery.of(Get.context!).size.width > 720 ? 220.h : 120.h,
             ),
             itemCount: controller.gridList.length,
             itemBuilder: (_, i) {
@@ -84,7 +84,7 @@ class AdminView extends GetView<AdminController> {
               style: TextStyle(
                 fontSize: MediaQuery.of(Get.context!).size.width > 720
                     ? AppDimens.font20
-                    : AppDimens.font18,
+                    : AppDimens.font16,
                 color: AppColors.blackColor,
               ),
             )

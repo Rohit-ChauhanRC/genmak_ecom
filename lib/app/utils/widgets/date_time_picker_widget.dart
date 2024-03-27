@@ -1,5 +1,6 @@
 import 'package:datetime_picker_formfield_new/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
+import 'package:genmak_ecom/app/utils/app_dimens/app_dimens.dart';
 
 import 'package:intl/intl.dart';
 
@@ -33,7 +34,7 @@ class DateTimePickerWidget extends StatelessWidget {
     return DateTimeField(
       initialValue: initialDate,
       // key: UniqueKey(),
-      style: style,
+      style: style ?? TextStyle(fontSize: AppDimens.font12),
       textAlign: TextAlign.start,
       // autovalidateMode: AutovalidateMode.onUserInteraction,
       onSaved: onSaved,
@@ -41,15 +42,12 @@ class DateTimePickerWidget extends StatelessWidget {
       decoration: InputDecoration(
         fillColor: Colors.white,
         filled: true,
-        contentPadding: const EdgeInsets.all(20),
+        // contentPadding: const EdgeInsets.all(20),
         hintText: hintText,
         // hintStyle: Styles.hintStyle,
-        suffixIcon: Container(
-          margin: const EdgeInsets.only(right: 20),
-          child: const Icon(
-            Icons.date_range,
-            color: Colors.green,
-          ),
+        suffixIcon: const Icon(
+          Icons.date_range,
+          color: Colors.green,
         ),
       ),
       format: format,

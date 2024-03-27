@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:genmak_ecom/app/data/models/product_model.dart';
 import 'package:genmak_ecom/app/data/models/receiving_model.dart';
 import 'package:genmak_ecom/app/data/models/vendor_model.dart';
@@ -318,14 +319,16 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                                 : const SizedBox()),
                             Container(
                               margin: const EdgeInsets.only(top: 10),
-                              child: Row(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   SizedBox(
-                                    // width: Get.width * 0.7,
+                                    // width: Get.width - 180.w,
                                     child: Text(
                                       "if product not available in the above list please,",
                                       // maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
+                                      overflow: TextOverflow.visible,
                                       style: TextStyle(
                                         fontSize: MediaQuery.of(Get.context!)
                                                     .size
@@ -337,24 +340,30 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                                       ),
                                     ),
                                   ),
-                                  InkWell(
-                                    onTap: () {
-                                      Get.toNamed(Routes.ADD_PRODUCT);
-                                    },
-                                    child: Text(
-                                      "\tclick here",
-                                      style: TextStyle(
-                                        fontSize: MediaQuery.of(Get.context!)
-                                                    .size
-                                                    .width >
-                                                720
-                                            ? AppDimens.font18
-                                            : AppDimens.font10,
-                                        color: AppColors.reddishColor,
-                                        decoration: TextDecoration.underline,
-                                        decorationColor: AppColors.reddishColor,
-                                        decorationStyle:
-                                            TextDecorationStyle.solid,
+                                  SizedBox(
+                                    width: 180.w,
+                                    child: InkWell(
+                                      onTap: () {
+                                        Get.toNamed(Routes.ADD_PRODUCT);
+                                      },
+                                      child: Text(
+                                        "\nclick here",
+                                        overflow: TextOverflow.visible,
+                                        style: TextStyle(
+                                          fontSize: MediaQuery.of(Get.context!)
+                                                      .size
+                                                      .width >
+                                                  720
+                                              ? AppDimens.font18
+                                              : AppDimens.font10,
+                                          color: AppColors.reddishColor,
+                                          decoration: TextDecoration.underline,
+                                          decorationColor:
+                                              AppColors.reddishColor,
+                                          decorationStyle:
+                                              TextDecorationStyle.solid,
+                                          overflow: TextOverflow.visible,
+                                        ),
                                       ),
                                     ),
                                   ),

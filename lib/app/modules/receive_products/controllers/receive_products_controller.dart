@@ -204,7 +204,7 @@ class ReceiveProductsController extends GetxController {
                     .toLowerCase()
                     .toString() ==
                 vendorId.toLowerCase().toString()) {
-          Utils.showDialog("Invoive Number already exit!");
+          Utils.showDialog("Invoive Number already exist!");
           b = false;
         }
       }
@@ -233,6 +233,22 @@ class ReceiveProductsController extends GetxController {
     } else if (totalAmount < 1.0) {
       Utils.showDialog("Total amount cannot be zero!");
     } else {
+      final names = productListModel.map((e) => e.productName).toSet();
+      productListModel.where((element) {
+        bool a;
+        if (names.contains(element.productName)) {
+          a = false;
+          Utils.showDialog("This ${element.productName} already add in list!");
+        } else {
+          a = true;
+        }
+        return a;
+      });
+      // for (var x in productListModel) {
+      //   if (names.contains(x.productName)) {
+      //     Utils.showDialog("This ${x.productName} already add in list!");
+      //   }
+      // }
       for (var i = 0; i < productListModel.length; i++) {
         await homeController.productDB
             .update(

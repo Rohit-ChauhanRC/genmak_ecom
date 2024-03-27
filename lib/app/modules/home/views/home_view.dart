@@ -344,7 +344,7 @@ class HomeView extends GetView<HomeController> {
                                                               ? Get.width / 2.7
                                                               : Get.width / 3.5,
                                                       child: Text(
-                                                        "${data.name}",
+                                                        "${data.name}-${data.weight}${data.unit}",
                                                         overflow: TextOverflow
                                                             .visible,
                                                         style: TextStyle(
