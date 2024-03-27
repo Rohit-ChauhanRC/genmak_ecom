@@ -33,6 +33,7 @@ class DataBaseService {
       version: 1,
       onCreate: create,
       singleInstance: true,
+      onUpgrade: onUpgrade,
     );
     return database;
   }
@@ -43,5 +44,13 @@ class DataBaseService {
     await ReceivingDB().createTable(database);
     await SellDB().createTable(database);
     await ProfileDB().createTable(database);
+  }
+
+  void onUpgrade(Database database, int oldVersion, int newVersion) async {
+    ProductDB().onUpgrade(database, oldVersion, newVersion);
+    VendorDB().onUpgrade(database, oldVersion, newVersion);
+    ReceivingDB().onUpgrade(database, oldVersion, newVersion);
+    SellDB().onUpgrade(database, oldVersion, newVersion);
+    ProfileDB().onUpgrade(database, oldVersion, newVersion);
   }
 }

@@ -139,4 +139,10 @@ class ReceivingDB {
   DELETE FROM $tableName WHERE id = ?
 ''', [id]);
   }
+
+  void onUpgrade(Database db, int oldVersion, int newVersion) {
+    // if (oldVersion < newVersion) {
+    //   db.execute("ALTER TABLE $tableName ADD COLUMN newCol TEXT;");
+    // }
+  }
 }
