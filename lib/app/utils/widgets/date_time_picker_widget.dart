@@ -31,6 +31,7 @@ class DateTimePickerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DateTimeField(
+      initialValue: initialDate,
       // key: UniqueKey(),
       style: style,
       textAlign: TextAlign.start,
@@ -58,7 +59,7 @@ class DateTimePickerWidget extends StatelessWidget {
         return showDatePicker(
             context: context,
             firstDate: DateTime(1900),
-            initialDate: initialDate ?? currentValue,
+            initialDate: currentValue ?? initialDate,
             lastDate: lastDate ?? DateTime(2100));
       },
     );

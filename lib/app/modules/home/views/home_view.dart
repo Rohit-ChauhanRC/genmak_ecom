@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:genmak_ecom/app/utils/app_colors/app_colors.dart';
 import 'package:genmak_ecom/app/utils/app_dimens/app_dimens.dart';
+import 'package:genmak_ecom/app/utils/utils.dart';
 import 'package:genmak_ecom/app/utils/widgets/app_drawer.dart';
 import 'package:genmak_ecom/app/utils/widgets/grid_widget.dart';
 import 'package:genmak_ecom/app/utils/widgets/text_form_widget.dart';
@@ -246,146 +247,152 @@ class HomeView extends GetView<HomeController> {
                                                   .toList()[i]
                                                   .count! >=
                                               1
-                                          ? Container(
-                                              margin: const EdgeInsets.only(
-                                                top: 20,
-                                                left: 20,
-                                                right: 20,
-                                              ),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  SizedBox(
-                                                    // width: Get.width / 6,
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        InkWell(
-                                                          onTap: () {
-                                                            controller
-                                                                .itemSub(i);
-                                                          },
-                                                          child: Icon(
-                                                            Icons
-                                                                .remove_circle_outline,
-                                                            color: AppColors
-                                                                .buttonColor,
-                                                            size: 20,
+                                          ? GetBuilder<HomeController>(
+                                              builder: (_) {
+                                              return Container(
+                                                margin: const EdgeInsets.only(
+                                                  top: 20,
+                                                  left: 20,
+                                                  right: 20,
+                                                ),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    SizedBox(
+                                                      // width: Get.width / 6,
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          InkWell(
+                                                            onTap: () {
+                                                              controller
+                                                                  .itemSub(i);
+                                                            },
+                                                            child: Icon(
+                                                              Icons
+                                                                  .remove_circle_outline,
+                                                              color: AppColors
+                                                                  .buttonColor,
+                                                              size: 20,
+                                                            ),
                                                           ),
-                                                        ),
-                                                        SizedBox(
-                                                          width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width >
-                                                                  720
-                                                              ? 20
-                                                              : 5,
-                                                        ),
-                                                        Text(
-                                                          " ${controller.orders.toSet().toList()[i].count}",
-                                                          style: TextStyle(
-                                                            fontSize: MediaQuery.of(
+                                                          SizedBox(
+                                                            width: MediaQuery.of(
                                                                             context)
                                                                         .size
                                                                         .width >
                                                                     720
-                                                                ? AppDimens
-                                                                    .font24
-                                                                : AppDimens
-                                                                    .font16,
-                                                            color: AppColors
-                                                                .blackColor,
-                                                            fontWeight:
-                                                                FontWeight.bold,
+                                                                ? 20
+                                                                : 5,
                                                           ),
-                                                        ),
-                                                        SizedBox(
-                                                          width: MediaQuery.of(
+                                                          Text(
+                                                            " ${controller.orders.toSet().toList()[i].count}",
+                                                            style: TextStyle(
+                                                              fontSize: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width >
+                                                                      720
+                                                                  ? AppDimens
+                                                                      .font24
+                                                                  : AppDimens
+                                                                      .font16,
+                                                              color: AppColors
+                                                                  .blackColor,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                            width: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width >
+                                                                    720
+                                                                ? 20
+                                                                : 5,
+                                                          ),
+                                                          InkWell(
+                                                            onTap: () {
+                                                              controller
+                                                                  .itemAdd(i);
+                                                            },
+                                                            child: Icon(
+                                                              Icons
+                                                                  .add_circle_outlined,
+                                                              color: AppColors
+                                                                  .bgColor1,
+                                                              size: 20,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                      .size
+                                                                      .width >
+                                                                  720
+                                                              ? Get.width / 2.7
+                                                              : Get.width / 3.5,
+                                                      child: Text(
+                                                        "${data.name}",
+                                                        overflow: TextOverflow
+                                                            .visible,
+                                                        style: TextStyle(
+                                                          fontSize: MediaQuery.of(
                                                                           context)
                                                                       .size
                                                                       .width >
                                                                   720
-                                                              ? 20
-                                                              : 5,
+                                                              ? AppDimens.font24
+                                                              : AppDimens
+                                                                  .font16,
+                                                          color: AppColors
+                                                              .blackColor,
+                                                          fontWeight:
+                                                              FontWeight.bold,
                                                         ),
-                                                        InkWell(
-                                                          onTap: () {
-                                                            controller
-                                                                .itemAdd(i);
-                                                          },
-                                                          child: Icon(
-                                                            Icons
-                                                                .add_circle_outlined,
-                                                            color: AppColors
-                                                                .bgColor1,
-                                                            size: 20,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                    .size
-                                                                    .width >
-                                                                720
-                                                            ? Get.width / 2.7
-                                                            : Get.width / 3.5,
-                                                    child: Text(
-                                                      "${data.name}",
-                                                      overflow:
-                                                          TextOverflow.visible,
-                                                      style: TextStyle(
-                                                        fontSize: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width >
-                                                                720
-                                                            ? AppDimens.font24
-                                                            : AppDimens.font16,
-                                                        color: AppColors
-                                                            .blackColor,
-                                                        fontWeight:
-                                                            FontWeight.bold,
                                                       ),
                                                     ),
-                                                  ),
-                                                  SizedBox(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                    .size
-                                                                    .width >
-                                                                720
-                                                            ? Get.width / 6
-                                                            : Get.width / 7,
-                                                    child: Text(
-                                                      "₹${double.tryParse(data.price!)!.toPrecision(2) * data.count!}",
-                                                      style: TextStyle(
-                                                        fontSize: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width >
-                                                                720
-                                                            ? AppDimens.font24
-                                                            : AppDimens.font16,
-                                                        color: AppColors
-                                                            .blackColor,
-                                                        fontWeight:
-                                                            FontWeight.bold,
+                                                    SizedBox(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                      .size
+                                                                      .width >
+                                                                  720
+                                                              ? Get.width / 6
+                                                              : Get.width / 7,
+                                                      child: Text(
+                                                        "₹${double.tryParse(data.price!)!.toPrecision(2) * data.count!}",
+                                                        style: TextStyle(
+                                                          fontSize: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width >
+                                                                  720
+                                                              ? AppDimens.font24
+                                                              : AppDimens
+                                                                  .font16,
+                                                          color: AppColors
+                                                              .blackColor,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
                                                       ),
                                                     ),
-                                                  ),
-                                                ],
-                                              ),
-                                            )
+                                                  ],
+                                                ),
+                                              );
+                                            })
                                           : const SizedBox());
                                     },
                                     separatorBuilder:
@@ -488,6 +495,13 @@ class HomeView extends GetView<HomeController> {
                       // controller.calulateGST();
                       if (controller.orders.isNotEmpty) {
                         await controller.printBtn();
+                        // for (var i = 0; i < controller.orders.length; i++) {
+                        //   print(
+                        //       "controller.orders: ${controller.orders[i].id}");
+                        // }
+                      } else {
+                        Utils.showDialog("Order is emplty!");
+                        // print("controller.orders: ${controller.orders}");
                       }
                     },
                     style: ElevatedButton.styleFrom(

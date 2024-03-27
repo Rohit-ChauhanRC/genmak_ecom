@@ -30,11 +30,17 @@ class CutomerBillingListController extends GetxController {
 
   final TextEditingController? textController = TextEditingController();
 
-  final RxString _fromDate = "".obs;
+  final RxString _fromDate = DateTime.now()
+      .copyWith(hour: 0, microsecond: 0, minute: 0, second: 0, millisecond: 0)
+      .toIso8601String()
+      .obs;
   String get fromDate => _fromDate.value;
   set fromDate(String str) => _fromDate.value = str;
 
-  final RxString _toDate = "".obs;
+  final RxString _toDate = DateTime.now()
+      .copyWith(hour: 0, microsecond: 0, minute: 0, second: 0, millisecond: 0)
+      .toIso8601String()
+      .obs;
   String get toDate => _toDate.value;
   set toDate(String str) => _toDate.value = str;
 

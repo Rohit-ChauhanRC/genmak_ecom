@@ -1,4 +1,3 @@
-import 'package:genmak_ecom/app/data/database/receiving_db.dart';
 import 'package:genmak_ecom/app/data/database/vendor_db.dart';
 import 'package:genmak_ecom/app/data/models/receiving_model.dart';
 import 'package:genmak_ecom/app/data/models/vendor_model.dart';
@@ -28,11 +27,17 @@ class TotalOrdersController extends GetxController {
 
   final TextEditingController? textController = TextEditingController();
 
-  final RxString _fromDate = "".obs;
+  final RxString _fromDate = DateTime.now()
+      .copyWith(hour: 0, microsecond: 0, minute: 0, second: 0, millisecond: 0)
+      .toIso8601String()
+      .obs;
   String get fromDate => _fromDate.value;
   set fromDate(String str) => _fromDate.value = str;
 
-  final RxString _toDate = "".obs;
+  final RxString _toDate = DateTime.now()
+      .copyWith(hour: 0, microsecond: 0, minute: 0, second: 0, millisecond: 0)
+      .toIso8601String()
+      .obs;
   String get toDate => _toDate.value;
   set toDate(String str) => _toDate.value = str;
 
@@ -159,8 +164,12 @@ class TotalOrdersController extends GetxController {
     final ids = receiveList.map((e) => e.invoiceId).toSet();
     receiveList.retainWhere((x) => ids.remove(x.invoiceId));
     receiveList.sort((a, b) {
-      var adate = DateTime.tryParse(a.receivingDate.toString());
-      var bdate = DateTime.tryParse(b.receivingDate.toString());
+      var adate = DateTime.tryParse(a.receivingDate!.isNotEmpty
+          ? a.receivingDate!
+          : DateTime.now().toString());
+      var bdate = DateTime.tryParse(b.receivingDate!.isNotEmpty
+          ? b.receivingDate!
+          : DateTime.now().toString());
       return -bdate!.compareTo(adate!);
     });
     totalAmounnt = 0.0;

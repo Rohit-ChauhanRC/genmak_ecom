@@ -73,12 +73,6 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
                           print(val);
                         },
                       ),
-                      // TextFormWidget(
-                      //   textController: controller.textController,
-                      //   label: "Search...",
-                      //   onChanged: (v) =>
-                      //       controller.textController!.text = v.toString(),
-                      // ),
                     ),
                     const SizedBox(
                       width: 5,
@@ -89,6 +83,7 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
                       width: Get.width / 2.2,
                       child: DateTimePickerWidget(
                         initialDate: DateTime.tryParse(controller.toDate),
+                        // lastDate: DateTime.tryParse(controller.fromDate),
                         hintText: "To Date",
                         onChanged: (val) {
                           controller.toDate = val!
@@ -365,7 +360,7 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
                   width: 20.w,
                 ),
                 Obx(() => Text(
-                    "₹${controller.searchV ? controller.totalAmounntS : controller.totalAmounnt}/-")),
+                    "₹${controller.searchV ? controller.totalAmounntS.toPrecision(2) : controller.totalAmounnt.toPrecision(2)}/-")),
                 Divider(
                   color: AppColors.blackColor,
                   thickness: 2,

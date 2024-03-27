@@ -13,6 +13,7 @@ import 'package:genmak_ecom/app/data/database/vendor_db.dart';
 import 'package:genmak_ecom/app/data/models/product_model.dart';
 import 'package:genmak_ecom/app/data/models/profile_model.dart';
 import 'package:genmak_ecom/app/data/models/vendor_model.dart';
+import 'package:genmak_ecom/app/utils/extensions/app_extensions.dart';
 import 'package:genmak_ecom/app/utils/utils.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -264,14 +265,6 @@ class HomeController extends GetxController {
     update();
   }
 
-  removeItem(i) {
-    orders[i].count = orders[i].count! - 1;
-  }
-
-  addItem(i) {
-    orders[i].count = orders[i].count! + 1;
-  }
-
   double totalAmountCal() {
     totalAmount = 0.0;
     if (orders.toSet().toList().isNotEmpty) {
@@ -291,34 +284,41 @@ class HomeController extends GetxController {
     for (var i = 0; i < orders.toSet().toList().length; i++) {
       final index = products
           .indexWhere((element) => element.id == orders.toSet().toList()[i].id);
-
-      await productDB.update(
-          id: products[index].id!,
-          quantity: "${int.tryParse(products[index].quantity!)!}");
-      await sellDB.create(
-        invoiceId: "${box.read("invoiceNo") ?? invoiceNo}",
-        productName: orders[i].name!,
-        productWeight: orders[i].weight!,
-        price: (double.tryParse(orders[i].price!)!).toString(),
-        productId: orders[i].id.toString(),
-        productQuantity: orders[i].count.toString(),
-        receivingDate: DateTime.now()
-            .copyWith(
-                hour: 0, microsecond: 0, minute: 0, second: 0, millisecond: 0)
-            .toIso8601String(),
-        count: orders[i].count!,
-        gst: orders[i].gst,
-        unit: orders[i].unit,
-      );
+      if (orders.toSet().toList()[i].count! >= 1) {
+        await productDB.update(
+            id: products[index].id!,
+            quantity: "${int.tryParse(products[index].quantity!)!}");
+        await sellDB.create(
+          invoiceId: "${box.read("invoiceNo") ?? invoiceNo}",
+          productName: orders.toSet().toList()[i].name!,
+          productWeight: orders.toSet().toList()[i].weight!,
+          price:
+              (double.tryParse(orders.toSet().toList()[i].price!)!).toString(),
+          productId: orders.toSet().toList()[i].id.toString(),
+          productQuantity: orders.toSet().toList()[i].count.toString(),
+          receivingDate: DateTime.now()
+              .copyWith(
+                  hour: 0, microsecond: 0, minute: 0, second: 0, millisecond: 0)
+              .toIso8601String(),
+          count: orders.toSet().toList()[i].count!,
+          gst: orders.toSet().toList()[i].gst,
+          unit: orders.toSet().toList()[i].unit,
+        );
+      }
     }
     box.write("invoiceNo", box.read("invoiceNo") + 1);
 
     await fetchProduct();
 
-    await checkIp(
-      "${box.read("invoiceNo")}",
-    );
-    Future.delayed(const Duration(seconds: 5), () {
+    if (orders.isNotEmpty) {
+      await checkIp(
+        "${box.read("invoiceNo")}",
+      );
+    }
+    Future.delayed(const Duration(seconds: 3), () {
+      for (var i = 0; i < products.length; i++) {
+        products[i].count = 0;
+      }
       orders.assignAll([]);
       totalAmount = 0.0;
     });
@@ -339,20 +339,8 @@ class HomeController extends GetxController {
       products[i].count = products[i].count! + 1;
       products[i].quantity =
           (int.tryParse(products[i].quantity.toString())! - 1).toString();
-
       orders.add(products[i]);
-      totalAmountCal();
-      update();
-    }
-  }
 
-  handleAddProductQuantity(int i) {
-    if (int.tryParse(products[i].quantity!)! >= 1) {
-      products[i].count = products[i].count! + 1;
-      products[i].quantity =
-          (int.tryParse(products[i].quantity.toString())! + 1).toString();
-
-      orders.add(products[i]);
       totalAmountCal();
       update();
     }
@@ -378,14 +366,11 @@ class HomeController extends GetxController {
 
   itemSub(int i) {
     if (orders.toSet().toList()[i].count! >= 1) {
-      // orders.add(orders.toSet().toList()[i]);
-      // orders[i]..count! -= 1;
-
       orders.toSet().toList()[i].count = orders.toSet().toList()[i].count! - 1;
-      // orders.toSet().toList()[i].quantity =
-      //     (int.tryParse(orders.toSet().toList()[i].quantity.toString())! - 1)
-      //         .toString();
-      totalAmountCal();
+      // orders.add(orders.toSet().toList()[i]);
+      orders.toSet().toList().addIf(
+          !orders.contains(orders.toSet().toList()[i]),
+          orders.toSet().toList()[i]);
       final index = products
           .indexWhere((element) => element.id == orders.toSet().toList()[i].id);
 
@@ -394,11 +379,16 @@ class HomeController extends GetxController {
             (int.tryParse(products[index].quantity.toString())! + 1).toString();
 
         totalAmountCal();
-        update();
-      } else {
-        orders.remove(orders.toSet().toList()[i]);
+        if (orders.toSet().toList()[i].count! == 0) {
+          orders.removeWhere(
+              (element) => element.id == orders.toSet().toList()[i].id);
+        }
       }
+      update();
+
       print(orders.length);
+    } else {
+      orders.remove(orders.toSet().toList()[i]);
     }
   }
 
@@ -427,6 +417,7 @@ class HomeController extends GetxController {
 
   Future<void> checkIp(String invoice) async {
     // if (box.read("status") == "A") {
+    // if(orders.)
     for (var interface in await NetworkInterface.list()) {
       // print(interface);
       for (var addr in interface.addresses) {
@@ -540,8 +531,10 @@ class HomeController extends GetxController {
 
     late String strp = "";
     for (var e in orders.toSet().toList()) {
-      strp =
-          """$strp${count1 = count1 + 1}.  ${"${e.name!}-${(e.weight.toString() + e.unit.toString()).toString().padRight(6, " ")}"} \n      ${(double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))).toPrecision(2).toString().padRight(11, " ")}${e.count.toString().padRight(4, " ")}${((double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))) * e.count!).toPrecision(2)}\n  """;
+      if (e.count! >= 1) {
+        strp =
+            """$strp${count1 = count1 + 1}.  ${"${e.name!}-${(e.weight.toString() + e.unit.toString()).toString().padRight(6, " ")}"} \n      ${(double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))).toPrecision(2).toString().padRight(11, " ")}${e.count.toString().padRight(4, " ")}${((double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))) * e.count!).toPrecision(2)}\n  """;
+      }
     }
     late String strpgst = "";
     late double az = 0.0;
@@ -572,10 +565,17 @@ class HomeController extends GetxController {
 
  """,
       });
+
       if (res.statusCode == 200) {
+        for (var i = 0; i < products.length; i++) {
+          products[i].count = 0;
+        }
+
+        orders = [];
         orders.assignAll([]);
         orders.clear();
         totalAmount = 0.0;
+        update();
         print("send");
       }
     } catch (e) {
