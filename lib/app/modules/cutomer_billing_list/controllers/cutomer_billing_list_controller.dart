@@ -346,9 +346,9 @@ class CutomerBillingListController extends GetxController {
     late double az = 0.0;
 
     for (var e in gstList) {
-      az = (az + e.values.first / 2).toPrecision(2);
+      az = (az + e.values.first).toPrecision(2);
       strpgst =
-          """$strpgst${e.keys.first.toString().padRight(9, " ")}${((e.values.first) / 2).toPrecision(2).toString().padRight(10, " ")}${((e.values.first) / 2).toPrecision(2)}\n  """;
+          """$strpgst${e.keys.first.toString().padRight(9, " ")}${((e.values.first)).toPrecision(2).toString().padRight(10, " ")}${((e.values.first)).toPrecision(2)}\n  """;
       // print(str);
     }
 

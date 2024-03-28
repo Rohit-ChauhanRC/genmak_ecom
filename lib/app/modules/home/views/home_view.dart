@@ -483,35 +483,36 @@ class HomeView extends GetView<HomeController> {
                       backgroundColor: AppColors.buttonColor,
                     ),
                     child: Text(
-                      "Save",
+                      "Save & Print",
                       style: TextStyle(color: AppColors.whiteColor),
                     ),
                   ),
                   SizedBox(
                     width: 20.w,
                   ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      // controller.calulateGST();
-                      if (controller.orders.isNotEmpty) {
-                        await controller.printBtn();
-                        // for (var i = 0; i < controller.orders.length; i++) {
-                        //   print(
-                        //       "controller.orders: ${controller.orders[i].id}");
-                        // }
-                      } else {
-                        Utils.showDialog("Order is emplty!");
-                        // print("controller.orders: ${controller.orders}");
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.buttonColor,
-                    ),
-                    child: Text(
-                      "Print",
-                      style: TextStyle(color: AppColors.whiteColor),
-                    ),
-                  ),
+                  // ElevatedButton(
+                  //   onPressed: () async {
+                  //     // controller.calulateGST();
+                  //     if (controller.orders.isNotEmpty) {
+                  //       await controller.printBtn();
+                  //       // for (var i = 0; i < controller.orders.length; i++) {
+                  //       //   print(
+                  //       //       "controller.orders: ${controller.orders[i].id}");
+                  //       // }
+                  //     } else {
+                  //       Utils.showDialog("Order is emplty!");
+                  //       // print("controller.orders: ${controller.orders}");
+                  //     }
+                  //   },
+                  //   style: ElevatedButton.styleFrom(
+                  //     backgroundColor: AppColors.buttonColor,
+                  //   ),
+                  //   child: Text(
+                  //     "Print",
+                  //     style: TextStyle(color: AppColors.whiteColor),
+                  //   ),
+                  // ),
+
                   // const SizedBox(
                   //   width: 20,
                   // ),

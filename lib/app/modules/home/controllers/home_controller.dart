@@ -306,7 +306,6 @@ class HomeController extends GetxController {
         );
       }
     }
-    box.write("invoiceNo", box.read("invoiceNo") + 1);
 
     await fetchProduct();
 
@@ -319,6 +318,8 @@ class HomeController extends GetxController {
       for (var i = 0; i < products.length; i++) {
         products[i].count = 0;
       }
+      box.write("invoiceNo", box.read("invoiceNo") + 1);
+
       orders.assignAll([]);
       totalAmount = 0.0;
     });
@@ -477,8 +478,8 @@ class HomeController extends GetxController {
     // final v = 0.0;
     final gst = orders.map((e) => (
           double.parse(e.gst!),
-          (double.parse(e.price!) -
-              (double.parse(e.price!) * 100 / (100 + double.parse(e.gst!))))
+          double.parse(e.price!) -
+              (double.parse(e.price!) * 100 / (100 + double.parse(e.gst!)))
         ));
 
     final lis1 = [];
