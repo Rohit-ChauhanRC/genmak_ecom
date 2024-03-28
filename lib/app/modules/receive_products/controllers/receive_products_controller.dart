@@ -4,6 +4,7 @@ import 'package:genmak_ecom/app/data/models/product_model.dart';
 import 'package:genmak_ecom/app/data/models/receiving_model.dart';
 import 'package:genmak_ecom/app/data/models/vendor_model.dart';
 import 'package:genmak_ecom/app/modules/home/controllers/home_controller.dart';
+import 'package:genmak_ecom/app/utils/extensions/app_extensions.dart';
 import 'package:genmak_ecom/app/utils/utils.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -233,53 +234,71 @@ class ReceiveProductsController extends GetxController {
     } else if (totalAmount < 1.0) {
       Utils.showDialog("Total amount cannot be zero!");
     } else {
-      final names = productListModel.map((e) => e.productName).toSet();
-      productListModel.where((element) {
-        bool a;
-        if (names.contains(element.productName)) {
-          a = false;
-          Utils.showDialog("This ${element.productName} already add in list!");
-        } else {
-          a = true;
-        }
-        return a;
-      });
+      // final names = productListModel
+      //     .map((e) =>
+      //         e.productModel!.name! +
+      //         e.productModel!.weight! +
+      //         e.productModel!.unit!)
+      //     .toSet();
+      bool a = false;
+
+      var users1 = productListModel.whereDuplicate(
+          key: (user) => user.productModel!.name);
+      if (users1.isNotEmpty) {
+        Utils.showDialog(
+            "${users1.first.productModel!.name! + users1.first.productModel!.weight! + users1.first.productModel!.unit!} already add in the list!");
+      }
+      // print("users1: ${users1.first.productModel!.name}");
+      // productListModel.where((e) {
+      //   if (names.contains(e.productModel!.name! +
+      //       e.productModel!.weight! +
+      //       e.productModel!.unit!)) {
+      //     a = false;
+      //     Utils.showDialog(
+      //         "This ${e.productModel!.name! + e.productModel!.weight! + e.productModel!.unit!} already add in list!");
+      //   } else {
+      //     a = true;
+      //   }
+      //   return a;
+      // });
       // for (var x in productListModel) {
       //   if (names.contains(x.productName)) {
       //     Utils.showDialog("This ${x.productName} already add in list!");
       //   }
       // }
-      for (var i = 0; i < productListModel.length; i++) {
-        await homeController.productDB
-            .update(
-                id: productListModel[i].productModel!.id!,
-                quantity:
-                    (int.tryParse(productListModel[i].productModel!.quantity!)!
-                                .toInt() +
-                            int.tryParse(
-                                    productListModel[i].productQuantity ?? "0")!
-                                .toInt())
-                        .toString())
-            .then((value) async {
-          await homeController.receivingDB.create(
-              vendorName: productListModel[i].vendorName.toString(),
-              totalAmount: totalAmountP.toString(),
-              productName: productListModel[i].productName.toString(),
-              invoiceId: productListModel[i].invoiceId,
-              productId: productListModel[i].productId,
-              productQuantity: productListModel[i].productQuantity.toString(),
-              receivingDate: productListModel[i].receivingDate,
-              vendorId: productListModel[i].vendorId);
-        }).then((value) async {
-          //  homeController. products.assignAll(await homeController.productDB.fetchAll());
-          await homeController.productDB.fetchAll().then((value) {
-            homeController.products.assignAll(value);
-            Get.back();
+
+      else {
+        for (var i = 0; i < productListModel.length; i++) {
+          await homeController.productDB
+              .update(
+                  id: productListModel[i].productModel!.id!,
+                  quantity: (int.tryParse(
+                                  productListModel[i].productModel!.quantity!)!
+                              .toInt() +
+                          int.tryParse(
+                                  productListModel[i].productQuantity ?? "0")!
+                              .toInt())
+                      .toString())
+              .then((value) async {
+            await homeController.receivingDB.create(
+                vendorName: productListModel[i].vendorName.toString(),
+                totalAmount: totalAmountP.toString(),
+                productName: productListModel[i].productName.toString(),
+                invoiceId: productListModel[i].invoiceId,
+                productId: productListModel[i].productId,
+                productQuantity: productListModel[i].productQuantity.toString(),
+                receivingDate: productListModel[i].receivingDate,
+                vendorId: productListModel[i].vendorId);
+          }).then((value) async {
+            //  homeController. products.assignAll(await homeController.productDB.fetchAll());
+            await homeController.productDB.fetchAll().then((value) {
+              homeController.products.assignAll(value);
+              Get.back();
+            });
           });
-        });
+        }
       }
     }
-    // print(receivingDate);
   }
 
   fetchAll() async {

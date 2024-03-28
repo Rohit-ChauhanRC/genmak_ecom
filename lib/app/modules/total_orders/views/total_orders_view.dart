@@ -372,7 +372,7 @@ class TotalOrdersView extends GetView<TotalOrdersController> {
                   width: 20.w,
                 ),
                 Obx(() => Text(
-                    "₹${controller.searchV ? controller.totalAmounntS : controller.totalAmounnt}/-")),
+                    "₹${controller.searchV ? controller.totalAmounntS.toPrecision(2) : controller.totalAmounnt.toPrecision(2)}/-")),
                 Divider(
                   color: AppColors.blackColor,
                   thickness: 2,
