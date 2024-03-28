@@ -192,14 +192,16 @@ class CutomerBillingListController extends GetxController {
     String invoice,
   ) async {
     for (var interface in await NetworkInterface.list()) {
-      print(interface);
+      print(interface.name);
       for (var addr in interface.addresses) {
-        print("addr: $addr");
+        // print("addr: $addr");
         if (addr.type == InternetAddressType.IPv4 &&
             addr.address.startsWith('192') &&
-            Platform.isAndroid) {
+            Platform.isAndroid &&
+            (interface.name.startsWith("swlan") ||
+                interface.name.startsWith("ap"))) {
           ip = addr.address.split(".").getRange(0, 3).join(".");
-          print(receiveProduct);
+          // print(receiveProduct);
 
           for (var i = 0; i < 255; i++) {
             apiLopp(i, invoice, receiveProduct);
@@ -208,7 +210,7 @@ class CutomerBillingListController extends GetxController {
             addr.address.startsWith('172') &&
             Platform.isIOS) {
           ip = addr.address.split(".").getRange(0, 3).join(".");
-          print("receiveProduct: $receiveProduct");
+          // print("receiveProduct: $receiveProduct");
 
           for (var i = 0; i < 255; i++) {
             apiLopp(i, invoice, receiveProduct);
@@ -375,15 +377,15 @@ class CutomerBillingListController extends GetxController {
       var res = await http.post(Uri.parse(apiUrl), body: {
         "print": """
   - - - - - - - - - - - - - - -
-  SR. ${"RATE".toString().padRight(9, " ")}${"QTY".toString().padRight(6, " ")}${"AMOUNT".toString().padRight(8, " ")}
+  SR. ${"RATE(Rs.)".toString().padRight(10, " ")}${"QTY".toString().padRight(4, " ")}${"AMOUNT(Rs.)".toString().padRight(8, " ")}
   $strp
   - - - - - - - - - - - - - - -
-  Subtotal   $count   Rs.${subtotalPrice.toStringAsFixed(2)}
+  Subtotal:  | $count | ${subtotalPrice.toStringAsFixed(2)} |
   - - - - - - - - - - - - - - -
   %        CGST      SGST
   $strpgst
   - - - - - - - - - - - - - - -
-  Rs.${az.toStringAsFixed(2)}/-   Rs.${az.toStringAsFixed(2)}
+      | ${az.toStringAsFixed(2)} | ${az.toStringAsFixed(2)} |
   - - - - - - - - - - - - - - -
   Total   Rs.${(double.parse(subtotalPrice.toStringAsFixed(2)) + 2 * double.parse(az.toStringAsFixed(2))).toPrecision(2)}/-
   - - - - - - - - - - - - - - -

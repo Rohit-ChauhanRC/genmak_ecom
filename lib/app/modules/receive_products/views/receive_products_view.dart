@@ -283,6 +283,7 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                                               ..productId = val!.id.toString()
                                               ..productName = val.name
                                               ..productModel = val;
+
                                             // controller.productListModel.update(
                                             //     index,
                                             //     ReceivingModel(

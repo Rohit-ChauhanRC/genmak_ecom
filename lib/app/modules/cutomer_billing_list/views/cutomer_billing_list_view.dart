@@ -52,6 +52,7 @@ class CutomerBillingListView extends GetView<CutomerBillingListController> {
               // mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
                       padding: const EdgeInsets.all(3),

@@ -242,9 +242,34 @@ class ReceiveProductsController extends GetxController {
       //     .toSet();
       bool a = false;
 
+      List names = []; // List();
+      List names1 = [];
+      productListModel.forEach((u) {
+        a = true;
+        if (names.contains(u.productModel!.name! +
+            u.productModel!.weight! +
+            u.productModel!.unit!)) {
+          names1.add(u.productModel!.name! +
+              u.productModel!.weight! +
+              u.productModel!.unit!);
+        } else {
+          a = false;
+
+          names.add(u.productModel!.name! +
+              u.productModel!.weight! +
+              u.productModel!.unit!);
+        }
+      });
+
       var users1 = productListModel.whereDuplicate(
-          key: (user) => user.productModel!.name);
-      if (users1.isNotEmpty) {
+          key: (user) => user.productModel!.name!);
+
+      var weight1 = productListModel.whereDuplicate(
+          key: (user) => user.productModel!.weight!);
+
+      var unit1 = productListModel.whereDuplicate(
+          key: (user) => user.productModel!.unit!);
+      if (names1.isNotEmpty) {
         Utils.showDialog(
             "${users1.first.productModel!.name! + users1.first.productModel!.weight! + users1.first.productModel!.unit!} already add in the list!");
       }

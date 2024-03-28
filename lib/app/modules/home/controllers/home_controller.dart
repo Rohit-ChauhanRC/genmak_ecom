@@ -424,7 +424,9 @@ class HomeController extends GetxController {
       for (var addr in interface.addresses) {
         if (addr.type == InternetAddressType.IPv4 &&
             addr.address.startsWith('192') &&
-            Platform.isAndroid) {
+            Platform.isAndroid &&
+            (interface.name.startsWith("swlan") ||
+                interface.name.startsWith("ap"))) {
           ip = addr.address.split(".").getRange(0, 3).join(".");
           for (var i = 0; i < 255; i++) {
             apiLopp(i, invoice);
@@ -558,7 +560,7 @@ class HomeController extends GetxController {
   %        CGST      SGST
   $strpgst
   - - - - - - - - - - - - - - -
-  Subtotal: | ${az.toStringAsFixed(2)} | ${az.toStringAsFixed(2)} |
+      | ${az.toStringAsFixed(2)} | ${az.toStringAsFixed(2)} |
   - - - - - - - - - - - - - - -
   Total   Rs.${(double.parse(subtotalPrice.toStringAsFixed(2)) + 2 * double.parse(az.toStringAsFixed(2))).toPrecision(2)}/-
   - - - - - - - - - - - - - - -
