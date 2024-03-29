@@ -138,7 +138,7 @@ class ReceiveProductsController extends GetxController {
 
   void addProductList(index) {
     // print(receivingDate);
-    if (double.tryParse(productListModel.first?.productQuantity ?? "0")! >=
+    if (double.tryParse(productListModel.first.productQuantity ?? "0")! >=
         1.0) {
       productListModel.insert(
           index + 1,
@@ -216,15 +216,19 @@ class ReceiveProductsController extends GetxController {
   Future onSumit() async {
     checkInvoiceExist();
     totalAmountP = 0.0;
+    // final bool qtyBool = productListModel
+    //     .map((e) => int.tryParse(e.productQuantity!)! < 1 ? true : false)
+    //     .first;
+    // if (qtyBool) {
+    //   Utils.showDialog("Product quantity cannot be null!");
+    // }
     for (var i = 0; i < productListModel.length; i++) {
       totalAmountP = totalAmountP +
           double.tryParse(productListModel[i].productModel!.price!)!
                   .toDouble() *
               double.tryParse(productListModel[i].productQuantity!)!;
     }
-    print("totalAmountP: $totalAmountP");
-    // print("amt: ${double.tryParse(amt)}");
-    print("totalAmount: $totalAmount");
+
     if (totalAmountP != totalAmount) {
       Utils.showDialog("Total amount is not same to total product amount!");
 
@@ -244,8 +248,12 @@ class ReceiveProductsController extends GetxController {
 
       List names = []; // List();
       List names1 = [];
+      List qty = [];
       productListModel.forEach((u) {
         a = true;
+        if (int.tryParse(u.productQuantity!)! < 1) {
+          qty.add(u.productModel!.name);
+        }
         if (names.contains(u.productModel!.name! +
             u.productModel!.weight! +
             u.productModel!.unit!)) {
@@ -270,8 +278,10 @@ class ReceiveProductsController extends GetxController {
       var unit1 = productListModel.whereDuplicate(
           key: (user) => user.productModel!.unit!);
       if (names1.isNotEmpty) {
-        Utils.showDialog(
-            "${users1.first.productModel!.name! + users1.first.productModel!.weight! + users1.first.productModel!.unit!} already add in the list!");
+        Utils.showDialog("${names1.first} already add in the list!");
+      }
+      if (qty.isNotEmpty) {
+        Utils.showDialog("${qty.first} quantity cannot be empty!");
       }
       // print("users1: ${users1.first.productModel!.name}");
       // productListModel.where((e) {

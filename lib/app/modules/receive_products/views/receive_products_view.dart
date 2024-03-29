@@ -6,6 +6,7 @@ import 'package:genmak_ecom/app/data/models/vendor_model.dart';
 import 'package:genmak_ecom/app/routes/app_pages.dart';
 import 'package:genmak_ecom/app/utils/app_colors/app_colors.dart';
 import 'package:genmak_ecom/app/utils/app_dimens/app_dimens.dart';
+import 'package:genmak_ecom/app/utils/utils.dart';
 import 'package:genmak_ecom/app/utils/widgets/date_time_picker_widget.dart';
 import 'package:genmak_ecom/app/utils/widgets/text_form_widget.dart';
 
@@ -394,9 +395,10 @@ class ReceiveProductsView extends GetView<ReceiveProductsController> {
                             ),
                             Obx(() => controller.products.isNotEmpty
                                 ? TextFormWidget(
-                                    validator: (v) => v!.isEmpty
-                                        ? "Field is required!"
-                                        : null,
+                                    validator: (v) =>
+                                        v!.isEmpty && int.tryParse(v) != 0
+                                            ? "Field is required!"
+                                            : null,
                                     label: "Please enter product quantity...",
                                     onChanged: (val) {
                                       controller.productListModel[index]
